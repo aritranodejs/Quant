@@ -24,6 +24,7 @@
             border: 1px solid #e2e8f0;
             font-size: 1.05em;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            line-height: 1.6; /* Improved line height for formulas */
         }
         .content-section { 
             display: none;
@@ -133,7 +134,6 @@
             @apply list-disc list-inside pl-4 text-slate-600;
         }
 
-        /* Enhanced Sidebar */
         #sidebar {
             transition: all 0.3s ease-in-out;
             background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
@@ -183,7 +183,6 @@
             }
         }
 
-        /* Welcome Section Enhancement */
         .welcome-section {
             @apply bg-gradient-to-br from-teal-50 to-emerald-50 p-8 rounded-xl shadow-lg border border-teal-100;
         }
@@ -203,7 +202,6 @@
             @apply text-teal-600 text-xl mt-1;
         }
 
-        /* Theme variables */
         .calculator-theme-teal {
             --card-bg: linear-gradient(to bottom right, #f0f9ff 0%, #e0f2fe 100%);
             --card-border: #bfdbfe;
@@ -245,11 +243,11 @@
             --card-border: #a7f3d0;
             --card-shadow: rgba(16, 185, 129, 0.2) 0px 7px 29px 0px;
             --card-shadow-hover: rgba(16, 185, 129, 0.4) 0px 10px 40px 0px;
-            --title-color: #047857; /* AI Title specific */
-            --title-border-color: #d1fae5; /* AI Title specific */
-            --icon-color: #059669; /* AI Icon specific */
-            --button-from: #059669; /* AI Button specific */
-            --button-to: #047857; /* AI Button specific */
+            --title-color: #047857; 
+            --title-border-color: #d1fae5; 
+            --icon-color: #059669; 
+            --button-from: #059669; 
+            --button-to: #047857; 
             --result-bg: #d1fae5;
             --result-border: #a7f3d0;
             --result-text: #047857;
@@ -258,7 +256,6 @@
             --error-result-text: #dc2626;
          }
 
-        /* Apply theme variables to components */
         .calculator-container .calculator-title, .ai-container .ai-title {
              color: var(--title-color);
              border-color: var(--title-border-color);
@@ -327,7 +324,7 @@
                                 <i class="fas fa-book"></i>
                                 <div>
                                     <h3 class="font-semibold text-slate-800">Comprehensive Coverage</h3>
-                                    <p class="text-sm text-slate-600">23 key topics with detailed explanations</p>
+                                    <p class="text-sm text-slate-600">24 key topics with detailed explanations</p>
                                 </div>
                             </div>
                             <div class="feature-item">
@@ -363,10 +360,19 @@
                 <div id="topic-2" class="content-section">
                     <h2 class="topic-heading"><i class="fas fa-sort-numeric-up text-teal-600"></i>2. Number Series</h2>
                     <p class="text-content mb-4">Number series problems involve identifying the underlying pattern in a sequence of numbers to find a missing term or an incorrect term in the series.</p>
-                    <h3 class="sub-heading"><i class="fas fa-project-diagram text-teal-500"></i>Common Patterns:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-project-diagram text-teal-500"></i>Arithmetic Progression (AP):</h3>
+                     <ul class="list-custom">
+                        <li>n<sup>th</sup> term: <span class="formula">a<sub>n</sub> = a + (n-1)d</span> (where 'a' is the first term, 'd' is common difference)</li>
+                        <li>Sum of first n terms: <span class="formula">S<sub>n</sub> = n/2 [2a + (n-1)d]</span> or <span class="formula">S<sub>n</sub> = n/2 [a + l]</span> (where 'l' is the last term)</li>
+                    </ul>
+                    <h3 class="sub-heading mt-4"><i class="fas fa-project-diagram text-teal-500"></i>Geometric Progression (GP):</h3>
+                     <ul class="list-custom">
+                        <li>n<sup>th</sup> term: <span class="formula">a<sub>n</sub> = ar<sup>n-1</sup></span> (where 'a' is the first term, 'r' is common ratio)</li>
+                        <li>Sum of first n terms: <span class="formula">S<sub>n</sub> = a(r<sup>n</sup>-1)/(r-1)</span> for r &gt; 1, or <span class="formula">S<sub>n</sub> = a(1-r<sup>n</sup>)/(1-r)</span> for r &lt; 1</li>
+                        <li>Sum of infinite GP (if |r|&lt;1): <span class="formula">S<sub>&infin;</sub> = a/(1-r)</span></li>
+                    </ul>
+                    <h3 class="sub-heading mt-4"><i class="fas fa-project-diagram text-teal-500"></i>Other Common Patterns:</h3>
                     <ul class="list-custom">
-                        <li>Arithmetic Progression (AP): Constant difference (e.g., a, a+d, a+2d, ...)</li>
-                        <li>Geometric Progression (GP): Constant ratio (e.g., a, ar, ar<sup>2</sup>, ...)</li>
                         <li>Squares/Cubes Series: Based on n<sup>2</sup>, n<sup>3</sup>, n<sup>2</sup>+1, n<sup>3</sup>-1, etc.</li>
                         <li>Difference/Double Difference Series: Pattern in the differences between terms.</li>
                         <li>Mixed Series: Combination of multiple operations.</li>
@@ -378,12 +384,12 @@
                 <div id="topic-3" class="content-section">
                     <h2 class="topic-heading"><i class="fas fa-square-root-alt text-teal-600"></i>3. Quadratic Equation</h2>
                     <p class="text-content mb-4">This section deals with equations of the form ax<sup>2</sup> + bx + c = 0 and methods to find their roots.</p>
-                    <p class="text-content">Standard Form: <span class="formula">ax<sup>2</sup> + bx + c = 0</span> (where a ≠ 0)</p>
+                    <p class="text-content">Standard Form: <span class="formula">ax<sup>2</sup> + bx + c = 0</span> (where a &ne; 0)</p>
                     <h3 class="sub-heading"><i class="fas fa-superscript text-teal-500"></i>Roots Formula (Quadratic Formula):</h3>
-                    <p class="text-content"><span class="formula">x = [-b ± √(b<sup>2</sup> - 4ac)] / 2a</span></p>
-                    <h3 class="sub-heading"><i class="fas fa-plus-minus text-teal-500"></i>Sum and Product of Roots (α, β):</h3>
-                    <p class="text-content">Sum (α + β): <span class="formula">-b/a</span></p>
-                    <p class="text-content">Product (αβ): <span class="formula">c/a</span></p>
+                    <p class="text-content"><span class="formula">x = [-b &plusmn; &radic;(b<sup>2</sup> - 4ac)] / 2a</span></p>
+                    <h3 class="sub-heading"><i class="fas fa-plus-minus text-teal-500"></i>Sum and Product of Roots (&alpha;, &beta;):</h3>
+                    <p class="text-content">Sum (&alpha; + &beta;): <span class="formula">-b/a</span></p>
+                    <p class="text-content">Product (&alpha;&beta;): <span class="formula">c/a</span></p>
                     <h3 class="sub-heading"><i class="fas fa-equals text-teal-500"></i>Forming Equation from Roots:</h3>
                     <p class="text-content"><span class="formula">x<sup>2</sup> - (Sum of roots)x + (Product of roots) = 0</span></p>
                     <h3 class="sub-heading"><i class="fas fa-balance-scale text-teal-500"></i>Nature of Roots (Discriminant D = b<sup>2</sup> - 4ac):</h3>
@@ -393,6 +399,8 @@
                         <li>D = 0: Real, equal, rational roots.</li>
                         <li>D < 0: Imaginary roots.</li>
                     </ul>
+                    <h3 class="sub-heading"><i class="fas fa-chart-area text-teal-500"></i>Maxima/Minima:</h3>
+                    <p class="text-content">The vertex of the parabola y = ax<sup>2</sup> + bx + c occurs at <span class="formula">x = -b/2a</span>. This point represents a minimum if a > 0 and a maximum if a < 0.</p>
                     <div class="calculator-container calculator-theme-teal">
                         <h4 class="calculator-title">
                             <i class="fas fa-calculator"></i>
@@ -444,17 +452,40 @@
                     <ul class="list-custom">
                         <li>Divisibility rules (for 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)</li>
                         <li>Prime numbers, composite numbers, factors, multiples, co-primes</li>
-                        <li>Remainder theorem</li>
+                    </ul>
+                     <h3 class="sub-heading"><i class="fas fa-divide text-teal-500"></i>Remainder Theorem:</h3>
+                    <ul class="list-custom">
+                        <li>Basic: Dividend = (Divisor × Quotient) + Remainder.</li>
+                        <li>Polynomial Remainder Theorem: Remainder of f(x) &divide; (x-a) is f(a). Example: Remainder of (x<sup>2</sup>+3x+5) &divide; (x-1) is 1<sup>2</sup>+3(1)+5 = 9.</li>
+                        <li>Advanced Concepts (mention): Chinese Remainder Theorem (CRT), Euler's Totient Theorem, Fermat's Little Theorem are used for complex remainder problems.</li>
+                    </ul>
+                    <h3 class="sub-heading"><i class="fas fa-stream text-teal-500"></i>HCF/LCM Remainder Problem Types:</h3>
+                    <ul class="list-custom">
+                        <li>Type 1 (HCF - Different Remainders): Greatest number dividing N<sub>1</sub>, N<sub>2</sub> leaving R<sub>1</sub>, R<sub>2</sub>. Solution: HCF(N<sub>1</sub>-R<sub>1</sub>, N<sub>2</sub>-R<sub>2</sub>).</li>
+                        <li>Type 2 (LCM - Same Remainder): Least number divided by D<sub>1</sub>, D<sub>2</sub> leaving remainder R. Solution: LCM(D<sub>1</sub>, D<sub>2</sub>) + R.</li>
+                        <li>Type 3 (LCM - Constant Difference): Least number divided by D<sub>1</sub>, D<sub>2</sub> leaving R<sub>1</sub>, R<sub>2</sub> where D<sub>1</sub>-R<sub>1</sub> = D<sub>2</sub>-R<sub>2</sub> = k. Solution: LCM(D<sub>1</sub>, D<sub>2</sub>) - k.</li>
+                        <li>Type 4 (HCF - Same Unknown Remainder): Greatest number dividing N<sub>1</sub>, N<sub>2</sub>, N<sub>3</sub> leaving same remainder. Solution: HCF(N<sub>2</sub>-N<sub>1</sub>, N<sub>3</sub>-N<sub>2</sub>, N<sub>3</sub>-N<sub>1</sub>).</li>
                     </ul>
                     <h3 class="sub-heading"><i class="fas fa-greater-than-equal text-teal-500"></i>HCF (Highest Common Factor / GCD):</h3>
                     <p class="text-content">The largest number that divides two or more numbers exactly.</p>
                     <h3 class="sub-heading"><i class="fas fa-less-than-equal text-teal-500"></i>LCM (Least Common Multiple):</h3>
                     <p class="text-content">The smallest number that is exactly divisible by two or more numbers.</p>
                     <h3 class="sub-heading"><i class="fas fa-link text-teal-500"></i>Relationship:</h3>
-                    <p class="text-content">For two numbers A and B: <span class="formula">HCF(A,B) × LCM(A,B) = A × B</span></p>
+                    <p class="text-content">For two numbers A and B: <span class="formula">HCF(A,B) &times; LCM(A,B) = A &times; B</span></p>
                     <h3 class="sub-heading"><i class="fas fa-divide text-teal-500"></i>HCF/LCM of Fractions:</h3>
                     <p class="text-content">HCF(a/b, c/d) = <span class="formula">HCF(a,c) / LCM(b,d)</span></p>
                     <p class="text-content">LCM(a/b, c/d) = <span class="formula">LCM(a,c) / HCF(b,d)</span></p>
+                    <h3 class="sub-heading"><i class="fas fa-ellipsis-h text-teal-500"></i>Trailing Zeros in n!:</h3>
+                    <p class="text-content">Number of trailing zeros in n! = <span class="formula">&lfloor;n/5&rfloor; + &lfloor;n/25&rfloor; + &lfloor;n/125&rfloor; + ...</span></p>
+                    <h3 class="sub-heading"><i class="fas fa-superscript text-teal-500"></i>Indices (Exponents) & Surds (Radicals):</h3>
+                    <ul class="list-custom">
+                        <li>a<sup>m</sup> &times; a<sup>n</sup> = a<sup>m+n</sup></li>
+                        <li>a<sup>m</sup> / a<sup>n</sup> = a<sup>m-n</sup></li>
+                        <li>(a<sup>m</sup>)<sup>n</sup> = a<sup>mn</sup></li>
+                        <li>a<sup>0</sup> = 1 (for a &ne; 0)</li>
+                        <li>a<sup>-n</sup> = 1/a<sup>n</sup></li>
+                        <li>&radic;a &times; &radic;b = &radic;(ab)</li>
+                    </ul>
                     <div class="calculator-container calculator-theme-slate">
                         <h4 class="calculator-title">
                              <i class="fas fa-calculator"></i>
@@ -495,12 +526,12 @@
                     <h3 class="sub-heading"><i class="fas fa-vector-square text-teal-500"></i>Ratio (a:b):</h3>
                     <p class="text-content">'a' is antecedent, 'b' is consequent.</p>
                     <h3 class="sub-heading"><i class="fas fa-equals text-teal-500"></i>Proportion (a:b::c:d):</h3>
-                    <p class="text-content"><span class="formula">a/b = c/d ⟹ ad = bc</span>. 'a,d' are extremes, 'b,c' are means.</p>
+                    <p class="text-content"><span class="formula">a/b = c/d &rArr; ad = bc</span>. 'a,d' are extremes, 'b,c' are means.</p>
                     <h3 class="sub-heading"><i class="fas fa-sitemap text-teal-500"></i>Types of Proportion:</h3>
                     <ul class="list-custom">
                         <li>Fourth Proportional (d)</li>
                         <li>Third Proportional (to a,b is c if a:b::b:c)</li>
-                        <li>Mean Proportional (between a,c is b if a:b::b:c ⟹ b<sup>2</sup>=ac)</li>
+                        <li>Mean Proportional (between a,c is b if a:b::b:c &rArr; b<sup>2</sup>=ac)</li>
                     </ul>
                     <h3 class="sub-heading"><i class="fas fa-cogs text-teal-500"></i>Properties:</h3>
                     <ul class="list-custom">
@@ -509,8 +540,10 @@
                         <li>Componendo: If a/b = c/d, then (a+b)/b = (c+d)/d</li>
                         <li>Dividendo: If a/b = c/d, then (a-b)/b = (c-d)/d</li>
                         <li>Componendo & Dividendo: If a/b = c/d, then (a+b)/(a-b) = (c+d)/(c-d)</li>
+                        <li>Addendo: If a/b = c/d = e/f = ..., then each ratio = (a+c+e+...)/(b+d+f+...)</li>
+                        <li>Subtrahendo: If a/b = c/d, then each ratio = (a-c)/(b-d)</li>
                     </ul>
-                    <p class="text-content mt-2">Duplicate Ratio: a<sup>2</sup>:b<sup>2</sup>. Triplicate Ratio: a<sup>3</sup>:b<sup>3</sup>. Sub-duplicate Ratio: √a:√b. Sub-triplicate Ratio: <sup>3</sup>√a:<sup>3</sup>√b.</p>
+                    <p class="text-content mt-2">Duplicate Ratio: a<sup>2</sup>:b<sup>2</sup>. Triplicate Ratio: a<sup>3</sup>:b<sup>3</sup>. Sub-duplicate Ratio: &radic;a:&radic;b. Sub-triplicate Ratio: <sup>3</sup>&radic;a:<sup>3</sup>&radic;b.</p>
                     <div class="calculator-container calculator-theme-teal">
                         <h4 class="calculator-title">
                             <i class="fas fa-calculator"></i>
@@ -559,8 +592,21 @@
                     <p class="text-content"><span class="formula">Average = Sum of Observations / Number of Observations</span></p>
                     <h3 class="sub-heading"><i class="fas fa-balance-scale-right text-teal-500"></i>Weighted Average:</h3>
                     <p class="text-content"><span class="formula">(w<sub>1</sub>x<sub>1</sub> + w<sub>2</sub>x<sub>2</sub> + ... + w<sub>n</sub>x<sub>n</sub>) / (w<sub>1</sub> + w<sub>2</sub> + ... + w<sub>n</sub>)</span></p>
-                    <h3 class="sub-heading"><i class="fas fa-cogs text-teal-500"></i>Properties:</h3>
-                    <p class="text-content">If each number is changed by k, the average also changes by k (for +,-,×,÷).</p>
+                    <h3 class="sub-heading"><i class="fas fa-cogs text-teal-500"></i>Properties & Specific Formulas:</h3>
+                    <ul class="list-custom">
+                        <li>If each number is changed by k, the average also changes by k (for +,-,&times;,&divide;).</li>
+                        <li>Average of first n natural numbers: <span class="formula">(n+1)/2</span>.</li>
+                        <li>Average of first n odd numbers: <span class="formula">n</span>.</li>
+                        <li>Average of first n even numbers: <span class="formula">n+1</span>.</li>
+                        <li>Average of squares of first n natural numbers: <span class="formula">(n+1)(2n+1)/6</span>.</li>
+                        <li>Average of cubes of first n natural numbers: <span class="formula">n(n+1)<sup>2</sup>/4</span>.</li>
+                    </ul>
+                    <h3 class="sub-heading"><i class="fas fa-tachometer-alt text-teal-500"></i>Average Speed:</h3>
+                    <ul class="list-custom">
+                        <li>General Formula: Total Distance / Total Time.</li>
+                        <li>Special Case (Equal Distances at Speeds x and y): Average Speed = <span class="formula">2xy / (x+y)</span>.</li>
+                        <li>For three equal distances covered at speeds x, y, z: Average Speed = <span class="formula">3xyz / (xy + yz + zx)</span>.</li>
+                    </ul>
                     <div class="calculator-container calculator-theme-slate">
                         <h4 class="calculator-title">
                              <i class="fas fa-calculator"></i>
@@ -594,9 +640,9 @@
                     <h3 class="sub-heading"><i class="fas fa-key text-teal-500"></i>Key Concept:</h3>
                     <p class="text-content">Profits (or losses) are shared in the ratio of 'effective' investments.</p>
                     <h3 class="sub-heading"><i class="fas fa-superscript text-teal-500"></i>Formula:</h3>
-                    <p class="text-content">Ratio of Profits = Ratio of (Investment × Time Period)</p>
+                    <p class="text-content">Ratio of Profits = Ratio of (Investment &times; Time Period)</p>
                     <p class="text-content">If P<sub>A</sub>, P<sub>B</sub> are profits, I<sub>A</sub>, I<sub>B</sub> are investments, T<sub>A</sub>, T<sub>B</sub> are time periods:</p>
-                    <p class="text-content"><span class="formula">P<sub>A</sub> / P<sub>B</sub> = (I<sub>A</sub> × T<sub>A</sub>) / (I<sub>B</sub> × T<sub>B</sub>)</span></p>
+                    <p class="text-content"><span class="formula">P<sub>A</sub> / P<sub>B</sub> = (I<sub>A</sub> &times; T<sub>A</sub>) / (I<sub>B</sub> &times; T<sub>B</sub>)</span></p>
                     <h3 class="sub-heading"><i class="fas fa-sitemap text-teal-500"></i>Types:</h3>
                     <ul class="list-custom">
                         <li>Simple Partnership: Investments for the same time.</li>
@@ -662,15 +708,18 @@
                     <p class="text-content mb-4">Percentage means 'per hundred' and is a way to express a fraction or a ratio as a part of 100.</p>
                     <h3 class="sub-heading"><i class="fas fa-key text-teal-500"></i>Basic Concept:</h3>
                     <p class="text-content">x% = <span class="formula">x / 100</span></p>
+                     <p class="text-content">Also, <span class="formula">x% of y = y% of x</span>.</p>
                     <h3 class="sub-heading"><i class="fas fa-superscript text-teal-500"></i>Key Formulas:</h3>
                     <ul class="list-custom">
-                        <li>Percentage Increase = <span class="formula">(Increase / Original Value) × 100</span></li>
-                        <li>Percentage Decrease = <span class="formula">(Decrease / Original Value) × 100</span></li>
-                        <li>Result after % increase = <span class="formula">Original Value × (1 + Percent Increase/100)</span></li>
-                        <li>Result after % decrease = <span class="formula">Original Value × (1 - Percent Decrease/100)</span></li>
+                        <li>Percentage Increase = <span class="formula">(Increase / Original Value) &times; 100</span></li>
+                        <li>Percentage Decrease = <span class="formula">(Decrease / Original Value) &times; 100</span></li>
+                        <li>Result after % increase = <span class="formula">Original Value &times; (1 + Percent Increase/100)</span></li>
+                        <li>Result after % decrease = <span class="formula">Original Value &times; (1 - Percent Decrease/100)</span></li>
                         <li>Successive Percentage Change (a%, b%): Net Change = <span class="formula">(a + b + ab/100)%</span> (Use + for increase, - for decrease)</li>
-                        <li>If A is x% more than B: A = B(1 + x/100). B is <span class="formula">(x / (100+x)) × 100%</span> less than A.</li>
-                        <li>If A is x% less than B: A = B(1 - x/100). B is <span class="formula">(x / (100-x)) × 100%</span> more than A.</li>
+                        <li>If A is x% more than B: A = B(1 + x/100). B is <span class="formula">(x / (100+x)) &times; 100%</span> less than A.</li>
+                        <li>If A is x% less than B: A = B(1 - x/100). B is <span class="formula">(x / (100-x)) &times; 100%</span> more than A.</li>
+                        <li>Population Growth: P<sub>final</sub> = P<sub>initial</sub>(1 + R/100)<sup>n</sup></li>
+                        <li>Depreciation: V<sub>final</sub> = V<sub>initial</sub>(1 - R/100)<sup>n</sup></li>
                     </ul>
                     <div class="calculator-container calculator-theme-slate">
                         <h4 class="calculator-title">
@@ -719,15 +768,18 @@
                     <ul class="list-custom">
                         <li>Profit (P) = SP - CP (when SP > CP)</li>
                         <li>Loss (L) = CP - SP (when CP > SP)</li>
-                        <li>Profit % = <span class="formula">(P / CP) × 100</span></li>
-                        <li>Loss % = <span class="formula">(L / CP) × 100</span></li>
+                        <li>Profit % = <span class="formula">(P / CP) &times; 100</span></li>
+                        <li>Loss % = <span class="formula">(L / CP) &times; 100</span></li>
                         <li>Discount (D) = MP - SP</li>
-                        <li>Discount % = <span class="formula">(D / MP) × 100</span></li>
-                        <li>SP = <span class="formula">CP × (100 + Profit %) / 100</span></li>
-                        <li>SP = <span class="formula">CP × (100 - Loss %) / 100</span></li>
-                        <li>SP = <span class="formula">MP × (100 - Discount %) / 100</span></li>
+                        <li>Discount % = <span class="formula">(D / MP) &times; 100</span></li>
+                        <li>SP = <span class="formula">CP &times; (100 + Profit %) / 100</span></li>
+                        <li>SP = <span class="formula">CP &times; (100 - Loss %) / 100</span></li>
+                        <li>CP = <span class="formula">SP &times; 100 / (100 + Profit %)</span></li>
+                        <li>CP = <span class="formula">SP &times; 100 / (100 - Loss %)</span></li>
+                        <li>SP = <span class="formula">MP &times; (100 - Discount %) / 100</span></li>
                         <li>Relation: <span class="formula">CP / MP = (100 - Discount %) / (100 + Profit %)</span></li>
-                        <li>Dishonest Dealer Profit % = <span class="formula">(Error / (True Value - Error)) × 100</span> or <span class="formula">(True Value - False Weight) / False Weight × 100</span></li>
+                        <li>Dishonest Dealer Profit % (False Weight): <span class="formula">(True Value - False Weight) / False Weight &times; 100</span> or <span class="formula">Error / (True Value - Error) &times; 100</span></li>
+                         <li>Dishonest Dealer (Overall Gain G%, Price Gain/Loss x%): <span class="formula">(100+G)/(100+x) = True Weight / False Weight</span></li>
                     </ul>
                      <div class="calculator-container calculator-theme-teal">
                         <h4 class="calculator-title">
@@ -767,7 +819,7 @@
                     <h2 class="topic-heading"><i class="fas fa-tachometer-alt text-teal-600"></i>11. Time, Speed & Distance</h2>
                     <p class="text-content mb-4">This fundamental topic explores the relationship between distance, speed, and time.</p>
                     <h3 class="sub-heading"><i class="fas fa-superscript text-teal-500"></i>Basic Formula:</h3>
-                    <p class="text-content"><span class="formula">Distance = Speed × Time</span></p>
+                    <p class="text-content"><span class="formula">Distance = Speed &times; Time</span></p>
                     <h3 class="sub-heading"><i class="fas fa-exchange-alt text-teal-500"></i>Unit Conversion:</h3>
                     <ul class="list-custom">
                         <li>1 km/hr = <span class="formula">5/18 m/s</span></li>
@@ -775,9 +827,9 @@
                     </ul>
                     <h3 class="sub-heading"><i class="fas fa-arrows-alt-h text-teal-500"></i>Proportionality:</h3>
                     <ul class="list-custom">
-                        <li>If Distance is constant: Speed ∝ 1/Time</li>
-                        <li>If Time is constant: Distance ∝ Speed</li>
-                        <li>If Speed is constant: Distance ∝ Time</li>
+                        <li>If Distance is constant: Speed &prop; 1/Time</li>
+                        <li>If Time is constant: Distance &prop; Speed</li>
+                        <li>If Speed is constant: Distance &prop; Time</li>
                     </ul>
                     <h3 class="sub-heading"><i class="fas fa-tachometer-alt text-teal-500"></i>Average Speed:</h3>
                     <ul class="list-custom">
@@ -847,15 +899,16 @@
                     <p class="text-content mb-4">This involves calculating speeds of boats in still water, downstream (with current), and upstream (against current).</p>
                     <h3 class="sub-heading"><i class="fas fa-info-circle text-teal-500"></i>Let:</h3>
                     <ul class="list-custom">
-                        <li>B = Speed of boat in still water</li>
-                        <li>S = Speed of the stream/current</li>
+                        <li>B (or u) = Speed of boat in still water</li>
+                        <li>S (or v) = Speed of the stream/current</li>
                     </ul>
                     <h3 class="sub-heading"><i class="fas fa-superscript text-teal-500"></i>Formulas:</h3>
                     <ul class="list-custom">
-                        <li>Downstream Speed (D) = <span class="formula">B + S</span></li>
-                        <li>Upstream Speed (U) = <span class="formula">B - S</span></li>
-                        <li>Speed of Boat in Still Water (B) = <span class="formula">(D + U) / 2</span></li>
-                        <li>Speed of Stream (S) = <span class="formula">(D - U) / 2</span></li>
+                        <li>Downstream Speed (D) = <span class="formula">B + S</span> (or $u+v$)</li>
+                        <li>Upstream Speed (U) = <span class="formula">B - S</span> (or $u-v$)</li>
+                        <li>Speed of Boat in Still Water (B or u) = <span class="formula">(D + U) / 2</span></li>
+                        <li>Speed of Stream (S or v) = <span class="formula">(D - U) / 2</span></li>
+                        <li>Average speed of boat for a round trip (equal distance upstream and downstream): <span class="formula">(U &times; D) / B</span> or <span class="formula">((B-S)(B+S))/B</span> = <span class="formula">(B<sup>2</sup>-S<sup>2</sup>)/B</span></li>
                     </ul>
                     <div class="calculator-container calculator-theme-teal">
                         <h4 class="calculator-title">
@@ -895,8 +948,8 @@
                     <h2 class="topic-heading"><i class="fas fa-clock text-teal-600"></i>14. Time & Work / Pipes and Cisterns</h2>
                     <p class="text-content mb-4">These problems relate work done, efficiency of workers/pipes, and time taken.</p>
                     <h3 class="sub-heading"><i class="fas fa-key text-teal-500"></i>Basic Concept:</h3>
-                    <p class="text-content"><span class="formula">Work = Efficiency × Time</span></p>
-                    <p class="text-content">Efficiency ∝ 1/Time</p>
+                    <p class="text-content"><span class="formula">Work = Efficiency &times; Time</span></p>
+                    <p class="text-content">Efficiency &prop; 1/Time</p>
                     <h3 class="sub-heading"><i class="fas fa-users text-teal-500"></i>Combined Work:</h3>
                     <p class="text-content">If A takes x days and B takes y days, together they take <span class="formula">xy / (x+y)</span> days.</p>
                     <h3 class="sub-heading"><i class="fas fa-list-ol text-teal-500"></i>LCM Method (Recommended):</h3>
@@ -955,7 +1008,7 @@
                         <li>A = Amount = Principal + Interest</li>
                     </ul>
                     <h3 class="sub-heading"><i class="fas fa-hand-holding-usd text-teal-500"></i>Simple Interest (SI):</h3>
-                    <p class="text-content">SI = <span class="formula">(P × R × T) / 100</span></p>
+                    <p class="text-content">SI = <span class="formula">(P &times; R &times; T) / 100</span></p>
                     <p class="text-content">Amount (SI): A = P(1 + RT/100)</p>
                     <h3 class="sub-heading"><i class="fas fa-piggy-bank text-teal-500"></i>Compound Interest (CI):</h3>
                     <p class="text-content">Amount (CI compounded annually): A = <span class="formula">P(1 + R/100)<sup>T</sup></span></p>
@@ -964,12 +1017,18 @@
                     <ul class="list-custom">
                         <li>Half-yearly: Rate = R/2, Time = 2T. A = P(1 + (R/2)/100)<sup>2T</sup></li>
                         <li>Quarterly: Rate = R/4, Time = 4T. A = P(1 + (R/4)/100)<sup>4T</sup></li>
+                        <li>Monthly: Rate = R/12, Time = 12T. A = P(1 + (R/12)/100)<sup>12T</sup></li>
+                        <li>Continuous Compounding: <span class="formula">A = P &times; e<sup>(RT/100)</sup></span> (where e &approx; 2.71828)</li>
                     </ul>
                     <h3 class="sub-heading"><i class="fas fa-balance-scale-left text-teal-500"></i>Difference between CI and SI:</h3>
                     <ul class="list-custom">
                         <li>For 2 years: CI - SI = <span class="formula">P(R/100)<sup>2</sup></span></li>
                         <li>For 3 years: CI - SI = <span class="formula">P(R/100)<sup>2</sup>(3 + R/100)</span></li>
                     </ul>
+                     <h3 class="sub-heading"><i class="fas fa-landmark text-teal-500"></i>Installments:</h3>
+                    <p class="text-content">For a loan P repaid in T equal annual installments of x at R% CI: <span class="formula">P = x / (1+R/100) + x / (1+R/100)<sup>2</sup> + ... + x / (1+R/100)<sup>T</sup></span></p>
+                    <h3 class="sub-heading"><i class="fas fa-magic text-teal-500"></i>Rule of 72:</h3>
+                    <p class="text-content">Approximate years to double investment = <span class="formula">72 / (Annual Interest Rate in %)</span></p>
                     <div class="calculator-container calculator-theme-teal">
                         <h4 class="calculator-title">
                             <i class="fas fa-calculator"></i>
@@ -1032,15 +1091,16 @@
                         <p class="mt-3 text-sm text-slate-600">Ratio of Quantities is (D-M) : (M-C)</p>
                     </div>
                     <h3 class="sub-heading"><i class="fas fa-sync-alt text-teal-500"></i>Removal and Replacement:</h3>
-                    <p class="text-content">If a container has x units, and y units are taken out and replaced n times:</p>
-                    <p class="text-content">Quantity of original liquid left = <span class="formula">x(1 - y/x)<sup>n</sup></span></p>
+                    <p class="text-content">If a container has C units of mixture, and R units are taken out and replaced with another substance n times:</p>
+                    <p class="text-content">Quantity of original liquid left = <span class="formula">C(1 - R/C)<sup>n</sup></span></p>
+                    <p class="text-content">If different volumes (a, b, c...) are replaced from total capacity C: Final Qty of original = <span class="formula">C(1–a/C)(1–b/C)(1–c/C)…</span></p>
                 </div>
 
                 <div id="topic-17" class="content-section">
                     <h2 class="topic-heading"><i class="fas fa-random text-teal-600"></i>17. Permutation and Combination</h2>
                     <p class="text-content mb-4">Permutation deals with arrangements (order matters), while combination deals with selections (order doesn't matter).</p>
                     <h3 class="sub-heading"><i class="fas fa-exclamation text-teal-500"></i>Factorial:</h3>
-                    <p class="text-content">n! = n × (n-1) × ... × 1. (0! = 1)</p>
+                    <p class="text-content">n! = n &times; (n-1) &times; ... &times; 1. (0! = 1)</p>
                     <h3 class="sub-heading"><i class="fas fa-sort-alpha-down text-teal-500"></i>Permutation (Arrangement):</h3>
                     <p class="text-content"><sup>n</sup>P<sub>r</sub> = <span class="formula">n! / (n-r)!</span></p>
                     <h3 class="sub-heading"><i class="fas fa-object-group text-teal-500"></i>Combination (Selection):</h3>
@@ -1049,12 +1109,15 @@
                     <ul class="list-custom">
                         <li><sup>n</sup>C<sub>r</sub> = <sup>n</sup>C<sub>n-r</sub></li>
                         <li><sup>n</sup>C<sub>0</sub> = 1, <sup>n</sup>C<sub>1</sub> = n, <sup>n</sup>C<sub>n</sub> = 1</li>
+                        <li><sup>n</sup>P<sub>r</sub> = <sup>n</sup>C<sub>r</sub> &times; r!</li>
                     </ul>
                     <h3 class="sub-heading"><i class="fas fa-circle-notch text-teal-500"></i>Circular Permutations:</h3>
                     <ul class="list-custom">
                         <li>n distinct objects around a circle: (n-1)!</li>
                         <li>n distinct beads (necklace): (n-1)! / 2</li>
                     </ul>
+                     <h3 class="sub-heading"><i class="fas fa-redo-alt text-teal-500"></i>Permutations with Repetitions:</h3>
+                    <p class="text-content">Number of permutations of n objects where there are p identical objects of type 1, q of type 2, ..., r of type k is <span class="formula">n! / (p!q!...r!)</span> (where p+q+...+r=n).</p>
                     <div class="calculator-container calculator-theme-slate">
                         <h4 class="calculator-title">
                             <i class="fas fa-calculator"></i>
@@ -1095,14 +1158,16 @@
                     <h3 class="sub-heading"><i class="fas fa-superscript text-teal-500"></i>Basic Formula:</h3>
                     <p class="text-content">P(E) = <span class="formula">(Number of Favorable Outcomes) / (Total Number of Possible Outcomes)</span> = n(E) / n(S)</p>
                     <h3 class="sub-heading"><i class="fas fa-arrows-alt-v text-teal-500"></i>Range:</h3>
-                    <p class="text-content">0 ≤ P(E) ≤ 1. P(Impossible Event)=0. P(Sure Event)=1.</p>
+                    <p class="text-content">0 &le; P(E) &le; 1. P(Impossible Event)=0. P(Sure Event)=1.</p>
                     <h3 class="sub-heading"><i class="fas fa-key text-teal-500"></i>Key Rules:</h3>
                     <ul class="list-custom">
                         <li>Complementary Event: P(Not E) = P(E') = 1 - P(E)</li>
-                        <li>Mutually Exclusive Events (cannot happen together): P(A∪B) = P(A) + P(B)</li>
-                        <li>Independent Events (occurrence of one doesn't affect other): P(A∩B) = P(A) × P(B)</li>
-                        <li>General Addition Rule: P(A∪B) = P(A) + P(B) - P(A∩B)</li>
-                        <li>Conditional Probability (A given B occurred): P(A|B) = P(A∩B) / P(B)</li>
+                        <li>Mutually Exclusive Events (cannot happen together): P(A&cup;B) = P(A) + P(B)</li>
+                        <li>Independent Events (occurrence of one doesn't affect other): P(A&cap;B) = P(A) &times; P(B)</li>
+                        <li>General Addition Rule: P(A&cup;B) = P(A) + P(B) - P(A&cap;B)</li>
+                        <li>Conditional Probability (A given B occurred): P(A|B) = P(A&cap;B) / P(B)</li>
+                        <li>General Multiplication Rule: P(A&cap;B) = P(A) &times; P(B|A) = P(B) &times; P(A|B)</li>
+                        <li>Bayes' Theorem: <span class="formula">P(A|B) = [P(B|A) &times; P(A)] / P(B)</span></li>
                     </ul>
                     <div class="calculator-container calculator-theme-teal">
                         <h4 class="calculator-title">
@@ -1182,16 +1247,16 @@
 
                     <h3 class="sub-heading"><i class="fas fa-superscript text-teal-500"></i>Squaring Techniques</h3>
                     <p class="text-content"><strong>1. Squaring Numbers Ending in 5:</strong></p>
-                    <p class="text-content">If a number is N5 (e.g., 35), its square ends in 25. The preceding digits are N × (N+1).</p>
+                    <p class="text-content">If a number is N5 (e.g., 35), its square ends in 25. The preceding digits are N &times; (N+1).</p>
                     <div class="trick-example">
                         Example: 35<sup>2</sup>
-                        <br>N = 3. N × (N+1) = 3 × 4 = 12.
+                        <br>N = 3. N &times; (N+1) = 3 &times; 4 = 12.
                         <br>So, 35<sup>2</sup> = 1225.
-                        <br>Example: 75<sup>2</sup> → 7 × 8 = 56 → 5625.
+                        <br>Example: 75<sup>2</sup> &rarr; 7 &times; 8 = 56 &rarr; 5625.
                     </div>
 
                     <p class="text-content mt-3"><strong>2. Squaring Numbers Near 50:</strong></p>
-                    <p class="text-content">Base is 25. Difference from 50 is 'd'. Square = (25 ± d) | d<sup>2</sup> (d<sup>2</sup> must be 2 digits).</p>
+                    <p class="text-content">Base is 25. Difference from 50 is 'd'. Square = (25 &plusmn; d) | d<sup>2</sup> (d<sup>2</sup> must be 2 digits).</p>
                     <div class="trick-example">
                         Example: 48<sup>2</sup> (48 is 50 - 2, so d = 2)
                         <br>25 - d = 25 - 2 = 23.
@@ -1204,7 +1269,7 @@
                     </div>
 
                     <p class="text-content mt-3"><strong>3. Squaring Numbers Near 100:</strong></p>
-                    <p class="text-content">Number = (100 ± d). Square = (Number ± d) | d<sup>2</sup> (d<sup>2</sup> must be 2 digits).</p>
+                    <p class="text-content">Number = (100 &plusmn; d). Square = (Number &plusmn; d) | d<sup>2</sup> (d<sup>2</sup> must be 2 digits).</p>
                     <div class="trick-example">
                         Example: 97<sup>2</sup> (97 is 100 - 3, so d = 3)
                         <br>Number - d = 97 - 3 = 94.
@@ -1219,33 +1284,33 @@
                     <h3 class="sub-heading"><i class="fas fa-times text-teal-500"></i>Multiplication Shortcuts</h3>
                     <p class="text-content"><strong>1. Multiplication by 5, 25, 125:</strong></p>
                     <ul class="list-custom">
-                        <li>Multiply by 5: Multiply by 10 and divide by 2 (N × 10 / 2). Example: 68 × 5 = 680 / 2 = 340.</li>
-                        <li>Multiply by 25: Multiply by 100 and divide by 4 (N × 100 / 4). Example: 72 × 25 = 7200 / 4 = 1800.</li>
-                        <li>Multiply by 125: Multiply by 1000 and divide by 8 (N × 1000 / 8). Example: 48 × 125 = 48000 / 8 = 6000.</li>
+                        <li>Multiply by 5: Multiply by 10 and divide by 2 (N &times; 10 / 2). Example: 68 &times; 5 = 680 / 2 = 340.</li>
+                        <li>Multiply by 25: Multiply by 100 and divide by 4 (N &times; 100 / 4). Example: 72 &times; 25 = 7200 / 4 = 1800.</li>
+                        <li>Multiply by 125: Multiply by 1000 and divide by 8 (N &times; 1000 / 8). Example: 48 &times; 125 = 48000 / 8 = 6000.</li>
                     </ul>
 
                     <p class="text-content mt-3"><strong>2. Multiplication by 11:</strong></p>
                     <p class="text-content">Write the last digit. Then sum adjacent digits from right to left (carrying over if sum > 9). Write the first digit (add carry if any).</p>
                     <div class="trick-example">
-                        Example: 345 × 11
+                        Example: 345 &times; 11
                         <br>Last digit: 5.
                         <br>4 + 5 = 9.
                         <br>3 + 4 = 7.
                         <br>First digit: 3.
-                        <br>So, 345 × 11 = 3795.
-                        <br>Example: 789 × 11
+                        <br>So, 345 &times; 11 = 3795.
+                        <br>Example: 789 &times; 11
                         <br>Last digit: 9.
                         <br>8 + 9 = 17 (write 7, carry 1).
                         <br>7 + 8 = 15. Add carry 1: 15 + 1 = 16 (write 6, carry 1).
                         <br>First digit: 7. Add carry 1: 7 + 1 = 8.
-                        <br>So, 789 × 11 = 8679.
+                        <br>So, 789 &times; 11 = 8679.
                     </div>
                     
                     <p class="text-content mt-3"><strong>3. Multiplication by 9, 99, 999, etc.:</strong></p>
                     <p class="text-content">Multiply by 10, 100, 1000, etc., and subtract the original number.</p>
                     <div class="trick-example">
-                        Example: 67 × 9 = 67 × (10 - 1) = 670 - 67 = 603.
-                        <br>Example: 123 × 99 = 123 × (100 - 1) = 12300 - 123 = 12177.
+                        Example: 67 &times; 9 = 67 &times; (10 - 1) = 670 - 67 = 603.
+                        <br>Example: 123 &times; 99 = 123 &times; (100 - 1) = 12300 - 123 = 12177.
                     </div>
 
                     <h3 class="sub-heading"><i class="fas fa-percentage text-teal-500"></i>Quick Percentage Calculations</h3>
@@ -1254,13 +1319,13 @@
                         <li>1% of N: Divide N by 100 (N / 100).</li>
                         <li>50% of N: Divide N by 2 (N / 2).</li>
                         <li>25% of N: Divide N by 4 (N / 4).</li>
-                        <li>75% of N: Find 25% and multiply by 3 (3 × N / 4), or (50% + 25%).</li>
+                        <li>75% of N: Find 25% and multiply by 3 (3 &times; N / 4), or (50% + 25%).</li>
                         <li>Breaking down percentages: e.g., 27% of N = (25% of N) + (2% of N) or (30% of N) - (3% of N).</li>
                     </ul>
                     <div class="trick-example">
                         Example: 35% of 240
                         <br>10% of 240 = 24.
-                        <br>30% of 240 = 3 × 24 = 72.
+                        <br>30% of 240 = 3 &times; 24 = 72.
                         <br>5% of 240 = 10% / 2 = 24 / 2 = 12.
                         <br>So, 35% of 240 = 72 + 12 = 84.
                     </div>
@@ -1306,6 +1371,36 @@
                          </div>
                     </div>
                 </div>
+                 <div id="topic-24" class="content-section">
+                    <h2 class="topic-heading"><i class="fas fa-scroll text-teal-600"></i>24. Logarithms & Algebraic Identities</h2>
+                    <p class="text-content mb-4">Understanding logarithms and key algebraic identities is crucial for simplifying complex expressions and solving various quantitative problems.</p>
+                    
+                    <h3 class="sub-heading"><i class="fas fa-calculator text-teal-500"></i>Logarithms</h3>
+                    <p class="text-content">Definition: If a<sup>x</sup> = N, then <span class="formula">log<sub>a</sub> N = x</span> (where a > 0, a &ne; 1, N > 0).</p>
+                    <h4 class="text-md font-semibold text-slate-700 mt-3 mb-1">Key Properties:</h4>
+                    <ul class="list-custom">
+                        <li>Product Rule: <span class="formula">log<sub>a</sub> (xy) = log<sub>a</sub> x + log<sub>a</sub> y</span></li>
+                        <li>Quotient Rule: <span class="formula">log<sub>a</sub> (x/y) = log<sub>a</sub> x - log<sub>a</sub> y</span></li>
+                        <li>Power Rule: <span class="formula">log<sub>a</sub> (x<sup>n</sup>) = n log<sub>a</sub> x</span></li>
+                        <li>Base Rules: <span class="formula">log<sub>a</sub> a = 1</span>; <span class="formula">log<sub>a</sub> 1 = 0</span></li>
+                        <li>Change of Base: <span class="formula">log<sub>a</sub> x = log<sub>b</sub> x / log<sub>b</sub> a</span></li>
+                        <li>Reciprocal Rule: <span class="formula">log<sub>a</sub> x = 1 / log<sub>x</sub> a</span></li>
+                        <li>log<sub>a</sub>(x) = y &hArr; a<sup>y</sup> = x</li>
+                    </ul>
+
+                    <h3 class="sub-heading mt-6"><i class="fas fa-equals text-teal-500"></i>Essential Algebraic Identities</h3>
+                     <ul class="list-custom">
+                        <li><span class="formula">(a + b)<sup>2</sup> = a<sup>2</sup> + 2ab + b<sup>2</sup></span></li>
+                        <li><span class="formula">(a - b)<sup>2</sup> = a<sup>2</sup> - 2ab + b<sup>2</sup></span></li>
+                        <li><span class="formula">a<sup>2</sup> - b<sup>2</sup> = (a - b)(a + b)</span></li>
+                        <li><span class="formula">(a + b)<sup>3</sup> = a<sup>3</sup> + b<sup>3</sup> + 3ab(a + b)</span> or <span class="formula">a<sup>3</sup> + 3a<sup>2</sup>b + 3ab<sup>2</sup> + b<sup>3</sup></span></li>
+                        <li><span class="formula">(a - b)<sup>3</sup> = a<sup>3</sup> - b<sup>3</sup> - 3ab(a - b)</span> or <span class="formula">a<sup>3</sup> - 3a<sup>2</sup>b + 3ab<sup>2</sup> - b<sup>3</sup></span></li>
+                        <li><span class="formula">a<sup>3</sup> + b<sup>3</sup> = (a + b)(a<sup>2</sup> - ab + b<sup>2</sup>)</span></li>
+                        <li><span class="formula">a<sup>3</sup> - b<sup>3</sup> = (a - b)(a<sup>2</sup> + ab + b<sup>2</sup>)</span></li>
+                        <li><span class="formula">(a + b + c)<sup>2</sup> = a<sup>2</sup> + b<sup>2</sup> + c<sup>2</sup> + 2ab + 2bc + 2ca</span></li>
+                        <li><span class="formula">a<sup>4</sup> - b<sup>4</sup> = (a<sup>2</sup> - b<sup>2</sup>)(a<sup>2</sup> + b<sup>2</sup>) = (a-b)(a+b)(a<sup>2</sup>+b<sup>2</sup>)</span></li>
+                    </ul>
+                </div>
 
 
             </div>
@@ -1336,7 +1431,8 @@
             { name: "Caselet DI", icon: "fa-file-alt" },
             { name: "Data Sufficiency", icon: "fa-check-double" },
             { name: "Speed Math & Calculation Shortcuts", icon: "fa-bolt" },
-            { name: "AI Word Problem Assistant ✨", icon: "fa-robot" }
+            { name: "AI Word Problem Assistant ✨", icon: "fa-robot" },
+            { name: "Logarithms & Algebraic Identities", icon: "fa-scroll"}
         ];
 
         const topicListEl = document.getElementById('topicList');
@@ -1361,6 +1457,7 @@
             const targetAnchor = e.target.closest('a');
             if (targetAnchor && targetAnchor.dataset.target) {
                 const targetId = targetAnchor.dataset.target;
+                window.location.hash = targetId; // Update hash for direct linking
                 showContent(targetId);
                 
                 if(activeLink) {
@@ -1395,25 +1492,33 @@
             }
         }
         
-        showContent('default-content');
-        if (window.location.hash) {
+        // Function to handle hash changes (e.g. on page load or back/forward)
+        function handleHashChange() {
             const targetIdFromHash = window.location.hash.substring(1);
-            const linkToActivate = topicListEl.querySelector(`a[data-target="${targetIdFromHash}"]`);
-            if (linkToActivate) {
-                showContent(targetIdFromHash);
+            if (targetIdFromHash) {
+                const linkToActivate = topicListEl.querySelector(`a[data-target="${targetIdFromHash}"]`);
+                if (linkToActivate) {
+                    showContent(targetIdFromHash);
+                    if(activeLink) activeLink.classList.remove('active-topic');
+                    linkToActivate.classList.add('active-topic');
+                    activeLink = linkToActivate;
+                } else {
+                    showContent('default-content');
+                     if(activeLink) activeLink.classList.remove('active-topic');
+                }
+            } else {
+                showContent('default-content');
                 if(activeLink) activeLink.classList.remove('active-topic');
-                linkToActivate.classList.add('active-topic');
-                activeLink = linkToActivate;
             }
         }
 
+        window.addEventListener('hashchange', handleHashChange);
+        document.addEventListener('DOMContentLoaded', handleHashChange); // Handle on initial load
+
+
         document.querySelectorAll('.calculator-container, .ai-container').forEach(container => {
-            container.addEventListener('mouseenter', () => {
-                // container.style.transform = 'translateY(-2px)'; // Already handled by Tailwind hover:
-            });
-            container.addEventListener('mouseleave', () => {
-                // container.style.transform = 'translateY(0)'; // Already handled by Tailwind
-            });
+            container.addEventListener('mouseenter', () => {});
+            container.addEventListener('mouseleave', () => {});
         });
 
         function gcd(a, b) {
@@ -1476,7 +1581,6 @@
             html = html.replace(/\n/g, '<br>');
             return html;
         }
-
 
         const solveQuadraticBtn = document.getElementById('solveQuadratic');
         if (solveQuadraticBtn) {
@@ -1748,7 +1852,8 @@ Ensure your language is clear, encouraging, and helpful for someone preparing fo
                 
                 try {
                     // IMPORTANT: Replace "YOUR_API_KEY_HERE" with your actual Gemini API key if running this outside a managed environment.
-                    // If the API key is managed by the environment, you can leave it as an empty string.
+                    // If the API key is managed by the environment (like in this platform), you can leave it as an empty string
+                    // or ideally, the platform will substitute it. For self-hosting, this key is essential.
                     const apiKey = "YOUR_API_KEY_HERE"; 
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                     
@@ -1764,19 +1869,21 @@ Ensure your language is clear, encouraging, and helpful for someone preparing fo
 
                     if (!response.ok) {
                         const errorData = await response.json();
-                        console.error("API Error Data:", errorData); // Log the full error
+                        console.error("API Error Data:", errorData); 
                         let errorMessage = `API request failed with status ${response.status}.`;
                         if (errorData.error && errorData.error.message) {
                             errorMessage += ` Message: ${errorData.error.message}`;
                         }
-                         // Check for specific API key related errors based on common messages
                         if (errorData.error?.message?.includes("API Key not valid") || errorData.error?.message?.includes("API_KEY_INVALID")) {
-                            errorMessage = "The API Key is not valid. Please check your API key and ensure it is correctly entered in the script.";
+                            errorMessage = "The API Key is not valid. Please ensure 'YOUR_API_KEY_HERE' in the script is replaced with your actual key from Google AI Studio.";
                         } else if (errorData.error?.message?.includes("API_KEY_SERVICE_BLOCKED") || errorData.error?.message?.includes("API key not valid")) {
-                             errorMessage = "This API key is not authorized to use this service or may be disabled. Please check your Google Cloud Project settings for the Gemini API.";
+                             errorMessage = "This API key is not authorized or may be disabled. Check your Google Cloud Project settings for the Gemini API.";
                         } else if (errorData.error?.message?.includes("caller does not have permission")) {
                             errorMessage = "The API key is missing required permissions for the Gemini API. Please check IAM settings in your Google Cloud Project.";
+                        } else if (response.status === 400 && errorData.error?.message?.toLowerCase().includes("api key")) {
+                             errorMessage = "API Key is likely missing or invalid. Please replace 'YOUR_API_KEY_HERE' in the script with your actual Gemini API key from Google AI Studio.";
                         }
+
 
                         throw new Error(errorMessage);
                     }
@@ -1789,7 +1896,6 @@ Ensure your language is clear, encouraging, and helpful for someone preparing fo
                         const aiText = result.candidates[0].content.parts[0].text;
                         aiAnalysisResultEl.innerHTML = formatAIResponse(aiText);
                     } else if (result.promptFeedback && result.promptFeedback.blockReason) {
-                        // Handle cases where the prompt was blocked
                         let blockMessage = `The AI could not process your request. Reason: ${result.promptFeedback.blockReason}.`;
                         if (result.promptFeedback.safetyRatings) {
                             blockMessage += ` Details: ${result.promptFeedback.safetyRatings.map(r => `${r.category} - ${r.probability}`).join(', ')}`;
