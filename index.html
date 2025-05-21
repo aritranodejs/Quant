@@ -24,8 +24,21 @@
             border: 1px solid #e2e8f0;
             font-size: 1.05em;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-            line-height: 1.6; /* Improved line height for formulas */
+            line-height: 1.6; 
         }
+        .example-problem {
+            @apply mt-3 mb-1 p-3 bg-sky-50 border border-sky-200 rounded-md text-sm;
+        }
+        .example-solution {
+            @apply p-3 bg-green-50 border border-green-200 rounded-md text-sm text-slate-700;
+        }
+        .example-problem strong, .example-solution strong {
+            @apply font-semibold text-sky-700;
+        }
+        .example-solution strong {
+            @apply text-green-700;
+        }
+
         .content-section { 
             display: none;
             animation: fadeIn 0.3s ease-in-out;
@@ -105,11 +118,17 @@
         .sub-heading {
             @apply text-xl font-semibold text-teal-700 mt-6 mb-2 flex items-center gap-2;
         }
+         .sub-heading-2 { /* For a slightly smaller sub-heading */
+            @apply text-lg font-semibold text-teal-600 mt-5 mb-1 flex items-center gap-2;
+        }
         .text-content {
             @apply text-slate-700 leading-relaxed;
         }
         .list-custom {
             @apply list-disc list-inside text-slate-600 space-y-2 pl-4;
+        }
+        .list-custom li > ul { /* Nested list styling */
+            @apply list-circle list-inside pl-6 mt-1;
         }
         .loader {
             border: 4px solid #f3f3f3;
@@ -309,8 +328,8 @@
                             Welcome to Quantitative Aptitude Guide!
                         </h2>
                         <p class="text-content mt-2">
-                            This interactive guide offers a comprehensive overview of key concepts, essential formulas, and calculation shortcuts for Quantitative Aptitude.
-                            Navigate through topics using the menu on the left. Explore definitions, formulas, practical examples, and try out interactive calculators to solidify your understanding.
+                            This interactive guide offers a comprehensive, book-like overview of key concepts, essential formulas, and calculation shortcuts for Quantitative Aptitude.
+                            Navigate through topics using the menu on the left. Explore detailed definitions, an extensive list of formulas, practical solved examples, and try out interactive calculators to solidify your understanding.
                         </p>
                         <div class="feature-grid">
                             <div class="feature-item">
@@ -321,10 +340,10 @@
                                 </div>
                             </div>
                             <div class="feature-item">
-                                <i class="fas fa-book"></i>
+                                <i class="fas fa-book-open"></i>
                                 <div>
                                     <h3 class="font-semibold text-slate-800">Comprehensive Coverage</h3>
-                                    <p class="text-sm text-slate-600">24 key topics with detailed explanations</p>
+                                    <p class="text-sm text-slate-600">24 key topics with detailed explanations and examples</p>
                                 </div>
                             </div>
                             <div class="feature-item">
@@ -346,41 +365,104 @@
                 </div>
                 <div id="topic-1" class="content-section">
                     <h2 class="topic-heading"><i class="fas fa-stream text-teal-600"></i>1. Simplification and Approximation</h2>
-                    <p class="text-content mb-4">This section covers techniques to simplify complex mathematical expressions and find approximate values for quick calculations. Understanding the order of operations (BODMAS/PEMDAS) is fundamental.</p>
+                    <p class="text-content mb-4">Simplification is the process of reducing complex mathematical expressions to their simplest form by applying arithmetic operations according to a defined order. Approximation involves finding a value that is acceptably close to the exact value, often used to speed up calculations when precision to the last decimal isn't critical or when dealing with complex numbers.</p>
+                    
                     <h3 class="sub-heading"><i class="fas fa-list-ol text-teal-500"></i>Key Concept: BODMAS Rule</h3>
-                    <p class="text-content">BODMAS stands for Brackets, Orders (powers/roots), Division, Multiplication, Addition, Subtraction. This rule dictates the sequence of operations.</p>
-                    <h3 class="sub-heading"><i class="fas fa-lightbulb text-teal-500"></i>Techniques:</h3>
+                    <p class="text-content">BODMAS (or PEMDAS in some regions) dictates the sequence of operations: Brackets (Parentheses), Orders (Exponents/Powers, Roots), Division, Multiplication, Addition, Subtraction. Division and Multiplication have equal precedence and are performed left-to-right. Similarly, Addition and Subtraction have equal precedence and are performed left-to-right.</p>
+                    <div class="example-problem">
+                        <strong>Example:</strong> Simplify $36 - 2(20 + 12 \div 4 \times 3 - 2 \times 2) + 10$
+                    </div>
+                    <div class="example-solution">
+                        <strong>Solution:</strong><br>
+                        Step 1 (Innermost Bracket - Division): $12 \div 4 = 3$<br>
+                        Expression becomes: $36 - 2(20 + 3 \times 3 - 2 \times 2) + 10$<br>
+                        Step 2 (Innermost Bracket - Multiplication L to R): $3 \times 3 = 9$; $2 \times 2 = 4$<br>
+                        Expression becomes: $36 - 2(20 + 9 - 4) + 10$<br>
+                        Step 3 (Innermost Bracket - Addition/Subtraction L to R): $20 + 9 = 29$; $29 - 4 = 25$<br>
+                        Expression becomes: $36 - 2(25) + 10$<br>
+                        Step 4 (Multiplication): $2 \times 25 = 50$<br>
+                        Expression becomes: $36 - 50 + 10$<br>
+                        Step 5 (Subtraction/Addition L to R): $36 - 50 = -14$; $-14 + 10 = -4$<br>
+                        Answer: <span class="formula">-4</span>
+                    </div>
+
+                    <h3 class="sub-heading"><i class="fas fa-bullseye text-teal-500"></i>Approximation Techniques</h3>
                     <ul class="list-custom">
-                        <li>Percentage-Fraction Conversions (e.g., 25% = 1/4, 12.5% = 1/8, 33.33% = 1/3)</li>
-                        <li>Memorizing Squares (up to 30-40) and Cubes (up to 20-25)</li>
-                        <li>Approximation: Rounding off numbers to the nearest convenient value.</li>
+                        <li><strong>Rounding:</strong> Convert numbers to their nearest whole numbers or convenient figures. E.g., 47.89 &approx; 48; 102.13 &approx; 100.</li>
+                        <li><strong>Percentage Approximation:</strong> Approximate percentages to easier fractions. E.g., 24.5% &approx; 25% = 1/4.</li>
+                        <li><strong>Strategic Grouping:</strong> Group numbers that simplify easily together.</li>
+                    </ul>
+                     <div class="example-problem">
+                        <strong>Example:</strong> Approximate the value of $(4433.764 - 2211.993 - 1133.667 + 3377.442) \div 76.3 \times 11.01$
+                    </div>
+                    <div class="example-solution">
+                        <strong>Solution:</strong><br>
+                        Approximate values: $(4434 - 2212 - 1134 + 3377) \div 76 \times 11$<br>
+                        Bracket calculation: $(4434 + 3377) - (2212 + 1134) = 7811 - 3346 = 4465$<br>
+                        Expression becomes: $4465 \div 76 \times 11$<br>
+                        $4465 \div 76 \approx 58.75$ (Can approximate $4480 \div 76 \approx 4480 \div 80 \times (80/76) \approx 56 \times 1.05 \approx 58.8$ or directly divide for better accuracy if time permits) <br>
+                        Let's use a slightly more accurate $4465 / 76 \approx 58.75$.<br>
+                        $58.75 \times 11 \approx 59 \times 11 = 649$. (Or $58.75 \times 10 + 58.75 = 587.5 + 58.75 = 646.25$)<br>
+                        Answer: Approximately <span class="formula">646</span> to <span class="formula">649</span> (depending on rounding precision).
+                    </div>
+
+                    <h3 class="sub-heading"><i class="fas fa-lightbulb text-teal-500"></i>Simplification Tricks</h3>
+                    <ul class="list-custom">
+                        <li><strong>Unit Digit Method:</strong> Useful for checking options in MCQs. The unit digit of a calculation is determined by the unit digits of the numbers involved.</li>
+                        <li><strong>Digit Sum Method (Casting out Nines):</strong> The sum of the digits of a number (modulo 9) can be used to verify calculations.</li>
+                        <li><strong>Vedic Maths & Shortcuts:</strong> Includes techniques for fast multiplication, squaring, cubing, division, etc. (e.g., base multiplication, Nikhilam sutra).</li>
+                        <li><strong>Fraction-Percentage Conversions:</strong> Memorizing common conversions (e.g., 1/2=50%, 1/3=33.33%, 1/4=25%, 1/8=12.5%) saves significant time.</li>
                     </ul>
                 </div>
 
                 <div id="topic-2" class="content-section">
                     <h2 class="topic-heading"><i class="fas fa-sort-numeric-up text-teal-600"></i>2. Number Series</h2>
-                    <p class="text-content mb-4">Number series problems involve identifying the underlying pattern in a sequence of numbers to find a missing term or an incorrect term in the series.</p>
+                    <p class="text-content mb-4">Number series questions test your ability to identify the underlying logical pattern in a given sequence of numbers. You might be asked to find a missing term, the next term, or an incorrect term in the series.</p>
+                    
                     <h3 class="sub-heading"><i class="fas fa-project-diagram text-teal-500"></i>Arithmetic Progression (AP):</h3>
+                    <p class="text-content">A sequence where the difference between any two consecutive terms is constant. This constant difference is called the common difference (d).</p>
                      <ul class="list-custom">
                         <li>n<sup>th</sup> term: <span class="formula">a<sub>n</sub> = a + (n-1)d</span> (where 'a' is the first term, 'd' is common difference)</li>
-                        <li>Sum of first n terms: <span class="formula">S<sub>n</sub> = n/2 [2a + (n-1)d]</span> or <span class="formula">S<sub>n</sub> = n/2 [a + l]</span> (where 'l' is the last term)</li>
+                        <li>Sum of first n terms (Series): <span class="formula">S<sub>n</sub> = n/2 [2a + (n-1)d]</span> or <span class="formula">S<sub>n</sub> = n/2 [a + l]</span> (where 'l' is the last term, $l = a_n$)</li>
                     </ul>
+                    <div class="example-problem">
+                        <strong>Example AP:</strong> Find the 10<sup>th</sup> term and sum of the first 10 terms of the series 3, 7, 11, 15, ...
+                    </div>
+                    <div class="example-solution">
+                        <strong>Solution:</strong><br>
+                        Here, a = 3, d = 7 - 3 = 4, n = 10.<br>
+                        10<sup>th</sup> term (a<sub>10</sub>) = a + (10-1)d = 3 + 9 &times; 4 = 3 + 36 = <span class="formula">39</span>.<br>
+                        Sum of first 10 terms (S<sub>10</sub>) = 10/2 [2a + (10-1)d] = 5 [2&times;3 + 9&times;4] = 5 [6 + 36] = 5 &times; 42 = <span class="formula">210</span>.
+                    </div>
+
                     <h3 class="sub-heading mt-4"><i class="fas fa-project-diagram text-teal-500"></i>Geometric Progression (GP):</h3>
+                    <p class="text-content">A sequence where the ratio of any term to its preceding term is constant. This constant ratio is called the common ratio (r).</p>
                      <ul class="list-custom">
                         <li>n<sup>th</sup> term: <span class="formula">a<sub>n</sub> = ar<sup>n-1</sup></span> (where 'a' is the first term, 'r' is common ratio)</li>
-                        <li>Sum of first n terms: <span class="formula">S<sub>n</sub> = a(r<sup>n</sup>-1)/(r-1)</span> for r &gt; 1, or <span class="formula">S<sub>n</sub> = a(1-r<sup>n</sup>)/(1-r)</span> for r &lt; 1</li>
+                        <li>Sum of first n terms (Series): <span class="formula">S<sub>n</sub> = a(r<sup>n</sup>-1)/(r-1)</span> for r &gt; 1, or <span class="formula">S<sub>n</sub> = a(1-r<sup>n</sup>)/(1-r)</span> for r &lt; 1. (If r=1, S<sub>n</sub> = na)</li>
                         <li>Sum of infinite GP (if |r|&lt;1): <span class="formula">S<sub>&infin;</sub> = a/(1-r)</span></li>
                     </ul>
-                    <h3 class="sub-heading mt-4"><i class="fas fa-project-diagram text-teal-500"></i>Other Common Patterns:</h3>
+                     <div class="example-problem">
+                        <strong>Example GP:</strong> Find the 5<sup>th</sup> term and sum of the first 5 terms of the series 2, 6, 18, ...
+                    </div>
+                    <div class="example-solution">
+                        <strong>Solution:</strong><br>
+                        Here, a = 2, r = 6/2 = 3, n = 5.<br>
+                        5<sup>th</sup> term (a<sub>5</sub>) = ar<sup>5-1</sup> = 2 &times; 3<sup>4</sup> = 2 &times; 81 = <span class="formula">162</span>.<br>
+                        Sum of first 5 terms (S<sub>5</sub>) = a(r<sup>n</sup>-1)/(r-1) = 2(3<sup>5</sup>-1)/(3-1) = 2(243-1)/2 = 242/1 = <span class="formula">242</span>.
+                    </div>
+
+                    <h3 class="sub-heading mt-4"><i class="fas fa-puzzle-piece text-teal-500"></i>Other Common Patterns:</h3>
                     <ul class="list-custom">
-                        <li>Squares/Cubes Series: Based on n<sup>2</sup>, n<sup>3</sup>, n<sup>2</sup>+1, n<sup>3</sup>-1, etc.</li>
-                        <li>Difference/Double Difference Series: Pattern in the differences between terms.</li>
-                        <li>Mixed Series: Combination of multiple operations.</li>
-                        <li>Alternating Series: Two different patterns alternating.</li>
-                        <li>Prime Number Series.</li>
+                        <li><strong>Squares/Cubes Series:</strong> Terms are squares or cubes of natural numbers, or follow a pattern involving squares/cubes (e.g., n<sup>2</sup>+1, n<sup>3</sup>-n). Example: 1, 4, 9, 16, 25 (n<sup>2</sup>).</li>
+                        <li><strong>Difference/Double Difference Series:</strong> The differences between consecutive terms form an AP or GP. If the first differences don't show a clear pattern, find the differences of these differences (double difference).</li>
+                        <li><strong>Mixed Series:</strong> A combination of two or more different types of series or operations. Example: $T_n = T_{n-1} \times k + c$.</li>
+                        <li><strong>Alternating Series:</strong> Two independent series interwoven, or alternating operations.</li>
+                        <li><strong>Prime Number Series:</strong> Series consisting of prime numbers or based on operations on prime numbers.</li>
+                        <li><strong>Fibonacci-like Series:</strong> Each term is the sum of the two preceding terms (or some variation).</li>
                     </ul>
                 </div>
-
+                
                 <div id="topic-3" class="content-section">
                     <h2 class="topic-heading"><i class="fas fa-square-root-alt text-teal-600"></i>3. Quadratic Equation</h2>
                     <p class="text-content mb-4">This section deals with equations of the form ax<sup>2</sup> + bx + c = 0 and methods to find their roots.</p>
@@ -1457,7 +1539,7 @@
             const targetAnchor = e.target.closest('a');
             if (targetAnchor && targetAnchor.dataset.target) {
                 const targetId = targetAnchor.dataset.target;
-                window.location.hash = targetId; // Update hash for direct linking
+                window.location.hash = targetId; 
                 showContent(targetId);
                 
                 if(activeLink) {
@@ -1492,7 +1574,6 @@
             }
         }
         
-        // Function to handle hash changes (e.g. on page load or back/forward)
         function handleHashChange() {
             const targetIdFromHash = window.location.hash.substring(1);
             if (targetIdFromHash) {
@@ -1513,7 +1594,7 @@
         }
 
         window.addEventListener('hashchange', handleHashChange);
-        document.addEventListener('DOMContentLoaded', handleHashChange); // Handle on initial load
+        document.addEventListener('DOMContentLoaded', handleHashChange);
 
 
         document.querySelectorAll('.calculator-container, .ai-container').forEach(container => {
@@ -1851,9 +1932,6 @@ Please provide your analysis in the following format, using Markdown-style headi
 Ensure your language is clear, encouraging, and helpful for someone preparing for an exam.`;
                 
                 try {
-                    // IMPORTANT: Replace "YOUR_API_KEY_HERE" with your actual Gemini API key if running this outside a managed environment.
-                    // If the API key is managed by the environment (like in this platform), you can leave it as an empty string
-                    // or ideally, the platform will substitute it. For self-hosting, this key is essential.
                     const apiKey = "YOUR_API_KEY_HERE"; 
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                     
