@@ -34,28 +34,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .content-section.active { display: block; }
-        .calculator-input {
-            @apply mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 transition-all duration-200;
-        }
-        .calculator-button, .ai-button {
-            @apply mt-4 px-4 py-2 bg-teal-600 text-white text-sm font-medium rounded-md shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 transition-all duration-200 w-full sm:w-auto transform hover:scale-105;
-        }
-        .ai-button {
-            @apply bg-emerald-600 hover:bg-emerald-700 focus:ring-emerald-500;
-        }
-        .math-symbol {
-            font-family: 'Georgia', 'Times New Roman', serif;
-            font-size: 1.1em;
-        }
-        .trick-example {
-            background-color: #ccfbf1;
-            padding: 16px;
-            border-left: 4px solid #0d9488;
-            margin: 16px 0;
-            border-radius: 8px;
-            font-size: 0.95em;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
+        
         .calculator-container, .ai-container {
             @apply mt-12 mb-10 p-8 rounded-lg shadow-md transition-all duration-300 ease-in-out;
             background: var(--card-bg, #ffffff);
@@ -69,17 +48,11 @@
         .calculator-title, .ai-title {
             @apply text-2xl font-bold mb-6 flex items-center gap-4 pb-4 border-b;
         }
-        .ai-title {
-            color: var(--ai-title-color, #065f46);
-            border-color: var(--ai-title-border-color, #d1fae5);
-        }
+       
         .calculator-title i, .ai-title i {
             @apply text-2xl opacity-90;
-            color: var(--icon-color, #0d9488);
         }
-        .ai-title i {
-            color: var(--ai-icon-color, #059669);
-        }
+        
         .calculator-input-group {
             @apply space-y-8;
         }
@@ -99,23 +72,14 @@
             @apply text-teal-500 text-sm;
         }
         .calculator-button, .ai-button {
-            @apply mt-6 px-8 py-3 bg-gradient-to-r from-teal-600 to-teal-700 text-white text-base font-semibold rounded-lg shadow-md hover:from-teal-700 hover:to-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 transition-all duration-200 w-full sm:w-auto transform hover:-translate-y-0.5 hover:scale-105 hover:shadow-lg;
+            @apply mt-6 px-8 py-3 text-white text-base font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-200 w-full sm:w-auto transform hover:-translate-y-0.5 hover:scale-105 hover:shadow-lg;
         }
-        .ai-button {
-            @apply from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 focus:ring-emerald-500;
-        }
+        
         .calculator-result-area {
-            @apply mt-6 p-6 bg-teal-50 rounded-xl border border-teal-200 text-sm min-h-[60px] shadow-inner text-teal-800;
-            background: var(--result-bg, #eef2ff);
+            @apply mt-6 p-6 rounded-xl border text-sm min-h-[60px] shadow-inner;
         }
-        .calculator-result-area.error {
-            @apply border-red-200 bg-red-50 text-red-800;
-             background: linear-gradient(to bottom right, #fef2f2, #fee2e2);
-        }
-        .calculator-result-area h3 {
-             @apply font-bold text-base text-slate-800 mb-2;
-        }
-         .calculator-grid {
+        
+        .calculator-grid {
              @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
          }
         .calculator-section {
@@ -133,9 +97,7 @@
         .calculator-example-title {
             @apply font-semibold text-slate-800 mb-2;
         }
-        .ai-title {
-            @apply text-emerald-700;
-        }
+        
         .topic-heading {
             @apply text-3xl font-bold text-slate-800 mb-4 pb-2 border-b border-slate-300 flex items-center gap-3;
         }
@@ -241,9 +203,9 @@
             @apply text-teal-600 text-xl mt-1;
         }
 
-        /* Teal Theme (default/primary) */
+        /* Theme variables */
         .calculator-theme-teal {
-             background: linear-gradient(to bottom right, #f0f9ff 0%, #e0f2fe 100%);
+            --card-bg: linear-gradient(to bottom right, #f0f9ff 0%, #e0f2fe 100%);
             --card-border: #bfdbfe;
             --card-shadow: rgba(147, 197, 253, 0.3) 0px 7px 29px 0px;
             --card-shadow-hover: rgba(147, 197, 253, 0.5) 0px 10px 40px 0px;
@@ -252,259 +214,72 @@
             --icon-color: #3b82f6;
             --button-from: #0e7490;
             --button-to: #155e75;
+            --result-bg: #e0f2fe;
+            --result-border: #bfdbfe;
+            --result-text: #1d4ed8;
+            --error-result-bg: #fee2e2;
+            --error-result-border: #fecaca;
+            --error-result-text: #dc2626;
         }
 
-        /* Slate Theme */
          .calculator-theme-slate {
-             background: linear-gradient(to bottom right, #f8fafc 0%, #f1f5f9 100%);
+            --card-bg: linear-gradient(to bottom right, #f8fafc 0%, #f1f5f9 100%);
             --card-border: #e2e8f0;
             --card-shadow: rgba(71, 85, 105, 0.2) 0px 7px 29px 0px;
             --card-shadow-hover: rgba(71, 85, 105, 0.4) 0px 10px 40px 0px;
-             --title-color: #334155;
-             --title-border-color: #f1f5f9;
-             --icon-color: #64748b;
-              --button-from: #475569;
-             --button-to: #334155;
+            --title-color: #334155;
+            --title-border-color: #f1f5f9;
+            --icon-color: #64748b;
+            --button-from: #475569;
+            --button-to: #334155;
+            --result-bg: #f1f5f9;
+            --result-border: #e2e8f0;
+            --result-text: #334155;
+            --error-result-bg: #fee2e2;
+            --error-result-border: #fecaca;
+            --error-result-text: #dc2626;
          }
 
-         /* Emerald Theme (for AI Assistant) */
-         .calculator-theme-emerald {
-              background: linear-gradient(to bottom right, #ecfdf5 0%, #d1fae5 100%);
+         .calculator-theme-emerald { /* For AI Assistant */
+            --card-bg: linear-gradient(to bottom right, #ecfdf5 0%, #d1fae5 100%);
             --card-border: #a7f3d0;
             --card-shadow: rgba(16, 185, 129, 0.2) 0px 7px 29px 0px;
             --card-shadow-hover: rgba(16, 185, 129, 0.4) 0px 10px 40px 0px;
-               --ai-title-color: #047857;
-               --ai-title-border-color: #d1fae5;
-               --ai-icon-color: #10b981;
-               --button-from: #059669;
-               --button-to: #04785e;
+            --title-color: #047857; /* AI Title specific */
+            --title-border-color: #d1fae5; /* AI Title specific */
+            --icon-color: #059669; /* AI Icon specific */
+            --button-from: #059669; /* AI Button specific */
+            --button-to: #047857; /* AI Button specific */
+            --result-bg: #d1fae5;
+            --result-border: #a7f3d0;
+            --result-text: #047857;
+            --error-result-bg: #fee2e2;
+            --error-result-border: #fecaca;
+            --error-result-text: #dc2626;
          }
 
-        /* Apply theme variables */
-        .calculator-container, .ai-container {
-            --card-border: var(--theme-card-border, #e2e8f0);
-            --card-shadow: var(--theme-card-shadow, rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px);
-            --card-shadow-hover: var(--theme-card-shadow-hover, rgba(0, 0, 0, 0.2) 0px 25px 50px -12px, rgba(0, 0, 0, 0.08) 0px 15px 15px -6px);
-            --title-color: var(--theme-title-color, #1a202c);
-            --title-border-color: var(--theme-title-border-color, #e2e8f0);
-            --icon-color: var(--theme-icon-color, #0d9488);
+        /* Apply theme variables to components */
+        .calculator-container .calculator-title, .ai-container .ai-title {
+             color: var(--title-color);
+             border-color: var(--title-border-color);
+         }
+        .calculator-container .calculator-title i, .ai-container .ai-title i {
+            color: var(--icon-color);
         }
-
-        .ai-title {
-            --ai-title-color: var(--theme-ai-title-color, #065f46);
-            --ai-title-border-color: var(--theme-ai-title-border-color, #d1fae5);
-            --ai-icon-color: var(--theme-ai-icon-color, #059669);
-        }
-
-        .calculator-title i, .ai-title i {
-            --icon-color: var(--theme-icon-color, #0d9488);
-        }
-
-        .ai-title i {
-            --ai-icon-color: var(--theme-ai-icon-color, #059669);
-        }
-
-        .calculator-button, .ai-button {
-            --button-from: var(--theme-button-from, #0e7490);
-            --button-to: var(--theme-button-to, #155e75);
-        }
-
-        .ai-button {
-            --button-from: var(--theme-ai-button-from, #059669);
-            --button-to: var(--theme-ai-button-to, #04785e);
+        .calculator-container .calculator-button, .ai-container .ai-button {
+            background: linear-gradient(to right, var(--button-from), var(--button-to));
         }
 
         .calculator-result-area {
-            --result-bg: var(--theme-result-bg, #f0f9ff);
-            --result-border: var(--theme-result-border, #e0f2fe);
-            --result-text: var(--theme-result-text, #0f766e);
+            background: var(--result-bg);
+            border-color: var(--result-border);
+            color: var(--result-text);
         }
-
         .calculator-result-area.error {
-            --result-bg: var(--theme-error-bg, #fef2f2);
-            --result-border: var(--theme-error-border, #fee2e2);
-            --result-text: var(--theme-error-text, #f87171);
+            background: var(--error-result-bg);
+            border-color: var(--error-result-border);
+            color: var(--error-result-text);
         }
-
-        .calculator-result-area h3 {
-            --result-font-weight: var(--theme-result-font-weight, bold);
-            --result-font-size: var(--theme-result-font-size, 1rem);
-            --result-color: var(--theme-result-color, #1a202c);
-        }
-
-        .calculator-grid {
-            --grid-gap: var(--theme-grid-gap, 1.5rem);
-        }
-
-        .calculator-section {
-            --section-gap: var(--theme-section-gap, 1.5rem);
-        }
-
-        .calculator-description {
-            --description-color: var(--theme-description-color, #4b5563);
-        }
-
-        .calculator-formula {
-            --formula-bg: var(--theme-formula-bg, #f8fafc);
-            --formula-border: var(--theme-formula-border, #e2e8f0);
-            --formula-color: var(--theme-formula-color, #0f766e);
-        }
-
-        .calculator-example {
-            --example-bg: var(--theme-example-bg, #f8fafc);
-            --example-border: var(--theme-example-border, #e2e8f0);
-            --example-color: var(--theme-example-color, #4b5563);
-        }
-
-        .calculator-example-title {
-            --example-font-weight: var(--theme-example-font-weight, bold);
-            --example-font-size: var(--theme-example-font-size, 1rem);
-            --example-color: var(--theme-example-color, #1a202c);
-        }
-
-        .ai-title {
-            --ai-title-color: var(--theme-ai-title-color, #065f46);
-            --ai-title-border-color: var(--theme-ai-title-border-color, #d1fae5);
-            --ai-icon-color: var(--theme-ai-icon-color, #059669);
-        }
-
-        .topic-heading {
-            --topic-heading-color: var(--theme-topic-heading-color, #1a202c);
-            --topic-heading-border-color: var(--theme-topic-heading-border-color, #e2e8f0);
-        }
-
-        .sub-heading {
-            --sub-heading-color: var(--theme-sub-heading-color, #0f766e);
-        }
-
-        .text-content {
-            --text-color: var(--theme-text-color, #4b5563);
-        }
-
-        /* New Calculator Themes */
-
-        /* Theme 1: Blue-Grey */
-        .calculator-theme-blue-grey {
-            --card-bg: linear-gradient(to bottom right, #eceff1 0%, #cfd8dc 100%);
-            --card-border: #b0bec5;
-            --card-shadow: rgba(96, 125, 139, 0.1) 0px 4px 12px;
-            --card-shadow-hover: rgba(96, 125, 139, 0.15) 0px 6px 16px;
-            --title-color: #37474f;
-            --title-border-color: #eceff1;
-            --icon-color: #546e7a;
-            --button-from: #546e7a;
-            --button-to: #455a64;
-            --result-bg: #eceff1;
-            --result-border: #b0bec5;
-            --result-text: #37474f;
-        }
-
-        /* Theme 2: Warm Grey */
-         .calculator-theme-warm-grey {
-             --card-bg: linear-gradient(to bottom right, #f5f5f5 0%, #e0e0e0 100%);
-             --card-border: #bdbdbd;
-             --card-shadow: rgba(117, 117, 117, 0.1) 0px 4px 12px;
-             --card-shadow-hover: rgba(117, 117, 117, 0.15) 0px 6px 16px;
-             --title-color: #616161;
-             --title-border-color: #f5f5f5;
-             --icon-color: #757575;
-              --button-from: #757575;
-             --button-to: #616161;
-             --result-bg: #f5f5f5;
-             --result-border: #bdbdbd;
-             --result-text: #616161;
-         }
-
-         /* Theme 3: Muted Green (for AI Assistant) */
-         .calculator-theme-green {
-              --card-bg: linear-gradient(to bottom right, #e8f5e9 0%, #c8e6c9 100%);
-              --card-border: #a5d6a7;
-              --card-shadow: rgba(76, 175, 80, 0.1) 0px 4px 12px;
-              --card-shadow-hover: rgba(76, 175, 80, 0.15) 0px 6px 16px;
-              --ai-title-color: #2e7d32;
-              --ai-title-border-color: #e8f5e9;
-              --ai-icon-color: #4caf50;
-              --button-from: #4caf50;
-              --button-to: #388e3c;
-              --result-bg: #e8f5e9;
-              --result-border: #a5d6a7;
-              --result-text: #2e7d32;
-          }
-
-        /* Apply theme variables */
-        .calculator-container .calculator-title, .ai-container .ai-title {
-             color: var(--title-color, #1f2937);
-             border-color: var(--title-border-color, #e5e7eb);
-         }
-          .calculator-container .calculator-title i, .ai-container .ai-title i {
-              color: var(--icon-color, #0d9488);
-          }
-          .calculator-container .calculator-button, .ai-container .ai-button {
-               background: linear-gradient(to right, var(--button-from, #0e7490), var(--button-to, #155e75));
-          }
-
-         .calculator-result-area {
-             background: var(--result-bg, #eef2ff);
-             border-color: var(--result-border, #c7d2fe);
-             color: var(--result-text, #3730a3);
-         }
-
-         .calculator-result-area.error {
-             background: var(--error-result-bg, #fef2f2);
-             border-color: var(--error-result-border, #fecaca);
-             color: var(--error-result-text, #f87171);
-         }
-
-        /* Map theme variables to components */
-        .calculator-theme-blue-grey {
-            --theme-card-border: var(--card-border);
-            --theme-card-shadow: var(--card-shadow);
-            --theme-card-shadow-hover: var(--card-shadow-hover);
-            --theme-title-color: var(--title-color);
-            --theme-title-border-color: var(--title-border-color);
-            --theme-icon-color: var(--icon-color);
-            --theme-button-from: var(--button-from);
-            --theme-button-to: var(--button-to);
-            --theme-result-bg: var(--result-bg);
-            --theme-result-border: var(--result-border);
-            --theme-result-text: var(--result-text);
-            --theme-error-bg: #fef2f2;
-            --theme-error-border: #fecaca;
-            --theme-error-text: #ef4444;
-        }
-         .calculator-theme-warm-grey {
-            --theme-card-border: var(--card-border);
-            --theme-card-shadow: var(--card-shadow);
-            --theme-card-shadow-hover: var(--card-shadow-hover);
-            --theme-title-color: var(--title-color);
-            --theme-title-border-color: var(--title-border-color);
-            --theme-icon-color: var(--icon-color);
-            --theme-button-from: var(--button-from);
-            --theme-button-to: var(--button-to);
-            --theme-result-bg: var(--result-bg);
-            --theme-result-border: var(--result-border);
-            --theme-result-text: var(--result-text);
-             --theme-error-bg: #fef2f2;
-            --theme-error-border: #fecaca;
-            --theme-error-text: #ef4444;
-         }
-          .calculator-theme-green {
-            --theme-card-border: var(--card-border);
-            --theme-card-shadow: var(--card-shadow);
-            --theme-card-shadow-hover: var(--card-shadow-hover);
-            --theme-ai-title-color: var(--ai-title-color);
-            --theme-ai-title-border-color: var(--ai-title-border-color);
-            --theme-ai-icon-color: var(--ai-icon-color);
-            --theme-button-from: var(--button-from);
-            --theme-button-to: var(--button-to);
-            --theme-result-bg: var(--result-bg);
-            --theme-result-border: var(--result-border);
-            --theme-result-text: var(--result-text);
-              --theme-error-bg: #fef2f2;
-            --theme-error-border: #fecaca;
-            --theme-error-text: #ef4444;
-          }
-
     </style>
 </head>
 <body class="bg-gradient-to-br from-slate-50 to-teal-50 text-slate-800">
@@ -552,7 +327,7 @@
                                 <i class="fas fa-book"></i>
                                 <div>
                                     <h3 class="font-semibold text-slate-800">Comprehensive Coverage</h3>
-                                    <p class="text-sm text-slate-600">21 key topics with detailed explanations</p>
+                                    <p class="text-sm text-slate-600">23 key topics with detailed explanations</p>
                                 </div>
                             </div>
                             <div class="feature-item">
@@ -573,11 +348,11 @@
                     </div>
                 </div>
                 <div id="topic-1" class="content-section">
-                    <h2 class="topic-heading">1. Simplification and Approximation</h2>
+                    <h2 class="topic-heading"><i class="fas fa-stream text-teal-600"></i>1. Simplification and Approximation</h2>
                     <p class="text-content mb-4">This section covers techniques to simplify complex mathematical expressions and find approximate values for quick calculations. Understanding the order of operations (BODMAS/PEMDAS) is fundamental.</p>
-                    <h3 class="sub-heading">Key Concept: BODMAS Rule</h3>
+                    <h3 class="sub-heading"><i class="fas fa-list-ol text-teal-500"></i>Key Concept: BODMAS Rule</h3>
                     <p class="text-content">BODMAS stands for Brackets, Orders (powers/roots), Division, Multiplication, Addition, Subtraction. This rule dictates the sequence of operations.</p>
-                    <h3 class="sub-heading">Techniques:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-lightbulb text-teal-500"></i>Techniques:</h3>
                     <ul class="list-custom">
                         <li>Percentage-Fraction Conversions (e.g., 25% = 1/4, 12.5% = 1/8, 33.33% = 1/3)</li>
                         <li>Memorizing Squares (up to 30-40) and Cubes (up to 20-25)</li>
@@ -586,9 +361,9 @@
                 </div>
 
                 <div id="topic-2" class="content-section">
-                    <h2 class="topic-heading">2. Number Series</h2>
+                    <h2 class="topic-heading"><i class="fas fa-sort-numeric-up text-teal-600"></i>2. Number Series</h2>
                     <p class="text-content mb-4">Number series problems involve identifying the underlying pattern in a sequence of numbers to find a missing term or an incorrect term in the series.</p>
-                    <h3 class="sub-heading">Common Patterns:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-project-diagram text-teal-500"></i>Common Patterns:</h3>
                     <ul class="list-custom">
                         <li>Arithmetic Progression (AP): Constant difference (e.g., a, a+d, a+2d, ...)</li>
                         <li>Geometric Progression (GP): Constant ratio (e.g., a, ar, ar<sup>2</sup>, ...)</li>
@@ -601,24 +376,24 @@
                 </div>
 
                 <div id="topic-3" class="content-section">
-                    <h2 class="topic-heading">3. Quadratic Equation</h2>
+                    <h2 class="topic-heading"><i class="fas fa-square-root-alt text-teal-600"></i>3. Quadratic Equation</h2>
                     <p class="text-content mb-4">This section deals with equations of the form ax<sup>2</sup> + bx + c = 0 and methods to find their roots.</p>
                     <p class="text-content">Standard Form: <span class="formula">ax<sup>2</sup> + bx + c = 0</span> (where a ≠ 0)</p>
-                    <h3 class="sub-heading">Roots Formula (Quadratic Formula):</h3>
+                    <h3 class="sub-heading"><i class="fas fa-superscript text-teal-500"></i>Roots Formula (Quadratic Formula):</h3>
                     <p class="text-content"><span class="formula">x = [-b ± √(b<sup>2</sup> - 4ac)] / 2a</span></p>
-                    <h3 class="sub-heading">Sum and Product of Roots (α, β):</h3>
+                    <h3 class="sub-heading"><i class="fas fa-plus-minus text-teal-500"></i>Sum and Product of Roots (α, β):</h3>
                     <p class="text-content">Sum (α + β): <span class="formula">-b/a</span></p>
                     <p class="text-content">Product (αβ): <span class="formula">c/a</span></p>
-                    <h3 class="sub-heading">Forming Equation from Roots:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-equals text-teal-500"></i>Forming Equation from Roots:</h3>
                     <p class="text-content"><span class="formula">x<sup>2</sup> - (Sum of roots)x + (Product of roots) = 0</span></p>
-                    <h3 class="sub-heading">Nature of Roots (Discriminant D = b<sup>2</sup> - 4ac):</h3>
+                    <h3 class="sub-heading"><i class="fas fa-balance-scale text-teal-500"></i>Nature of Roots (Discriminant D = b<sup>2</sup> - 4ac):</h3>
                     <ul class="list-custom">
                         <li>D > 0 & is a perfect square: Real, distinct, rational roots.</li>
                         <li>D > 0 & not a perfect square: Real, distinct, irrational roots.</li>
                         <li>D = 0: Real, equal, rational roots.</li>
                         <li>D < 0: Imaginary roots.</li>
                     </ul>
-                    <div class="calculator-container calculator-theme-blue-grey">
+                    <div class="calculator-container calculator-theme-teal">
                         <h4 class="calculator-title">
                             <i class="fas fa-calculator"></i>
                             Quadratic Equation Solver
@@ -663,24 +438,24 @@
                 </div>
 
                 <div id="topic-4" class="content-section">
-                    <h2 class="topic-heading">4. Number System / HCF & LCM</h2>
+                    <h2 class="topic-heading"><i class="fas fa-hashtag text-teal-600"></i>4. Number System / HCF & LCM</h2>
                     <p class="text-content mb-4">This topic covers fundamental concepts like divisibility rules, prime numbers, factors, multiples, and the calculation of HCF and LCM.</p>
-                    <h3 class="sub-heading">Key Concepts:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-key text-teal-500"></i>Key Concepts:</h3>
                     <ul class="list-custom">
                         <li>Divisibility rules (for 2, 3, 4, 5, 6, 7, 8, 9, 10, 11)</li>
                         <li>Prime numbers, composite numbers, factors, multiples, co-primes</li>
                         <li>Remainder theorem</li>
                     </ul>
-                    <h3 class="sub-heading">HCF (Highest Common Factor / GCD):</h3>
+                    <h3 class="sub-heading"><i class="fas fa-greater-than-equal text-teal-500"></i>HCF (Highest Common Factor / GCD):</h3>
                     <p class="text-content">The largest number that divides two or more numbers exactly.</p>
-                    <h3 class="sub-heading">LCM (Least Common Multiple):</h3>
+                    <h3 class="sub-heading"><i class="fas fa-less-than-equal text-teal-500"></i>LCM (Least Common Multiple):</h3>
                     <p class="text-content">The smallest number that is exactly divisible by two or more numbers.</p>
-                    <h3 class="sub-heading">Relationship:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-link text-teal-500"></i>Relationship:</h3>
                     <p class="text-content">For two numbers A and B: <span class="formula">HCF(A,B) × LCM(A,B) = A × B</span></p>
-                    <h3 class="sub-heading">HCF/LCM of Fractions:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-divide text-teal-500"></i>HCF/LCM of Fractions:</h3>
                     <p class="text-content">HCF(a/b, c/d) = <span class="formula">HCF(a,c) / LCM(b,d)</span></p>
                     <p class="text-content">LCM(a/b, c/d) = <span class="formula">LCM(a,c) / HCF(b,d)</span></p>
-                    <div class="calculator-container calculator-theme-warm-grey">
+                    <div class="calculator-container calculator-theme-slate">
                         <h4 class="calculator-title">
                              <i class="fas fa-calculator"></i>
                             HCF & LCM Calculator (for two numbers)
@@ -689,7 +464,7 @@
                              Calculate the HCF and LCM for two positive integers.
                          </div>
                         <div class="calculator-section">
-                             <div class="calculator-grid">
+                             <div class="calculator-grid grid-cols-1 sm:grid-cols-2">
                                  <div class="calculator-input-wrapper">
                                     <label for="num1HcfLcm" class="calculator-input-label">
                                          <i class="fas fa-hashtag"></i>
@@ -715,19 +490,19 @@
                 </div>
 
                 <div id="topic-5" class="content-section">
-                    <h2 class="topic-heading">5. Ratio and Proportion</h2>
+                    <h2 class="topic-heading"><i class="fas fa-percentage text-teal-600"></i>5. Ratio and Proportion</h2>
                     <p class="text-content mb-4">Ratio compares two quantities, while proportion signifies the equality of two ratios.</p>
-                    <h3 class="sub-heading">Ratio (a:b):</h3>
+                    <h3 class="sub-heading"><i class="fas fa-vector-square text-teal-500"></i>Ratio (a:b):</h3>
                     <p class="text-content">'a' is antecedent, 'b' is consequent.</p>
-                    <h3 class="sub-heading">Proportion (a:b::c:d):</h3>
+                    <h3 class="sub-heading"><i class="fas fa-equals text-teal-500"></i>Proportion (a:b::c:d):</h3>
                     <p class="text-content"><span class="formula">a/b = c/d ⟹ ad = bc</span>. 'a,d' are extremes, 'b,c' are means.</p>
-                    <h3 class="sub-heading">Types of Proportion:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-sitemap text-teal-500"></i>Types of Proportion:</h3>
                     <ul class="list-custom">
                         <li>Fourth Proportional (d)</li>
                         <li>Third Proportional (to a,b is c if a:b::b:c)</li>
                         <li>Mean Proportional (between a,c is b if a:b::b:c ⟹ b<sup>2</sup>=ac)</li>
                     </ul>
-                    <h3 class="sub-heading">Properties:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-cogs text-teal-500"></i>Properties:</h3>
                     <ul class="list-custom">
                         <li>Invertendo: If a/b = c/d, then b/a = d/c</li>
                         <li>Alternendo: If a/b = c/d, then a/c = b/d</li>
@@ -736,7 +511,7 @@
                         <li>Componendo & Dividendo: If a/b = c/d, then (a+b)/(a-b) = (c+d)/(c-d)</li>
                     </ul>
                     <p class="text-content mt-2">Duplicate Ratio: a<sup>2</sup>:b<sup>2</sup>. Triplicate Ratio: a<sup>3</sup>:b<sup>3</sup>. Sub-duplicate Ratio: √a:√b. Sub-triplicate Ratio: <sup>3</sup>√a:<sup>3</sup>√b.</p>
-                    <div class="calculator-container calculator-theme-blue-grey">
+                    <div class="calculator-container calculator-theme-teal">
                         <h4 class="calculator-title">
                             <i class="fas fa-calculator"></i>
                             Fourth Proportional Calculator (a:b::c:X)
@@ -778,15 +553,15 @@
                 </div>
 
                 <div id="topic-6" class="content-section">
-                    <h2 class="topic-heading">6. Average</h2>
+                    <h2 class="topic-heading"><i class="fas fa-chart-line text-teal-600"></i>6. Average</h2>
                     <p class="text-content mb-4">The average or mean represents the central value of a set of observations.</p>
-                    <h3 class="sub-heading">Basic Average:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-calculator text-teal-500"></i>Basic Average:</h3>
                     <p class="text-content"><span class="formula">Average = Sum of Observations / Number of Observations</span></p>
-                    <h3 class="sub-heading">Weighted Average:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-balance-scale-right text-teal-500"></i>Weighted Average:</h3>
                     <p class="text-content"><span class="formula">(w<sub>1</sub>x<sub>1</sub> + w<sub>2</sub>x<sub>2</sub> + ... + w<sub>n</sub>x<sub>n</sub>) / (w<sub>1</sub> + w<sub>2</sub> + ... + w<sub>n</sub>)</span></p>
-                    <h3 class="sub-heading">Properties:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-cogs text-teal-500"></i>Properties:</h3>
                     <p class="text-content">If each number is changed by k, the average also changes by k (for +,-,×,÷).</p>
-                    <div class="calculator-container calculator-theme-warm-grey">
+                    <div class="calculator-container calculator-theme-slate">
                         <h4 class="calculator-title">
                              <i class="fas fa-calculator"></i>
                             Simple Average Calculator
@@ -814,22 +589,22 @@
                 </div>
 
                 <div id="topic-7" class="content-section">
-                    <h2 class="topic-heading">7. Partnership</h2>
+                    <h2 class="topic-heading"><i class="fas fa-handshake text-teal-600"></i>7. Partnership</h2>
                     <p class="text-content mb-4">This topic deals with how profits or losses are shared among partners in a business venture based on their investments and time periods.</p>
-                    <h3 class="sub-heading">Key Concept:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-key text-teal-500"></i>Key Concept:</h3>
                     <p class="text-content">Profits (or losses) are shared in the ratio of 'effective' investments.</p>
-                    <h3 class="sub-heading">Formula:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-superscript text-teal-500"></i>Formula:</h3>
                     <p class="text-content">Ratio of Profits = Ratio of (Investment × Time Period)</p>
                     <p class="text-content">If P<sub>A</sub>, P<sub>B</sub> are profits, I<sub>A</sub>, I<sub>B</sub> are investments, T<sub>A</sub>, T<sub>B</sub> are time periods:</p>
                     <p class="text-content"><span class="formula">P<sub>A</sub> / P<sub>B</sub> = (I<sub>A</sub> × T<sub>A</sub>) / (I<sub>B</sub> × T<sub>B</sub>)</span></p>
-                    <h3 class="sub-heading">Types:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-sitemap text-teal-500"></i>Types:</h3>
                     <ul class="list-custom">
                         <li>Simple Partnership: Investments for the same time.</li>
                         <li>Compound Partnership: Investments for different times.</li>
                         <li>Sleeping Partner: Invests but doesn't work.</li>
                         <li>Working Partner: Invests and works, may get extra share/salary.</li>
                     </ul>
-                    <div class="calculator-container calculator-theme-blue-grey">
+                    <div class="calculator-container calculator-theme-teal">
                         <h4 class="calculator-title">
                             <i class="fas fa-calculator"></i>
                             Simple Partnership Profit Share (2 Partners, Same Time)
@@ -870,10 +645,10 @@
                     </div>
                 </div>
 
-                <div id="topic-8" class="content-section">
-                    <h2 class="topic-heading">8. Ages</h2>
+                 <div id="topic-8" class="content-section">
+                    <h2 class="topic-heading"><i class="fas fa-user-clock text-teal-600"></i>8. Ages</h2>
                     <p class="text-content mb-4">Problems on ages involve forming linear equations based on relationships between ages of individuals at different points in time (past, present, future).</p>
-                    <h3 class="sub-heading">Key Concept:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-key text-teal-500"></i>Key Concept:</h3>
                     <p class="text-content">Represent present ages using variables (e.g., x, y). Form linear equations based on given conditions.</p>
                     <ul class="list-custom">
                         <li>'k years ago': Age was (Present Age - k)</li>
@@ -883,11 +658,11 @@
                 </div>
 
                 <div id="topic-9" class="content-section">
-                    <h2 class="topic-heading">9. Percentage</h2>
+                    <h2 class="topic-heading"><i class="fas fa-percent text-teal-600"></i>9. Percentage</h2>
                     <p class="text-content mb-4">Percentage means 'per hundred' and is a way to express a fraction or a ratio as a part of 100.</p>
-                    <h3 class="sub-heading">Basic Concept:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-key text-teal-500"></i>Basic Concept:</h3>
                     <p class="text-content">x% = <span class="formula">x / 100</span></p>
-                    <h3 class="sub-heading">Key Formulas:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-superscript text-teal-500"></i>Key Formulas:</h3>
                     <ul class="list-custom">
                         <li>Percentage Increase = <span class="formula">(Increase / Original Value) × 100</span></li>
                         <li>Percentage Decrease = <span class="formula">(Decrease / Original Value) × 100</span></li>
@@ -897,7 +672,7 @@
                         <li>If A is x% more than B: A = B(1 + x/100). B is <span class="formula">(x / (100+x)) × 100%</span> less than A.</li>
                         <li>If A is x% less than B: A = B(1 - x/100). B is <span class="formula">(x / (100-x)) × 100%</span> more than A.</li>
                     </ul>
-                    <div class="calculator-container calculator-theme-warm-grey">
+                    <div class="calculator-container calculator-theme-slate">
                         <h4 class="calculator-title">
                             <i class="fas fa-calculator"></i>
                             Percentage Calculator
@@ -932,15 +707,15 @@
                 </div>
 
                 <div id="topic-10" class="content-section">
-                    <h2 class="topic-heading">10. Profit & Loss</h2>
+                    <h2 class="topic-heading"><i class="fas fa-coins text-teal-600"></i>10. Profit & Loss</h2>
                     <p class="text-content mb-4">This topic deals with calculations involving cost price, selling price, marked price, profit, loss, and discount in commercial transactions.</p>
-                    <h3 class="sub-heading">Key Terms:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-tags text-teal-500"></i>Key Terms:</h3>
                     <ul class="list-custom">
                         <li>CP: Cost Price</li>
                         <li>SP: Selling Price</li>
                         <li>MP: Marked Price / List Price</li>
                     </ul>
-                    <h3 class="sub-heading">Formulas:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-superscript text-teal-500"></i>Formulas:</h3>
                     <ul class="list-custom">
                         <li>Profit (P) = SP - CP (when SP > CP)</li>
                         <li>Loss (L) = CP - SP (when CP > SP)</li>
@@ -954,7 +729,7 @@
                         <li>Relation: <span class="formula">CP / MP = (100 - Discount %) / (100 + Profit %)</span></li>
                         <li>Dishonest Dealer Profit % = <span class="formula">(Error / (True Value - Error)) × 100</span> or <span class="formula">(True Value - False Weight) / False Weight × 100</span></li>
                     </ul>
-                     <div class="calculator-container calculator-theme-blue-grey">
+                     <div class="calculator-container calculator-theme-teal">
                         <h4 class="calculator-title">
                             <i class="fas fa-calculator"></i>
                             Profit/Loss Calculator
@@ -989,32 +764,32 @@
                 </div>
 
                 <div id="topic-11" class="content-section">
-                    <h2 class="topic-heading">11. Time, Speed & Distance</h2>
+                    <h2 class="topic-heading"><i class="fas fa-tachometer-alt text-teal-600"></i>11. Time, Speed & Distance</h2>
                     <p class="text-content mb-4">This fundamental topic explores the relationship between distance, speed, and time.</p>
-                    <h3 class="sub-heading">Basic Formula:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-superscript text-teal-500"></i>Basic Formula:</h3>
                     <p class="text-content"><span class="formula">Distance = Speed × Time</span></p>
-                    <h3 class="sub-heading">Unit Conversion:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-exchange-alt text-teal-500"></i>Unit Conversion:</h3>
                     <ul class="list-custom">
                         <li>1 km/hr = <span class="formula">5/18 m/s</span></li>
                         <li>1 m/s = <span class="formula">18/5 km/hr</span></li>
                     </ul>
-                    <h3 class="sub-heading">Proportionality:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-arrows-alt-h text-teal-500"></i>Proportionality:</h3>
                     <ul class="list-custom">
                         <li>If Distance is constant: Speed ∝ 1/Time</li>
                         <li>If Time is constant: Distance ∝ Speed</li>
                         <li>If Speed is constant: Distance ∝ Time</li>
                     </ul>
-                    <h3 class="sub-heading">Average Speed:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-tachometer-alt text-teal-500"></i>Average Speed:</h3>
                     <ul class="list-custom">
                         <li>Equal distances at speeds s<sub>1</sub>, s<sub>2</sub>: <span class="formula">2s<sub>1</sub>s<sub>2</sub> / (s<sub>1</sub>+s<sub>2</sub>)</span></li>
                         <li>General Case: <span class="formula">Total Distance / Total Time</span></li>
                     </ul>
-                    <h3 class="sub-heading">Relative Speed:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-running text-teal-500"></i>Relative Speed:</h3>
                     <ul class="list-custom">
                         <li>Opposite directions: S<sub>rel</sub> = S<sub>1</sub> + S<sub>2</sub></li>
                         <li>Same direction: S<sub>rel</sub> = |S<sub>1</sub> - S<sub>2</sub>|</li>
                     </ul>
-                    <div class="calculator-container calculator-theme-warm-grey">
+                    <div class="calculator-container calculator-theme-slate">
                         <h4 class="calculator-title">
                             <i class="fas fa-calculator"></i>
                             Time, Speed, Distance Calculator
@@ -1056,9 +831,9 @@
                 </div>
 
                 <div id="topic-12" class="content-section">
-                    <h2 class="topic-heading">12. Problems on Trains</h2>
+                    <h2 class="topic-heading"><i class="fas fa-train text-teal-600"></i>12. Problems on Trains</h2>
                     <p class="text-content mb-4">These problems apply Time, Speed, Distance concepts, considering the length of trains and objects they cross.</p>
-                    <h3 class="sub-heading">Key Concepts:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-key text-teal-500"></i>Key Concepts:</h3>
                     <ul class="list-custom">
                         <li>Crossing a pole/man (negligible length): Distance = Length of train (L<sub>T</sub>). Time = <span class="formula">L<sub>T</sub> / S<sub>T</sub></span>.</li>
                         <li>Crossing a platform/bridge (length L<sub>P</sub>): Distance = L<sub>T</sub> + L<sub>P</sub>. Time = <span class="formula">(L<sub>T</sub> + L<sub>P</sub>) / S<sub>T</sub></span>.</li>
@@ -1068,21 +843,21 @@
                 </div>
 
                 <div id="topic-13" class="content-section">
-                    <h2 class="topic-heading">13. Boat and Stream</h2>
+                    <h2 class="topic-heading"><i class="fas fa-water text-teal-600"></i>13. Boat and Stream</h2>
                     <p class="text-content mb-4">This involves calculating speeds of boats in still water, downstream (with current), and upstream (against current).</p>
-                    <h3 class="sub-heading">Let:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-info-circle text-teal-500"></i>Let:</h3>
                     <ul class="list-custom">
                         <li>B = Speed of boat in still water</li>
                         <li>S = Speed of the stream/current</li>
                     </ul>
-                    <h3 class="sub-heading">Formulas:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-superscript text-teal-500"></i>Formulas:</h3>
                     <ul class="list-custom">
                         <li>Downstream Speed (D) = <span class="formula">B + S</span></li>
                         <li>Upstream Speed (U) = <span class="formula">B - S</span></li>
                         <li>Speed of Boat in Still Water (B) = <span class="formula">(D + U) / 2</span></li>
                         <li>Speed of Stream (S) = <span class="formula">(D - U) / 2</span></li>
                     </ul>
-                    <div class="calculator-container calculator-theme-blue-grey">
+                    <div class="calculator-container calculator-theme-teal">
                         <h4 class="calculator-title">
                             <i class="fas fa-calculator"></i>
                             Boat & Stream Speed Calculator
@@ -1117,25 +892,25 @@
                 </div>
 
                 <div id="topic-14" class="content-section">
-                    <h2 class="topic-heading">14. Time & Work / Pipes and Cisterns</h2>
+                    <h2 class="topic-heading"><i class="fas fa-clock text-teal-600"></i>14. Time & Work / Pipes and Cisterns</h2>
                     <p class="text-content mb-4">These problems relate work done, efficiency of workers/pipes, and time taken.</p>
-                    <h3 class="sub-heading">Basic Concept:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-key text-teal-500"></i>Basic Concept:</h3>
                     <p class="text-content"><span class="formula">Work = Efficiency × Time</span></p>
                     <p class="text-content">Efficiency ∝ 1/Time</p>
-                    <h3 class="sub-heading">Combined Work:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-users text-teal-500"></i>Combined Work:</h3>
                     <p class="text-content">If A takes x days and B takes y days, together they take <span class="formula">xy / (x+y)</span> days.</p>
-                    <h3 class="sub-heading">LCM Method (Recommended):</h3>
+                    <h3 class="sub-heading"><i class="fas fa-list-ol text-teal-500"></i>LCM Method (Recommended):</h3>
                     <ol class="list-decimal list-inside text-slate-600 space-y-1 pl-2">
                         <li>Assume Total Work = LCM of individual times.</li>
                         <li>Calculate individual efficiencies: Efficiency = Total Work / Individual Time.</li>
                         <li>Calculate combined efficiency.</li>
                         <li>Time = Total Work / Combined Efficiency.</li>
                     </ol>
-                    <h3 class="sub-heading">MDH Formula:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-superscript text-teal-500"></i>MDH Formula:</h3>
                     <p class="text-content"><span class="formula">(M<sub>1</sub>D<sub>1</sub>H<sub>1</sub>E<sub>1</sub>) / W<sub>1</sub> = (M<sub>2</sub>D<sub>2</sub>H<sub>2</sub>E<sub>2</sub>) / W<sub>2</sub></span> (M=Men, D=Days, H=Hours, E=Efficiency, W=Work)</p>
-                    <h3 class="sub-heading">Pipes and Cisterns:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-tint text-teal-500"></i>Pipes and Cisterns:</h3>
                     <p class="text-content">Inlet pipes do positive work (filling), Outlet pipes do negative work (emptying). Apply same Time & Work concepts.</p>
-                    <div class="calculator-container calculator-theme-warm-grey">
+                    <div class="calculator-container calculator-theme-slate">
                         <h4 class="calculator-title">
                              <i class="fas fa-calculator"></i>
                             Combined Work Time (2 People)
@@ -1170,32 +945,32 @@
                 </div>
 
                 <div id="topic-15" class="content-section">
-                    <h2 class="topic-heading">15. Simple and Compound Interest</h2>
+                    <h2 class="topic-heading"><i class="fas fa-money-bill-wave text-teal-600"></i>15. Simple and Compound Interest</h2>
                     <p class="text-content mb-4">This section covers calculations of interest earned or paid on a principal amount over a period.</p>
-                    <h3 class="sub-heading">Let:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-info-circle text-teal-500"></i>Let:</h3>
                     <ul class="list-custom">
                         <li>P = Principal</li>
                         <li>R = Rate of Interest (per annum)</li>
                         <li>T = Time Period (in years)</li>
                         <li>A = Amount = Principal + Interest</li>
                     </ul>
-                    <h3 class="sub-heading">Simple Interest (SI):</h3>
+                    <h3 class="sub-heading"><i class="fas fa-hand-holding-usd text-teal-500"></i>Simple Interest (SI):</h3>
                     <p class="text-content">SI = <span class="formula">(P × R × T) / 100</span></p>
                     <p class="text-content">Amount (SI): A = P(1 + RT/100)</p>
-                    <h3 class="sub-heading">Compound Interest (CI):</h3>
+                    <h3 class="sub-heading"><i class="fas fa-piggy-bank text-teal-500"></i>Compound Interest (CI):</h3>
                     <p class="text-content">Amount (CI compounded annually): A = <span class="formula">P(1 + R/100)<sup>T</sup></span></p>
                     <p class="text-content">CI = A - P = <span class="formula">P[(1 + R/100)<sup>T</sup> - 1]</span></p>
-                    <h3 class="sub-heading">Compounding Frequencies:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-calendar-alt text-teal-500"></i>Compounding Frequencies:</h3>
                     <ul class="list-custom">
                         <li>Half-yearly: Rate = R/2, Time = 2T. A = P(1 + (R/2)/100)<sup>2T</sup></li>
                         <li>Quarterly: Rate = R/4, Time = 4T. A = P(1 + (R/4)/100)<sup>4T</sup></li>
                     </ul>
-                    <h3 class="sub-heading">Difference between CI and SI:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-balance-scale-left text-teal-500"></i>Difference between CI and SI:</h3>
                     <ul class="list-custom">
                         <li>For 2 years: CI - SI = <span class="formula">P(R/100)<sup>2</sup></span></li>
                         <li>For 3 years: CI - SI = <span class="formula">P(R/100)<sup>2</sup>(3 + R/100)</span></li>
                     </ul>
-                    <div class="calculator-container calculator-theme-blue-grey">
+                    <div class="calculator-container calculator-theme-teal">
                         <h4 class="calculator-title">
                             <i class="fas fa-calculator"></i>
                             Interest Calculator
@@ -1237,9 +1012,9 @@
                 </div>
 
                 <div id="topic-16" class="content-section">
-                    <h2 class="topic-heading">16. Mixture & Allegations</h2>
+                    <h2 class="topic-heading"><i class="fas fa-flask text-teal-600"></i>16. Mixture & Allegations</h2>
                     <p class="text-content mb-4">This topic deals with combining ingredients and finding ratios or properties of the resulting mixture.</p>
-                    <h3 class="sub-heading">Allegation Rule:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-balance-scale text-teal-500"></i>Allegation Rule:</h3>
                     <p class="text-content">Used to find the ratio to mix two ingredients (Cheaper C, Dearer D) to get a Mean value M.</p>
                     <p class="text-content">Ratio (Cheaper Qty : Dearer Qty) = <span class="formula">(D - M) : (M - C)</span></p>
                     <div class="my-4 p-4 bg-slate-100 rounded-lg text-center shadow">
@@ -1256,31 +1031,31 @@
                         </div>
                         <p class="mt-3 text-sm text-slate-600">Ratio of Quantities is (D-M) : (M-C)</p>
                     </div>
-                    <h3 class="sub-heading">Removal and Replacement:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-sync-alt text-teal-500"></i>Removal and Replacement:</h3>
                     <p class="text-content">If a container has x units, and y units are taken out and replaced n times:</p>
                     <p class="text-content">Quantity of original liquid left = <span class="formula">x(1 - y/x)<sup>n</sup></span></p>
                 </div>
 
                 <div id="topic-17" class="content-section">
-                    <h2 class="topic-heading">17. Permutation and Combination</h2>
+                    <h2 class="topic-heading"><i class="fas fa-random text-teal-600"></i>17. Permutation and Combination</h2>
                     <p class="text-content mb-4">Permutation deals with arrangements (order matters), while combination deals with selections (order doesn't matter).</p>
-                    <h3 class="sub-heading">Factorial:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-exclamation text-teal-500"></i>Factorial:</h3>
                     <p class="text-content">n! = n × (n-1) × ... × 1. (0! = 1)</p>
-                    <h3 class="sub-heading">Permutation (Arrangement):</h3>
+                    <h3 class="sub-heading"><i class="fas fa-sort-alpha-down text-teal-500"></i>Permutation (Arrangement):</h3>
                     <p class="text-content"><sup>n</sup>P<sub>r</sub> = <span class="formula">n! / (n-r)!</span></p>
-                    <h3 class="sub-heading">Combination (Selection):</h3>
+                    <h3 class="sub-heading"><i class="fas fa-object-group text-teal-500"></i>Combination (Selection):</h3>
                     <p class="text-content"><sup>n</sup>C<sub>r</sub> = <span class="formula">n! / [r!(n-r)!]</span></p>
-                    <h3 class="sub-heading">Important Properties:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-star text-teal-500"></i>Important Properties:</h3>
                     <ul class="list-custom">
                         <li><sup>n</sup>C<sub>r</sub> = <sup>n</sup>C<sub>n-r</sub></li>
                         <li><sup>n</sup>C<sub>0</sub> = 1, <sup>n</sup>C<sub>1</sub> = n, <sup>n</sup>C<sub>n</sub> = 1</li>
                     </ul>
-                    <h3 class="sub-heading">Circular Permutations:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-circle-notch text-teal-500"></i>Circular Permutations:</h3>
                     <ul class="list-custom">
                         <li>n distinct objects around a circle: (n-1)!</li>
                         <li>n distinct beads (necklace): (n-1)! / 2</li>
                     </ul>
-                    <div class="calculator-container calculator-theme-warm-grey">
+                    <div class="calculator-container calculator-theme-slate">
                         <h4 class="calculator-title">
                             <i class="fas fa-calculator"></i>
                             Permutation (nPr) & Combination (nCr) Calculator
@@ -1315,13 +1090,13 @@
                 </div>
 
                 <div id="topic-18" class="content-section">
-                    <h2 class="topic-heading">18. Probability</h2>
+                    <h2 class="topic-heading"><i class="fas fa-dice text-teal-600"></i>18. Probability</h2>
                     <p class="text-content mb-4">Probability measures the likelihood of an event occurring.</p>
-                    <h3 class="sub-heading">Basic Formula:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-superscript text-teal-500"></i>Basic Formula:</h3>
                     <p class="text-content">P(E) = <span class="formula">(Number of Favorable Outcomes) / (Total Number of Possible Outcomes)</span> = n(E) / n(S)</p>
-                    <h3 class="sub-heading">Range:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-arrows-alt-v text-teal-500"></i>Range:</h3>
                     <p class="text-content">0 ≤ P(E) ≤ 1. P(Impossible Event)=0. P(Sure Event)=1.</p>
-                    <h3 class="sub-heading">Key Rules:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-key text-teal-500"></i>Key Rules:</h3>
                     <ul class="list-custom">
                         <li>Complementary Event: P(Not E) = P(E') = 1 - P(E)</li>
                         <li>Mutually Exclusive Events (cannot happen together): P(A∪B) = P(A) + P(B)</li>
@@ -1329,7 +1104,7 @@
                         <li>General Addition Rule: P(A∪B) = P(A) + P(B) - P(A∩B)</li>
                         <li>Conditional Probability (A given B occurred): P(A|B) = P(A∩B) / P(B)</li>
                     </ul>
-                    <div class="calculator-container calculator-theme-blue-grey">
+                    <div class="calculator-container calculator-theme-teal">
                         <h4 class="calculator-title">
                             <i class="fas fa-calculator"></i>
                             Basic Probability Calculator P(E) = n(E)/n(S)
@@ -1364,9 +1139,9 @@
                 </div>
 
                 <div id="topic-19" class="content-section">
-                    <h2 class="topic-heading">19. Data Interpretation (DI)</h2>
+                    <h2 class="topic-heading"><i class="fas fa-chart-bar text-teal-600"></i>19. Data Interpretation (DI)</h2>
                     <p class="text-content mb-4">DI involves understanding and analyzing data presented in various formats like tables, graphs, and charts.</p>
-                    <h3 class="sub-heading">Types:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-table text-teal-500"></i>Types:</h3>
                     <ul class="list-custom">
                         <li>Tables</li>
                         <li>Bar Graphs (Simple, Multiple, Stacked)</li>
@@ -1374,7 +1149,7 @@
                         <li>Pie Charts (Single, Multiple)</li>
                         <li>Mixed Graphs, Radar Graphs</li>
                     </ul>
-                    <h3 class="sub-heading">Skills:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-cogs text-teal-500"></i>Skills:</h3>
                     <ul class="list-custom">
                         <li>Accurate data reading.</li>
                         <li>Quick calculations: Percentages, Averages, Ratios, Differences, Sums.</li>
@@ -1384,15 +1159,15 @@
                 </div>
 
                 <div id="topic-20" class="content-section">
-                    <h2 class="topic-heading">20. Caselet DI</h2>
+                    <h2 class="topic-heading"><i class="fas fa-file-alt text-teal-600"></i>20. Caselet DI</h2>
                     <p class="text-content mb-4">Caselet DI presents data in descriptive paragraphs. The skill lies in comprehending the text, extracting relevant data, organizing it (often into a table), and then answering questions.</p>
                     <p class="text-content">This requires strong reading comprehension and analytical skills to structure the unstructured information effectively.</p>
                 </div>
 
                 <div id="topic-21" class="content-section">
-                    <h2 class="topic-heading">21. Data Sufficiency</h2>
+                    <h2 class="topic-heading"><i class="fas fa-check-double text-teal-600"></i>21. Data Sufficiency</h2>
                     <p class="text-content mb-4">Data Sufficiency questions test whether the given data in statements is sufficient to answer a question, not necessarily to find the actual answer.</p>
-                    <h3 class="sub-heading">Approach:</h3>
+                    <h3 class="sub-heading"><i class="fas fa-tasks text-teal-500"></i>Approach:</h3>
                     <ol class="list-decimal list-inside text-slate-600 space-y-1 pl-2">
                         <li>Check Statement I alone: Can you get a unique answer?</li>
                         <li>Check Statement II alone: Can you get a unique answer?</li>
@@ -1402,10 +1177,10 @@
                 </div>
                 
                 <div id="topic-22" class="content-section">
-                    <h2 class="topic-heading">22. Speed Math & Calculation Shortcuts</h2>
+                    <h2 class="topic-heading"><i class="fas fa-bolt text-teal-600"></i>22. Speed Math & Calculation Shortcuts</h2>
                     <p class="text-content mb-4">Improving calculation speed is crucial for competitive exams. Here are some common techniques:</p>
 
-                    <h3 class="sub-heading">Squaring Techniques</h3>
+                    <h3 class="sub-heading"><i class="fas fa-superscript text-teal-500"></i>Squaring Techniques</h3>
                     <p class="text-content"><strong>1. Squaring Numbers Ending in 5:</strong></p>
                     <p class="text-content">If a number is N5 (e.g., 35), its square ends in 25. The preceding digits are N × (N+1).</p>
                     <div class="trick-example">
@@ -1441,7 +1216,7 @@
                         <br>So, 104<sup>2</sup> = 10816.
                     </div>
 
-                    <h3 class="sub-heading">Multiplication Shortcuts</h3>
+                    <h3 class="sub-heading"><i class="fas fa-times text-teal-500"></i>Multiplication Shortcuts</h3>
                     <p class="text-content"><strong>1. Multiplication by 5, 25, 125:</strong></p>
                     <ul class="list-custom">
                         <li>Multiply by 5: Multiply by 10 and divide by 2 (N × 10 / 2). Example: 68 × 5 = 680 / 2 = 340.</li>
@@ -1473,7 +1248,7 @@
                         <br>Example: 123 × 99 = 123 × (100 - 1) = 12300 - 123 = 12177.
                     </div>
 
-                    <h3 class="sub-heading">Quick Percentage Calculations</h3>
+                    <h3 class="sub-heading"><i class="fas fa-percentage text-teal-500"></i>Quick Percentage Calculations</h3>
                      <ul class="list-custom">
                         <li>10% of N: Divide N by 10 (N / 10).</li>
                         <li>1% of N: Divide N by 100 (N / 100).</li>
@@ -1494,10 +1269,10 @@
                 </div>
 
                 <div id="topic-23" class="content-section">
-                    <h2 class="topic-heading">23. AI Word Problem Assistant ✨</h2>
+                    <h2 class="topic-heading"><i class="fas fa-robot text-emerald-600"></i>23. AI Word Problem Assistant ✨</h2>
                     <p class="text-content mb-4">Stuck on a word problem? Paste it below and let our AI assistant help you break it down! The AI will identify key information, suggest variables and formulas, and outline a step-by-step approach to guide you towards the solution (without solving it directly).</p>
-
-                    <div class="ai-container calculator-theme-green">
+                    
+                    <div class="ai-container calculator-theme-emerald">
                         <h4 class="ai-title">
                              <i class="fas fa-robot"></i>
                             Enter Your Word Problem
@@ -1539,7 +1314,7 @@
 
     <script>
         const topics = [
-            { name: "Simplification and Approximation", icon: "fa-calculator" },
+            { name: "Simplification and Approximation", icon: "fa-stream" },
             { name: "Number Series", icon: "fa-sort-numeric-up" },
             { name: "Quadratic Equation", icon: "fa-square-root-alt" },
             { name: "Number System / HCF & LCM", icon: "fa-hashtag" },
@@ -1559,7 +1334,7 @@
             { name: "Probability", icon: "fa-dice" },
             { name: "Data Interpretation (DI)", icon: "fa-chart-bar" },
             { name: "Caselet DI", icon: "fa-file-alt" },
-            { name: "Data Sufficiency", icon: "fa-check-circle" },
+            { name: "Data Sufficiency", icon: "fa-check-double" },
             { name: "Speed Math & Calculation Shortcuts", icon: "fa-bolt" },
             { name: "AI Word Problem Assistant ✨", icon: "fa-robot" }
         ];
@@ -1575,7 +1350,7 @@
             const listItem = document.createElement('li');
             const link = document.createElement('a');
             link.href = `#topic-${index + 1}`;
-            link.innerHTML = `<i class="fas ${topic.icon}"></i> ${index + 1}. ${topic.name.replace('✨', '<span class="text-yellow-300">✨</span>')}`;
+            link.innerHTML = `<i class="fas ${topic.icon} fa-fw"></i> ${index + 1}. ${topic.name.replace('✨', '<span class="text-yellow-300">✨</span>')}`;
             link.dataset.target = `topic-${index + 1}`;
             listItem.appendChild(link);
             topicListEl.appendChild(listItem);
@@ -1611,7 +1386,6 @@
             const targetElement = document.getElementById(targetId);
             if (targetElement) {
                 targetElement.classList.add('active');
-                // Add smooth scroll to top
                 document.getElementById('contentArea').scrollTo({
                     top: 0,
                     behavior: 'smooth'
@@ -1633,23 +1407,12 @@
             }
         }
 
-        // Add hover effect to calculator containers
         document.querySelectorAll('.calculator-container, .ai-container').forEach(container => {
             container.addEventListener('mouseenter', () => {
-                container.style.transform = 'translateY(-2px)';
+                // container.style.transform = 'translateY(-2px)'; // Already handled by Tailwind hover:
             });
             container.addEventListener('mouseleave', () => {
-                container.style.transform = 'translateY(0)';
-            });
-        });
-
-        // Add smooth transitions to buttons
-        document.querySelectorAll('.calculator-button, .ai-button').forEach(button => {
-            button.addEventListener('mouseenter', () => {
-                button.style.transform = 'scale(1.05)';
-            });
-            button.addEventListener('mouseleave', () => {
-                button.style.transform = 'scale(1)';
+                // container.style.transform = 'translateY(0)'; // Already handled by Tailwind
             });
         });
 
@@ -1662,9 +1425,8 @@
         function lcm(a, b) {
             a = Math.abs(a); b = Math.abs(b);
             if (a === 0 || b === 0) return 0;
-            if (a === 0 || b === 0) return 0; // Avoid division by zero if gcd is 0
             const hcf = gcd(a,b);
-            return hcf === 0 ? 0 : (a * b) / hcf; // Check hcf before division
+            return hcf === 0 ? 0 : (a * b) / hcf;
         }
 
         function factorial(n) {
@@ -1679,52 +1441,39 @@
         
         function displayError(resultEl, message) {
             resultEl.innerHTML = `
-                <div class="flex items-center gap-3 text-red-600">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <span class="font-medium">${message}</span>
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-exclamation-circle text-red-500"></i>
+                    <span class="font-medium text-red-700">${message}</span>
                 </div>`;
             resultEl.classList.add('error');
-            resultEl.classList.remove('success');
+            resultEl.classList.remove('success', 'hidden');
         }
 
         function displaySuccess(resultEl, message) {
             resultEl.innerHTML = `
-                <div class="flex items-center gap-3 text-teal-700">
-                    <i class="fas fa-check-circle"></i>
-                    <span class="font-medium">${message}</span>
+                <div class="flex items-start gap-3">
+                     <i class="fas fa-check-circle text-teal-600 mt-1"></i>
+                    <div class="font-medium text-teal-800">${message}</div>
                 </div>`;
             resultEl.classList.add('success');
-            resultEl.classList.remove('error');
+            resultEl.classList.remove('error', 'hidden');
         }
         
         function formatAIResponse(text) {
             let html = text;
-            // Basic Markdown to HTML
-            // Bold: **text** or __text__
-            html = html.replace(/\*\*(.*?)\*\*|__(.*?)__/g, (match, p1, p2) => `<h3>${p1 || p2}</h3>`);
-            // Italic: *text* or _text_
-            html = html.replace(/\*(.*?)\*|_(.*?)_/g, (match, p1, p2) => `<em>${p1 || p2}</em>`);
-
-            // Lists (numbered and bulleted)
-            // Numbered lists: 1. Item
-            html = html.replace(/^\s*(\d+)\.\s+(.*)/gm, '<li>$2</li>');
-            // Bulleted lists: * Item or - Item
-            html = html.replace(/^\s*[\*\-]\s+(.*)/gm, '<li>$1</li>');
-            
-            // Wrap consecutive <li> items in <ul> or <ol>
-            // This is a simplified approach and might need refinement for complex list structures
+            html = html.replace(/\*\*(.*?)\*\*/g, (match, p1) => `<h3 class="text-lg font-semibold text-emerald-700 mt-4 mb-2">${p1}</h3>`);
+            html = html.replace(/\*(.*?)\*/g, (match, p1) => `<em>${p1}</em>`);
+            html = html.replace(/^\s*(\d+)\.\s+(.*)/gm, (match, p1, p2) => `<li class="ml-4">${p1}. ${p2.trim()}</li>`);
+            html = html.replace(/^\s*[\*\-]\s+(.*)/gm, (match, p1) => `<li class="ml-4">${p1.trim()}</li>`);
+            html = html.replace(/(\<\/li\>\s*)+/g, '</li>'); 
             html = html.replace(/(<li>.*?<\/li>\s*)+/g, (match) => {
-                if (match.startsWith('<li>') && match.match(/^\s*(\d+)\./)) { // Check if first item looks numbered
-                    return `<ol class="list-decimal list-inside pl-5">${match}</ol>`;
+                 if (match.match(/<li class="ml-4">\d+\./)) {
+                    return `<ol class="list-decimal list-inside space-y-1 text-slate-700">${match}</ol>`;
                 }
-                return `<ul class="list-disc list-inside pl-5">${match}</ul>`;
+                return `<ul class="list-disc list-inside space-y-1 text-slate-700">${match}</ul>`;
             });
-            
-            // Paragraphs (double newlines)
-            html = html.replace(/\n\n/g, '<br><br>'); // Using <br><br> for paragraphs as p tags might interfere with list formatting
-            // Single newlines
+            html = html.replace(/\n\n/g, '<br><br>');
             html = html.replace(/\n/g, '<br>');
-
             return html;
         }
 
@@ -1754,61 +1503,18 @@
                     const r1 = (-b + Math.sqrt(D)) / (2*a);
                     const r2 = (-b - Math.sqrt(D)) / (2*a);
                     nature = Number.isInteger(Math.sqrt(D)) ? "Real, distinct, rational" : "Real, distinct, irrational";
-                    rootsText = `
-                        <div class="mt-3 space-y-2">
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-square-root-alt text-teal-600"></i>
-                                <span>x₁ = ${r1.toFixed(4)}</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-square-root-alt text-teal-600"></i>
-                                <span>x₂ = ${r2.toFixed(4)}</span>
-                            </div>
-                        </div>`;
+                    rootsText = `x₁ = ${r1.toFixed(4)}, x₂ = ${r2.toFixed(4)}`;
                 } else if (D === 0) {
                     const r = -b / (2*a);
                     nature = "Real, equal, rational";
-                    rootsText = `
-                        <div class="mt-3">
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-equals text-teal-600"></i>
-                                <span>x = ${r.toFixed(4)}</span>
-                            </div>
-                        </div>`;
+                    rootsText = `x = ${r.toFixed(4)}`;
                 } else {
                     const rp = (-b / (2*a)).toFixed(4);
                     const ip = (Math.sqrt(-D) / (2*a)).toFixed(4);
                     nature = "Imaginary (complex conjugate)";
-                    rootsText = `
-                        <div class="mt-3 space-y-2">
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-square-root-alt text-teal-600"></i>
-                                <span>x₁ = ${rp} + ${ip}i</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-square-root-alt text-teal-600"></i>
-                                <span>x₂ = ${rp} - ${ip}i</span>
-                            </div>
-                        </div>`;
+                    rootsText = `x₁ = ${rp} + ${ip}i, x₂ = ${rp} - ${ip}i`;
                 }
-                
-                displaySuccess(resultEl, `
-                    <div class="space-y-3">
-                        <div class="flex items-center gap-2">
-                            <i class="fas fa-info-circle"></i>
-                            <span><strong>Discriminant (D):</strong> ${D.toFixed(4)}</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <i class="fas fa-chart-line"></i>
-                            <span><strong>Nature:</strong> ${nature} roots</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <i class="fas fa-square-root-alt"></i>
-                            <span><strong>Roots:</strong></span>
-                        </div>
-                        ${rootsText}
-                    </div>
-                `);
+                displaySuccess(resultEl, `<strong>Discriminant (D):</strong> ${D.toFixed(4)}<br><strong>Nature:</strong> ${nature} roots<br><strong>Roots:</strong> ${rootsText}`);
             });
         }
 
@@ -2041,7 +1747,9 @@ Please provide your analysis in the following format, using Markdown-style headi
 Ensure your language is clear, encouraging, and helpful for someone preparing for an exam.`;
                 
                 try {
-                    const apiKey = ""; 
+                    // IMPORTANT: Replace "YOUR_API_KEY_HERE" with your actual Gemini API key if running this outside a managed environment.
+                    // If the API key is managed by the environment, you can leave it as an empty string.
+                    const apiKey = "YOUR_API_KEY_HERE"; 
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                     
                     const payload = {
@@ -2056,7 +1764,21 @@ Ensure your language is clear, encouraging, and helpful for someone preparing fo
 
                     if (!response.ok) {
                         const errorData = await response.json();
-                        throw new Error(errorData.error?.message || `API request failed with status ${response.status}`);
+                        console.error("API Error Data:", errorData); // Log the full error
+                        let errorMessage = `API request failed with status ${response.status}.`;
+                        if (errorData.error && errorData.error.message) {
+                            errorMessage += ` Message: ${errorData.error.message}`;
+                        }
+                         // Check for specific API key related errors based on common messages
+                        if (errorData.error?.message?.includes("API Key not valid") || errorData.error?.message?.includes("API_KEY_INVALID")) {
+                            errorMessage = "The API Key is not valid. Please check your API key and ensure it is correctly entered in the script.";
+                        } else if (errorData.error?.message?.includes("API_KEY_SERVICE_BLOCKED") || errorData.error?.message?.includes("API key not valid")) {
+                             errorMessage = "This API key is not authorized to use this service or may be disabled. Please check your Google Cloud Project settings for the Gemini API.";
+                        } else if (errorData.error?.message?.includes("caller does not have permission")) {
+                            errorMessage = "The API key is missing required permissions for the Gemini API. Please check IAM settings in your Google Cloud Project.";
+                        }
+
+                        throw new Error(errorMessage);
                     }
 
                     const result = await response.json();
@@ -2066,7 +1788,15 @@ Ensure your language is clear, encouraging, and helpful for someone preparing fo
                         result.candidates[0].content.parts.length > 0) {
                         const aiText = result.candidates[0].content.parts[0].text;
                         aiAnalysisResultEl.innerHTML = formatAIResponse(aiText);
-                    } else {
+                    } else if (result.promptFeedback && result.promptFeedback.blockReason) {
+                        // Handle cases where the prompt was blocked
+                        let blockMessage = `The AI could not process your request. Reason: ${result.promptFeedback.blockReason}.`;
+                        if (result.promptFeedback.safetyRatings) {
+                            blockMessage += ` Details: ${result.promptFeedback.safetyRatings.map(r => `${r.category} - ${r.probability}`).join(', ')}`;
+                        }
+                        throw new Error(blockMessage);
+                    }
+                    else {
                         throw new Error("Received an unexpected response structure from the AI.");
                     }
 
