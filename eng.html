@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive English Study Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Visualization & Content Choices:
+        - Exam Pattern (Paper 1 Marks): Bar Chart (Chart.js) for clear visual comparison of subject contributions. Interaction: Tooltips. Justification: Better than text for quick understanding of weights for an English language exam's first paper. Library: Chart.js (Canvas).
+        - English Language Specifics (Marks): Pie Chart (Chart.js) for English section's proportion in Paper 1. Interaction: Tooltips. Justification: Visualizes part-to-whole relationship effectively. Library: Chart.js (Canvas).
+        - Grammar Rules (Parts of Speech, Tenses, SVA, etc.): Structured HTML text, Tailwind-styled tables, with additional examples. Interaction: Read, reference. Justification: Clear, organized presentation for study.
+        - Vocabulary Lists (Words, Idioms, Phrasal Verbs): Interactive "flashcard" style (click to reveal details), search/filter bar. Note added to encourage wider reading. Added more sample words/idioms. Interaction: Click to toggle details, type to filter. Justification: Active recall for memorization, efficient searching.
+        - Reading Comprehension (Practice Passage): Interactive Q&A (radio buttons for MCQs), including additional practice passages with relevant themes. Interaction: Select option, click "Show Answer". Justification: Simulates practice, immediate feedback.
+        - Question-Specific Areas (Error Spotting, Sentence Improvement, Para Jumbles, Cloze Test): Significantly more interactive questions with input/selection and "Show Solution" buttons, designed to be representative of competitive exam questions. Justification: Focused practice on exam-specific question formats with instant feedback.
+        - General Text: Well-formatted HTML with Tailwind. Interaction: Read. Justification: Context and explanation. Includes note on practice strategy.
+        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. All charts are Chart.js on Canvas.
+    -->
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f8fafc; /* slate-50 */
+            color: #1e293b; /* slate-800 */
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px; 
+            margin-left: auto;
+            margin-right: auto;
+            height: 280px; 
+            max-height: 350px; 
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 320px; 
+            }
+        }
+        .table-container table {
+            width: 100%;
+            font-size: 0.875rem;
+        }
+        .interactive-item .details {
+            display: none;
+            border-left: 2px solid #5eead4; /* teal-300 */
+            padding-left: 0.75rem;
+            margin-left: 0.25rem;
+        }
+        .interactive-item.open .details {
+            display: block;
+        }
+        .solution {
+            display: none;
+            margin-top: 0.75rem;
+            padding: 0.75rem;
+            background-color: #f0fdfa; /* teal-50 */
+            border-left: 4px solid #14b8a6; /* teal-500 */
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e2e8f0; /* slate-200 */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8; /* slate-400 */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b; /* slate-500 */
+        }
+        .nav-item {
+            padding: 0.625rem 1rem; 
+            display: block;
+            color: #334155; /* slate-700 */
+            border-radius: 0.375rem;
+            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+            font-size: 0.9rem; 
+        }
+        .nav-item:hover {
+            background-color: #e2e8f0; /* slate-200 */
+            color: #0f172a; /* slate-900 */
+        }
+        .nav-item.active {
+            background-color: #0d9488; /* teal-600 */
+            color: white;
+            font-weight: 500; 
+        }
+        .nav-group-title {
+            padding: 0.75rem 1rem 0.25rem; 
+            font-size: 0.75rem; 
+            font-weight: 600;
+            color: #0f766e; /* teal-700 */
+            margin-top: 0.75rem; 
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        h2, h3, h4 {
+            font-weight: 600; 
+        }
+        h2 { color: #0f766e; /* teal-700 */ }
+        h3 { color: #0d9488; /* teal-600 */ }
+        h4 { color: #14b8a6; /* teal-500 */ }
+        .card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            margin-bottom: 1.5rem;
+        }
+        .prose-custom {
+            color: #334155; /* slate-700 */
+            line-height: 1.65;
+        }
+        .prose-custom p, .prose-custom ul, .prose-custom ol {
+            margin-bottom: 1rem;
+        }
+        .prose-custom ul, .prose-custom ol {
+            padding-left: 1.25rem;
+        }
+        .prose-custom strong {
+            color: #1e293b; /* slate-800 */
+        }
+        .prose-custom em {
+            font-style: italic;
+            color: #475569; /* slate-600 */
+        }
+        .prose-custom a {
+            color: #0d9488; /* teal-600 */
+            text-decoration: none;
+        }
+        .prose-custom a:hover {
+            text-decoration: underline;
+        }
+        .prose-custom code {
+            background-color: #f1f5f9; /* slate-100 */
+            padding: 0.125rem 0.25rem;
+            border-radius: 0.25rem;
+            font-size: 0.875em;
+            color: #0d9488; /* teal-600 */
+        }
+        .prose-custom table {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+        .prose-custom th, .prose-custom td {
+            border: 1px solid #e2e8f0; /* slate-200 */
+            padding: 0.5rem 0.75rem;
+        }
+        .prose-custom th {
+            background-color: #f8fafc; /* slate-50 */
+            font-weight: 600;
+        }
+        .practice-question-item {
+            border: 1px solid #e2e8f0; /* slate-200 */
+            padding: 0.75rem; 
+            border-radius: 0.375rem; 
+            background-color: #ffffff; 
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
+        }
+        .note-box {
+            background-color: #e0f2f1; /* teal-50 lighter shade */
+            border-left: 4px solid #0d9488; /* teal-600 */
+            padding: 0.75rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <aside class="w-full md:w-72 bg-white text-slate-700 p-4 space-y-1 shadow-lg md:sticky md:top-0 md:h-screen md:overflow-y-auto">
+            <h1 class="text-xl font-bold text-teal-700 mb-4 border-b pb-3 border-teal-200">English Language Guide</h1>
+            <nav id="mainNav">
+                <a href="#overview" class="nav-item active" onclick="showSection('overview', this)">Overview</a>
+
+                <div class="nav-group-title">Grammar Essentials</div>
+                <a href="#grammar-intro" class="nav-item" onclick="showSection('grammar-intro', this)">Introduction</a>
+                <a href="#parts-of-speech" class="nav-item" onclick="showSection('parts-of-speech', this)">Parts of Speech</a>
+                <a href="#tenses" class="nav-item" onclick="showSection('tenses', this)">Tenses</a>
+                <a href="#sva" class="nav-item" onclick="showSection('sva', this)">Subject-Verb Agreement</a>
+                <a href="#articles" class="nav-item" onclick="showSection('articles', this)">Articles</a>
+                <a href="#prepositions" class="nav-item" onclick="showSection('prepositions', this)">Prepositions</a>
+                <a href="#voice" class="nav-item" onclick="showSection('voice', this)">Voice</a>
+                <a href="#speech" class="nav-item" onclick="showSection('speech', this)">Speech</a>
+                <a href="#common-pitfalls" class="nav-item" onclick="showSection('common-pitfalls', this)">Common Pitfalls</a>
+
+                <div class="nav-group-title">Vocabulary Hub</div>
+                <a href="#vocab-intro" class="nav-item" onclick="showSection('vocab-intro', this)">Intro & Strategies</a>
+                <a href="#vocab-list" class="nav-item" onclick="showSection('vocab-list', this)">High-Frequency Words</a>
+                <a href="#synonyms-antonyms" class="nav-item" onclick="showSection('synonyms-antonyms', this)">Synonyms & Antonyms</a>
+                <a href="#idioms-phrases" class="nav-item" onclick="showSection('idioms-phrases', this)">Idioms & Phrases</a>
+                <a href="#phrasal-verbs" class="nav-item" onclick="showSection('phrasal-verbs', this)">Phrasal Verbs</a>
+                <a href="#one-word-substitution" class="nav-item" onclick="showSection('one-word-substitution', this)">One-Word Substitution</a>
+                <a href="#vocab-practice" class="nav-item" onclick="showSection('vocab-practice', this)">Vocabulary Practice</a>
+
+
+                <div class="nav-group-title">Reading Comprehension</div>
+                <a href="#rc-intro" class="nav-item" onclick="showSection('rc-intro', this)">Introduction</a>
+                <a href="#rc-strategies" class="nav-item" onclick="showSection('rc-strategies', this)">Reading Strategies</a>
+                <a href="#rc-question-types" class="nav-item" onclick="showSection('rc-question-types', this)">Question Types</a>
+                <a href="#rc-practice" class="nav-item" onclick="showSection('rc-practice', this)">Practice Passages</a>
+
+                <div class="nav-group-title">Question Practice</div>
+                <a href="#error-spotting" class="nav-item" onclick="showSection('error-spotting', this)">Error Spotting</a>
+                <a href="#sentence-improvement" class="nav-item" onclick="showSection('sentence-improvement', this)">Sentence Improvement</a>
+                <a href="#para-jumbles" class="nav-item" onclick="showSection('para-jumbles', this)">Para Jumbles</a>
+                <a href="#sentence-framing" class="nav-item" onclick="showSection('sentence-framing', this)">Sentence Framing</a>
+                <a href="#cloze-test" class="nav-item" onclick="showSection('cloze-test', this)">Cloze Test</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 p-6 md:p-8 lg:p-10 bg-slate-50 overflow-y-auto">
+            <section id="overview" class="content-section active">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6">Overview: English Language Section</h2>
+                <div class="card prose-custom">
+                    <h3 class="text-xl font-semibold mb-3">1.1. Introduction</h3>
+                    <p>This interactive study guide is a comprehensive resource for the English Language section of a competitive examination. It covers essential topics to equip candidates with the knowledge and skills needed to excel. Navigate through topics using the menu on the left.</p>
+                    <div class="note-box">
+                        <p><strong>A Note on Practice:</strong> The practice questions in this guide are designed to be representative of common patterns found in the English sections of competitive examinations. For actual previous year papers and the most specific preparation for a particular exam, candidates are advised to consult official exam syllabi and materials from reliable sources for that specific examination.</p>
+                    </div>
+                </div>
+
+                <div class="card prose-custom">
+                    <h3 class="text-xl font-semibold mb-3">1.2. Exam Pattern Context</h3>
+                    <p class="mb-4">Understanding the exam structure is key. Phase 1 is an online screening exam.</p>
+                    <ul class="list-disc space-y-2 mb-4">
+                        <li><strong>Phase 1 Structure:</strong> Two papers (Paper 1 & Paper 2), MCQs. Paper 1 is common.</li>
+                        <li><strong>Paper 1 Composition:</strong> General Awareness (Financial Sector), English Language, Quantitative Aptitude, Test of Reasoning.</li>
+                        <li><strong>Marks & Questions (Paper 1):</strong> 100 marks, 80 questions.</li>
+                        <li><strong>English Language Specifics:</strong> 20 questions, 25 marks (1.25 marks/question).</li>
+                        <li><strong>Duration:</strong> Composite 60 minutes for Paper 1 (avg. 45 secs/question).</li>
+                        <li><strong>Cut-off:</strong> No sectional cut-offs in Paper 1. Min. 30% in Paper 1. Aggregate 40% (Paper 1+2) for Phase 2.</li>
+                        <li><strong>Negative Marking:</strong> 1/4th mark penalty (0.3125 for English). None for unanswered.</li>
+                        <li><strong>Exam Language:</strong> Bilingual (Hindi/English), except English test.</li>
+                    </ul>
+                    <div class="grid md:grid-cols-2 gap-6 mt-6">
+                        <div class="bg-slate-100 p-4 rounded-lg">
+                            <h4 class="text-lg font-semibold mb-2 text-center">Paper 1 Mark Distribution (Assumed)</h4>
+                            <div class="chart-container h-60 md:h-64 max-h-[280px]">
+                                <canvas id="paper1MarksChart"></canvas>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-2 text-center">Assumed equal distribution for GA, Quant, Reasoning, with specified English marks.</p>
+                        </div>
+                        <div class="bg-slate-100 p-4 rounded-lg">
+                            <h4 class="text-lg font-semibold mb-2 text-center">English Language in Paper 1</h4>
+                             <div class="chart-container h-60 md:h-64 max-h-[280px]">
+                                <canvas id="englishContributionChart"></canvas>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-2 text-center">Contribution of English to Paper 1 total marks.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card prose-custom">
+                    <h3 class="text-xl font-semibold mb-3">1.3. Syllabus Topics</h3>
+                    <p class="mb-4">This guide covers the following topics, detailed in respective sections:</p>
+                    <ul class="list-disc space-y-1 columns-1 sm:columns-2">
+                        <li>Reading Comprehension</li>
+                        <li>Error Spotting</li>
+                        <li>Sentence Improvement</li>
+                        <li>Grammar</li>
+                        <li>Vocabulary (Synonyms, Antonyms, Idioms & Phrases)</li>
+                        <li>Passage Making / Cloze Test</li>
+                        <li>Jumble Words (Para Jumbles)</li>
+                        <li>Sentence Framing</li>
+                        <li>Fill in the Blanks</li>
+                    </ul>
+                </div>
+
+                <div class="card prose-custom">
+                    <h3 class="text-xl font-semibold mb-3">1.4. Importance and Scoring Potential</h3>
+                    <p class="mb-3">Phase 1 is qualifying but crucial. English (25 marks) is vital for meeting cut-offs (30% Paper 1, 40% aggregate). Strong English performance can save time for other sections.</p>
+                    <p>The exam tests general proficiency and swift rule application. Preparation should cover all topics, emphasizing common patterns. This guide aims to build that competence.</p>
+                </div>
+            </section>
+
+            <section id="grammar-intro" class="content-section">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6">Part 2: Mastering English Grammar</h2>
+                <div class="card prose-custom">
+                    <h3 class="text-xl font-semibold mb-3">2.1. Introduction</h3>
+                    <p>A strong grammar foundation is indispensable for this English section. It's tested in Error Spotting, Sentence Improvement, and vital for RCs, Cloze Tests, and sentence framing. This section breaks down essential concepts. Explore sub-topics via the navigation menu for more detailed explanations and examples.</p>
+                </div>
+            </section>
+
+            <section id="parts-of-speech" class="content-section">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6">2.2. Parts of Speech</h2>
+                <div class="card prose-custom">
+                    <p class="mb-4">Understanding word functions is fundamental. Correct identification is key to spotting errors.</p>
+                    <div class="space-y-4">
+                        <div><h4 class="text-lg font-semibold">Nouns:</h4><p class="ml-4">Persons, places, things, ideas, qualities. Types: Common (boy, <code>system</code>), Proper (Ram, <code>Linux</code>), Abstract (honesty, <code>complexity</code>), Collective (team, <code>committee</code>), Countable (book, <code>server</code>), Uncountable (water, <code>information</code>, <code>software</code>). Singular/plural. <em>Ex: The <strong>developer</strong> wrote clean <strong>code</strong>. The <strong>network</strong> experienced an <strong>outage</strong>.</em></p></div>
+                        <div><h4 class="text-lg font-semibold">Pronouns:</h4><p class="ml-4">Replace nouns. Types: Personal (I, he, <code>it</code>), Reflexive (myself, <code>itself</code>), Relative (who, <code>which</code>). Agree with antecedents. <em>Ex: The program crashed; <strong>it</strong> had a bug. The users, <strong>who</strong> reported the issue, were patient.</em></p></div>
+                        <div><h4 class="text-lg font-semibold">Verbs:</h4><p class="ml-4">Action, occurrence, state. Types: Transitive (reads a book, <code>compiles code</code>), Intransitive (sleeps, <code>runs</code>); Action (run, <code>execute</code>), Stative (know, <code>seem</code>), Linking (is, <code>becomes</code>), Auxiliary (be, have), Modal (can, <code>should</code>). <em>Ex: The script <strong>automates</strong> the process. The database <strong>is responding</strong> slowly.</em></p></div>
+                        <div><h4 class="text-lg font-semibold">Adjectives:</h4><p class="ml-4">Describe nouns/pronouns. Types: Descriptive (big, <code>efficient</code>), Demonstrative (this, <code>that</code>). Comparative/superlative forms. <em>Ex: An <strong>agile</strong> methodology was adopted. The <strong>latest</strong> update includes <strong>critical</strong> security patches.</em></p></div>
+                        <div><h4 class="text-lg font-semibold">Adverbs:</h4><p class="ml-4">Modify verbs, adjectives, adverbs (quickly, <code>efficiently</code>, very). Often end in '-ly'. Placement is crucial. <em>Ex: The data was processed <strong>accurately</strong>. The system recovered <strong>surprisingly</strong> fast.</em></p></div>
+                        <div><h4 class="text-lg font-semibold">Prepositions:</h4><p class="ml-4">Show relationships (in, on, at, <code>through</code>, <code>via</code>). Followed by an object. <em>Ex: The manual is available <strong>on</strong> the intranet. Access is granted <strong>through</strong> the portal.</em></p></div>
+                        <div><h4 class="text-lg font-semibold">Conjunctions:</h4><p class="ml-4">Connect words, phrases, clauses. Types: Coordinating (FANBOYS), Subordinating (because, if, <code>while</code>). <em>Ex: The system is robust, <strong>yet</strong> it requires regular maintenance. <strong>Although</strong> the interface is complex, <strong>it</strong> is powerful.</em></p></div>
+                        <div><h4 class="text-lg font-semibold">Interjections:</h4><p class="ml-4">Express sudden emotion (Oh!, Wow!, <code>Oops!</code>). <em>Ex: <strong>Alas!</strong> The server is down. <strong>Bravo!</strong> The deployment was successful.</em></p></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tenses" class="content-section">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6">2.3. Tenses</h2>
+                <div class="card prose-custom">
+                    <p class="mb-4">Tenses indicate time. Mastery is crucial. Common errors: incorrect usage, inconsistency, wrong sequence.</p>
+                    <h4 class="text-lg font-semibold mb-3">Tense Rules Summary Chart</h4>
+                    <div class="overflow-x-auto table-container mb-6">
+                        <table class="min-w-full divide-y divide-slate-200 shadow border border-slate-200">
+                            <thead class="bg-slate-50"><tr><th class="px-3 py-2 text-left">Tense</th><th class="px-3 py-2 text-left">Structure</th></tr></thead>
+                            <tbody class="bg-white divide-y divide-slate-200">
+                                <tr><td class="px-3 py-2">Present Simple</td><td class="px-3 py-2">V1 / V1+s/es</td></tr>
+                                <tr><td class="px-3 py-2">Present Continuous</td><td class="px-3 py-2">is/am/are + V1+ing</td></tr>
+                                <tr><td class="px-3 py-2">Present Perfect</td><td class="px-3 py-2">has/have + V3</td></tr>
+                                <tr><td class="px-3 py-2">Present Perfect Continuous</td><td class="px-3 py-2">has/have + been + V1+ing</td></tr>
+                                <tr><td class="px-3 py-2">Past Simple</td><td class="px-3 py-2">V2</td></tr>
+                                <tr><td class="px-3 py-2">Past Continuous</td><td class="px-3 py-2">was/were + V1+ing</td></tr>
+                                <tr><td class="px-3 py-2">Past Perfect</td><td class="px-3 py-2">had + V3</td></tr>
+                                <tr><td class="px-3 py-2">Past Perfect Continuous</td><td class="px-3 py-2">had + been + V1+ing</td></tr>
+                                <tr><td class="px-3 py-2">Future Simple</td><td class="px-3 py-2">will/shall + V1</td></tr>
+                                <tr><td class="px-3 py-2">Future Continuous</td><td class="px-3 py-2">will/shall + be + V1+ing</td></tr>
+                                <tr><td class="px-3 py-2">Future Perfect</td><td class="px-3 py-2">will/shall + have + V3</td></tr>
+                                <tr><td class="px-3 py-2">Future Perfect Continuous</td><td class="px-3 py-2">will/shall + have + been + V1+ing</td></tr>
+                            </tbody>
+                        </table>
+                        <p class="text-xs text-slate-500 mt-1">(V1: Base, V2: Past, V3: Past Participle)</p>
+                    </div>
+                    <h4 class="text-lg font-semibold mb-3">Detailed Usage & Examples:</h4>
+                    <div class="space-y-2">
+                        <p><strong>Present Simple:</strong> Habits, truths, schedules. <em>Ex: The algorithm <strong>sorts</strong> data efficiently. Our team <strong>meets</strong> daily. The sun <strong>rises</strong> in the east.</em></p>
+                        <p><strong>Present Continuous:</strong> Actions now, future plans. <em>Ex: The system <strong>is undergoing</strong> maintenance. We <strong>are launching</strong> the new feature next month. He <strong>is learning</strong> Python.</em></p>
+                        <p><strong>Present Perfect:</strong> Recent/unspecified past actions, continuing actions. <em>Ex: The administrator <strong>has updated</strong> the firewall. They <strong>have used</strong> this software for five years. I <strong>have just finished</strong> the report.</em></p>
+                        <p><strong>Present Perfect Continuous:</strong> Past actions still continuing (duration focus). <em>Ex: She <strong>has been coding</strong> for eight hours straight. They <strong>have been waiting</strong> for the results since morning.</em></p>
+                        <p><strong>Past Simple:</strong> Completed past actions. <em>Ex: The company <strong>implemented</strong> a new CRM last year. We <strong>visited</strong> the client yesterday.</em></p>
+                        <p><strong>Past Continuous:</strong> Past actions in progress. <em>Ex: He <strong>was debugging</strong> the application when the power failed. They <strong>were discussing</strong> the project requirements.</em></p>
+                        <p><strong>Past Perfect:</strong> Action before another past action. <em>Ex: The backup <strong>had completed</strong> before the main server crashed. She <strong>had already left</strong> when I arrived.</em></p>
+                        <p><strong>Past Perfect Continuous:</strong> Past action continued up to another past point. <em>Ex: The team <strong>had been developing</strong> the module for six months before it was finally approved. He <strong>had been working</strong> on the issue for hours before he found the solution.</em></p>
+                        <p><strong>Future Simple:</strong> Predictions, decisions. <em>Ex: The update <strong>will improve</strong> performance. I <strong>shall attend</strong> the conference. It <strong>will rain</strong> tomorrow.</em></p>
+                        <p><strong>Future Continuous:</strong> Future actions in progress. <em>Ex: Next week, we <strong>will be testing</strong> the new interface. This time tomorrow, I <strong>will be traveling</strong>.</em></p>
+                        <p><strong>Future Perfect:</strong> Actions completed by future time. <em>Ex: By December, they <strong>will have migrated</strong> all data to the new platform. She <strong>will have finished</strong> her work by 6 PM.</em></p>
+                        <p><strong>Future Perfect Continuous:</strong> Actions for a duration up to future point. <em>Ex: By the end of the year, she <strong>will have been working</strong> on this project for three years. Next month, we <strong>will have been living</strong> here for a decade.</em></p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sva" class="content-section">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6">2.4. Subject-Verb Agreement (SVA)</h2>
+                <div class="card prose-custom">
+                    <p class="mb-4">Verb must agree in number with its subject. Frequent error area.</p>
+                    <h4 class="text-lg font-semibold mb-3">SVA Rules Summary</h4>
+                    <div class="overflow-x-auto table-container">
+                        <table class="min-w-full divide-y divide-slate-200 shadow border border-slate-200">
+                            <thead class="bg-slate-50"><tr><th class="px-3 py-2 text-left">Rule/Condition</th><th class="px-3 py-2 text-left">Explanation</th><th class="px-3 py-2 text-left">Example</th></tr></thead>
+                            <tbody class="bg-white divide-y divide-slate-200">
+                                <tr><td>Basic Rule</td><td>Singular Subject → Singular Verb; Plural Subject → Plural Verb</td><td>The program runs. The programs run.</td></tr>
+                                <tr><td>'And' (compound)</td><td>Usually plural verb.</td><td>The analyst and the manager are present.</td></tr>
+                                <tr><td>'And' (one idea)</td><td>Singular verb.</td><td>Research and development is crucial. My friend and colleague has arrived.</td></tr>
+                                <tr><td>'Or', 'nor', 'either/or'</td><td>Verb agrees with nearer subject.</td><td>Neither the server nor the workstations are affected. Either the manager or the employees have the key.</td></tr>
+                                <tr><td>Intervening Phrases</td><td>Ignore phrases (with, along with, as well as, in addition to, etc.).</td><td>The manager, along with the team leads, is attending. The software, including all its modules, was updated.</td></tr>
+                                <tr><td>Indefinite Pronouns (Singular)</td><td>Each, every, anyone, someone, no one, anybody, everybody, somebody, nobody, nothing, anything, everything → Singular verb.</td><td>Each of the modules was tested. Everybody wants a stable system.</td></tr>
+                                <tr><td>Indefinite Pronouns (Plural)</td><td>Several, few, both, many → Plural verb.</td><td>Several errors were found. Many users have reported the bug.</td></tr>
+                                <tr><td>Indefinite (Singular/Plural)</td><td>Some, any, none, all, most (depend on 'of' phrase noun).</td><td>Some of the data is corrupted. Some of the files are missing. All of the information is correct. All of the reports are ready.</td></tr>
+                                <tr><td>Collective Nouns</td><td>Singular if unit; Plural if individual.</td><td>The IT department is efficient. The staff were given individual tasks to complete for the project.</td></tr>
+                                <tr><td>Nouns Plural Form, Singular Meaning</td><td>News, mathematics, ethics, physics, measles → Singular verb.</td><td>Cybersecurity ethics is an important subject. The news about the update is positive.</td></tr>
+                                <tr><td>Nouns Plural Form, Plural Meaning</td><td>Scissors, credentials, premises, trousers, police, people, cattle → Plural verb.</td><td>The login credentials are required. The police have arrived.</td></tr>
+                                <tr><td>'The number of' / 'A number of'</td><td>'The number of' → Singular; 'A number of' → Plural.</td><td>The number of users is high. A number of issues are pending.</td></tr>
+                                <tr><td>Amounts, Distances, Periods</td><td>Usually singular (as one unit).</td><td>Ten gigabytes is a large file. Fifty thousand rupees is a considerable sum.</td></tr>
+                                <tr><td>'Here' / 'There'</td><td>Verb agrees with following subject.</td><td>Here is the report. There are multiple solutions available.</td></tr>
+                                <tr><td>Relative Pronouns</td><td>Verb agrees with antecedent.</td><td>He is one of the engineers who are skilled in Python. This is the software that causes problems.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="articles" class="content-section">
+                 <h2 class="text-2xl md:text-3xl font-semibold mb-6">2.5. Articles (A, An, The)</h2>
+                <div class="card prose-custom">
+                    <p class="mb-4">Articles specify noun definiteness. Common errors: wrong choice (a/an), omission/unnecessary use of 'the'.</p>
+                    <div class="space-y-3">
+                        <div><h4 class="text-lg font-semibold">Indefinite Articles (A/An)</h4><p class="ml-4">Before singular countable nouns. 'A' (consonant sound), 'An' (vowel sound). <em>Ex: a <strong>server</strong>, an <strong>application</strong>, an <strong>HTML</strong> file (H is silent), a <strong>user</strong>, an <strong>hour</strong>.</em></p></div>
+                        <div><h4 class="text-lg font-semibold">Definite Article (The)</h4><p class="ml-4">Specific/unique nouns, already mentioned, superlatives, geographical names. <em>Ex: <strong>The</strong> internet, <strong>the</strong> database, <strong>the</strong> chief technology officer, <strong>the</strong> specific algorithm we discussed.</em></p></div>
+                        <div><h4 class="text-lg font-semibold">Omission</h4><p class="ml-4">Often before proper nouns (names), languages, abstract nouns (general sense), meals. <em>Ex: <strong>Security</strong> is paramount. We use <strong>Python</strong> for scripting. <strong>Information</strong> is valuable.</em></p></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="prepositions" class="content-section">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6">2.6. Prepositions</h2>
+                <div class="card prose-custom">
+                    <p class="mb-4">Link nouns/pronouns to other words (time, place, direction). Errors with wrong prepositions, especially fixed ones (abide by, good at).</p>
+                    <h4 class="text-lg font-semibold mb-3">Common Prepositions & Usage</h4>
+                    <div class="overflow-x-auto table-container">
+                        <table class="min-w-full divide-y divide-slate-200 shadow border border-slate-200">
+                            <thead class="bg-slate-50"><tr><th class="px-3 py-2 text-left">Prep.</th><th class="px-3 py-2 text-left">Usage</th><th class="px-3 py-2 text-left">Example</th></tr></thead>
+                            <tbody class="bg-white divide-y divide-slate-200">
+                                <tr><td>AT</td><td>Specific time, location, rate, skill</td><td>Meet <strong>at</strong> 3 PM. The server is <strong>at</strong> full capacity. Data transfer <strong>at</strong> 100 Mbps. Good <strong>at</strong> coding.</td></tr>
+                                <tr><td>ON</td><td>Days, dates, surfaces, topics, dependence</td><td>Meeting is <strong>on</strong> Monday. Report <strong>on</strong> cybersecurity. Software runs <strong>on</strong> this OS. System relies <strong>on</strong> this module.</td></tr>
+                                <tr><td>IN</td><td>Months, years, enclosed spaces, field, state</td><td>Launched <strong>in</strong> 2023. Data stored <strong>in</strong> the cloud. Expert <strong>in</strong> AI. The project is <strong>in</strong> progress.</td></tr>
+                                <tr><td>TO</td><td>Direction, limit, comparison, recipient</td><td>Send the file <strong>to</strong> the client. Access restricted <strong>to</strong> authorized users. Prefer this <strong>to</strong> that. Give it <strong>to</strong> him.</td></tr>
+                                <tr><td>FROM</td><td>Origin, start point, cause, separation</td><td>Data retrieved <strong>from</strong> the archive. Work <strong>from</strong> 9 AM. Error resulting <strong>from</strong> a bug. Different <strong>from</strong> the original.</td></tr>
+                                <tr><td>FOR</td><td>Duration, purpose, recipient, exchange</td><td>Worked <strong>for</strong> 5 hours. Algorithm designed <strong>for</strong> speed. This update is <strong>for</strong> you. Paid $10 <strong>for</strong> the software.</td></tr>
+                                <tr><td>WITH</td><td>Accompaniment, instrument, manner, agreement</td><td>Integrate <strong>with</strong> existing systems. Encrypted <strong>with</strong> AES. Handle <strong>with</strong> care. I agree <strong>with</strong> your assessment.</td></tr>
+                                <tr><td>BY</td><td>Agent (passive), means, deadline, proximity</td><td>Code written <strong>by</strong> AI. Connect <strong>by</strong> VPN. Submit <strong>by</strong> Friday. The office is <strong>by</strong> the park.</td></tr>
+                                <tr><td>ABOUT</td><td>Topic, approximation</td><td>A discussion <strong>about</strong> the new policy. It costs <strong>about</strong> $50.</td></tr>
+                                <tr><td>OVER</td><td>Above, across, more than, during</td><td>The drone flew <strong>over</strong> the building. He has authority <strong>over</strong> the team. It took <strong>over</strong> an hour.</td></tr>
+                                <tr><td>UNDER</td><td>Below, less than, subject to</td><td>The file is <strong>under</strong> 1MB. The system is <strong>under</strong> development.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="mt-3"><strong>Types:</strong> Simple (at), Compound (across), Double (into), Participle (during), Phrase (according to, in spite of).</p>
+                    <p class="mt-2"><strong>Fixed Prepositions:</strong> Words followed by specific prepositions (<em>e.g., comply <strong>with</strong>, responsible <strong>for</strong>, proficient <strong>in</strong>, depend <strong>on</strong>, result <strong>in</strong>, aware <strong>of</strong></em>).</p>
+                </div>
+            </section>
+
+            <section id="voice" class="content-section">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6">2.7. Voice (Active & Passive)</h2>
+                <div class="card prose-custom">
+                    <p class="mb-4">Indicates if subject performs or receives action.</p>
+                    <div class="space-y-3">
+                        <div><h4 class="text-lg font-semibold">Active Voice:</h4><p class="ml-4">Subject performs. <em>Ex: The team <strong>developed</strong> the application. The firewall <strong>blocks</strong> unauthorized access. The user <strong>submitted</strong> the form.</em></p></div>
+                        <div><h4 class="text-lg font-semibold">Passive Voice:</h4><p class="ml-4">Subject receives. <em>Ex: The application <strong>was developed</strong> by the team. Unauthorized access <strong>is blocked</strong> by the firewall. The form <strong>was submitted</strong> by the user.</em><br><strong>Structure:</strong> form of 'be' + V3. <strong>Usage:</strong> Action > doer, or doer unknown/unimportant. Often used in technical/formal writing to emphasize the process or result. <strong>Conversion:</strong> Object becomes subject, etc.</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="speech" class="content-section">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6">2.8. Speech (Direct & Indirect)</h2>
+                <div class="card prose-custom">
+                     <p class="mb-4">How we report what someone said.</p>
+                    <div class="space-y-3">
+                        <div><h4 class="text-lg font-semibold">Direct Speech:</h4><p class="ml-4">Exact words, in quotes. <em>Ex: The manager said, "The deadline is tomorrow." The client asked, "Can we integrate this module?"</em></p></div>
+                        <div><h4 class="text-lg font-semibold">Indirect (Reported) Speech:</h4><p class="ml-4">Reported words, often with 'that'. <em>Ex: The manager said that the deadline was the next day. The client asked if they could integrate that module.</em><br><strong>Conversion:</strong> Changes in reporting verbs (said to, told, asked, enquired), pronouns, tenses (usually shift back), time/place adverbs (now→then, tomorrow→the next day, here→there). Specific rules for questions (use 'if'/'whether' or Wh-word, change word order) and commands (use infinitive 'to + verb').</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="common-pitfalls" class="content-section">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6">2.9. Common Grammatical Pitfalls</h2>
+                <div class="card prose-custom">
+                    <p class="mb-4">Competitive exams often test frequently confused rules. Awareness improves accuracy.</p>
+                    <ul class="list-disc space-y-1">
+                        <li><strong>SVA Errors:</strong> <em>Incorrect: The data from various sources are compiled... → Correct: The data...is compiled...</em></li>
+                        <li><strong>Pronoun Errors:</strong> <em>Incorrect: Every employee must update their password. → Correct: ...update his or her password / ...update their passwords (if 'employee' is pluralized).</em></li>
+                        <li><strong>Tense Errors:</strong> <em>Incorrect: The system crashed when I run the script. → Correct: ...when I ran the script.</em></li>
+                        <li><strong>Adjective vs. Adverb:</strong> <em>Incorrect: The program runs efficient. → Correct: ...runs efficiently.</em></li>
+                        <li><strong>Preposition Errors:</strong> <em>Incorrect: We discussed about the project. → Correct: We discussed the project. Comply to → Comply with.</em></li>
+                        <li><strong>Article Errors:</strong> <em>Incorrect: He is an IT manager with an unique skill set. → Correct: ...with a unique skill set.</em></li>
+                        <li><strong>Comparison Errors:</strong> <em>Incorrect: This software is more superior. → Correct: This software is superior.</em></li>
+                        <li><strong>Parallelism Errors:</strong> <em>Incorrect: The goals are to reduce cost, improving efficiency, and customer satisfaction. → Correct: ...reducing cost, improving efficiency, and increasing customer satisfaction.</em></li>
+                        <li><strong>Modifier Errors:</strong> <em>Incorrect: Running the diagnostics, the error was found by the technician. → Correct: Running the diagnostics, the technician found the error.</em></li>
+                        <li><strong>Redundancy:</strong> <em>Incorrect: The two departments will collaborate together. → Correct: ...will collaborate.</em></li>
+                        <li><strong>Countable/Uncountable Nouns:</strong> <em>Incorrect: He gave me many advices. → Correct: ...much advice / many pieces of advice.</em></li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="vocab-intro" class="content-section">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6">Part 3: Building a Strong Vocabulary</h2>
+                 <div class="card prose-custom">
+                    <h3 class="text-xl font-semibold mb-3">3.1. Introduction</h3>
+                    <p class="mb-4">Robust vocabulary is vital for RCs, Cloze Tests, Fillers, Synonyms, Antonyms, Idioms. This section guides you.</p>
+                    <h3 class="text-xl font-semibold mb-3">3.2. Strategies for Vocabulary Enhancement</h3>
+                    <p class="mb-3">Continuous effort is key. Effective strategies:</p>
+                    <ul class="list-disc space-y-1">
+                        <li><strong>Read Widely:</strong> Newspapers (editorials), magazines, books, quality online articles. For IT officer exams, include readings from tech journals, business publications, and reports on current affairs related to technology and finance.</li>
+                        <li><strong>Contextual Learning:</strong> Infer meaning from surrounding sentences before lookup.</li>
+                        <li><strong>Vocabulary Notebook:</strong> Record new words, meanings, syn/ant, example sentences. Note down technical jargon if relevant to general understanding.</li>
+                        <li><strong>Flashcards:</strong> For quick revision.</li>
+                        <li><strong>Roots, Prefixes, Suffixes:</strong> Decipher unfamiliar words.</li>
+                        <li><strong>Practice Regularly:</strong> Actively use new words. Use apps.</li>
+                    </ul>
+                    <p class="mt-3"><strong>Note for IT Officer Aspirants:</strong> While the English section tests general proficiency, being familiar with commonly used terms in business, technology, and finance can be advantageous for comprehension, especially in RC passages or Cloze tests that might draw from these domains.</p>
+                </div>
+            </section>
+
+            <section id="vocab-list" class="content-section">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6">3.3. High-Frequency Words (Sample)</h2>
+                <div class="card">
+                    <p class="prose-custom mb-4">Competitive exams often test core vocabulary. Focus on high-frequency words. Click a word for details. (Sample list - expanded)</p>
+                    <input type="text" id="vocabSearch" onkeyup="filterVocab()" placeholder="Search for words..." class="w-full p-2 border border-slate-300 rounded mb-4 focus:ring-teal-500 focus:border-teal-500">
+                    <div id="vocabListContainer" class="space-y-2 max-h-[60vh] overflow-y-auto pr-2">
+                        </div>
+                </div>
+            </section>
+
+            <section id="synonyms-antonyms" class="content-section">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6">3.4. Synonyms & Antonyms</h2>
+                <div class="card prose-custom">
+                    <p class="mb-4">Commonly tested. Precise meaning and context are key. Practice MCQs.</p>
+                    <h4 class="text-lg font-semibold mb-2">Solving Techniques:</h4>
+                    <ul class="list-disc space-y-1">
+                        <li>Understand precise word meaning.</li>
+                        <li>Note context if in a sentence.</li>
+                        <li>Eliminate unrelated options.</li>
+                        <li>For antonyms, find meaning, then opposite.</li>
+                    </ul>
+                    <p class="mt-3">Refer to <a href="#vocab-list" onclick="showSection('vocab-list', document.querySelector('a[href=\\'#vocab-list\\']'))">High-Frequency Words</a> for examples. Exam prep books are good for practice sets.</p>
+                </div>
+            </section>
+
+            <section id="idioms-phrases" class="content-section">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6">3.5. Idioms & Phrases (Sample)</h2>
+                 <div class="card">
+                    <p class="prose-custom mb-4">Meaning not predictable from elements. Crucial for comprehension. Focus on meaning/usage in context. (Sample list - expanded)</p>
+                    <input type="text" id="idiomSearch" onkeyup="filterIdioms()" placeholder="Search idioms/phrases..." class="w-full p-2 border border-slate-300 rounded mb-4 focus:ring-teal-500 focus:border-teal-500">
+                    <div id="idiomListContainer" class="space-y-2 max-h-[60vh] overflow-y-auto pr-2">
+                        </div>
+                </div>
+            </section>
+
+            <section id="phrasal-verbs" class="content-section">
+                 <h2 class="text-2xl md:text-3xl font-semibold mb-6">3.6. Phrasal Verbs (Sample)</h2>
+                <div class="card">
+                    <p class="prose-custom mb-4">Verb + particle with new meaning. Vital for comprehension. Learn in context. (Sample list - expanded)</p>
+                     <input type="text" id="phrasalVerbSearch" onkeyup="filterPhrasalVerbs()" placeholder="Search phrasal verbs..." class="w-full p-2 border border-slate-300 rounded mb-4 focus:ring-teal-500 focus:border-teal-500">
+                    <div id="phrasalVerbListContainer" class="space-y-2 max-h-[60vh] overflow-y-auto pr-2">
+                        </div>
+                </div>
+            </section>
+
+            <section id="one-word-substitution" class="content-section">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6">3.7. One-Word Substitution</h2>
+                <div class="card prose-custom">
+                    <p class="mb-4">Replace phrase/clause with a single word. Tests vocabulary breadth/precision.</p>
+                    <h4 class="text-lg font-semibold mb-2">Examples:</h4>
+                    <ul class="list-disc space-y-1">
+                        <li>One who loves books: <strong>Bibliophile</strong></li>
+                        <li>A place where birds are kept: <strong>Aviary</strong></li>
+                        <li>Something that cannot be avoided: <strong>Inevitable</strong></li>
+                        <li>A person who is new to a profession or activity: <strong>Novice / Neophyte</strong></li>
+                        <li>A system of government by one person with absolute power: <strong>Autocracy</strong></li>
+                        <li>One who is skilled in many different arts or fields of study: <strong>Polymath</strong></li>
+                        <li>A remedy for all diseases or ills: <strong>Panacea</strong></li>
+                    </ul>
+                    <p class="mt-3">Practice lists from general vocabulary resources.</p>
+                </div>
+            </section>
+            
+            <section id="vocab-practice" class="content-section">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6">Vocabulary Practice: Fill in the Blanks</h2>
+                <div class="card prose-custom">
+                    <p class="mb-4">Choose the most appropriate word from the high-frequency list or common idioms to fill in the blanks. This tests contextual understanding.</p>
+                    <div class="space-y-4">
+                        <div class="practice-question-item">
+                            <p class="font-semibold mb-1">1. The manager tried to ______ the client's concerns about the project delay with a detailed explanation and a revised timeline.</p>
+                            <p class="text-xs mb-1">Options: (A) exacerbate (B) mitigate (C) bolster (D) admonish</p>
+                            <button onclick="showSolution('vp_q1_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Solution</button>
+                            <div id="vp_q1_solution" class="solution"><strong>Correct: (B) mitigate.</strong> Meaning: make less severe. The manager is trying to lessen the client's concerns.</div>
+                        </div>
+                        <div class="practice-question-item">
+                            <p class="font-semibold mb-1">2. Despite the initial setbacks, the team remained ______ and eventually launched the product successfully.</p>
+                            <p class="text-xs mb-1">Options: (A) recalcitrant (B) sanguine (C) taciturn (D) dauntless</p>
+                            <button onclick="showSolution('vp_q2_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Solution</button>
+                            <div id="vp_q2_solution" class="solution"><strong>Correct: (D) dauntless.</strong> Meaning: showing fearlessness and determination. 'Sanguine' (optimistic) could also fit, but 'dauntless' better captures remaining determined despite setbacks. (In an exam, 'sanguine' might also be a plausible distractor depending on other options).</div>
+                        </div>
+                        <div class="practice-question-item">
+                            <p class="font-semibold mb-1">3. The CEO decided to ______ and address the rumors directly at the all-hands meeting.</p>
+                            <p class="text-xs mb-1">Options: (A) beat around the bush (B) bite the bullet (C) spill the beans (D) call it a day</p>
+                            <button onclick="showSolution('vp_q3_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Solution</button>
+                            <div id="vp_q3_solution" class="solution"><strong>Correct: (B) bite the bullet.</strong> Meaning: face a difficult situation with courage. Addressing rumors directly is facing a potentially tough situation.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section id="rc-intro" class="content-section">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6">Part 4: Reading Comprehension (RC) Excellence</h2>
+                <div class="card prose-custom">
+                    <h3 class="text-xl font-semibold mb-3">4.1. Introduction</h3>
+                    <p>RC tests ability to read, understand, analyze, interpret passages. Significant portion of English section. This part covers strategies and practice. Passages can sometimes be drawn from current affairs, technology, or business contexts in officer-level exams.</p>
+                </div>
+            </section>
+
+            <section id="rc-strategies" class="content-section">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6">4.2. Effective Reading Strategies</h2>
+                <div class="card prose-custom">
+                    <p class="mb-4">Effective habits for timed RCs.</p>
+                    <ul class="list-disc space-y-1">
+                        <li><strong>Understand the Purpose:</strong> Glance at questions first OR read passage first. Experiment.</li>
+                        <li><strong>Active Reading:</strong> Engage. Identify main idea, author's tone, and passage structure.</li>
+                        <li><strong>Note-Taking (Mental/Scrap):</strong> Key points, paragraph summaries, transition words.</li>
+                        <li><strong>Questioning:</strong> Ask "What? Why? How?" to deepen understanding.</li>
+                        <li><strong>Summarizing:</strong> Mentally summarize paragraphs or sections.</li>
+                        <li><strong>Structure Awareness:</strong> Note organization (comparison, cause-effect, problem-solution) and transition words.</li>
+                        <li><strong>Speed Reading:</strong> Practice. Focus on keywords. Avoid subvocalization and regression (re-reading).</li>
+                        <li><strong>Vocabulary in Context:</strong> Infer meaning of unfamiliar words from context. Don't get stuck.</li>
+                        <li><strong>Time Management:</strong> Allocate time per passage/question. Don't linger on difficult ones; mark and return if time permits.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="rc-question-types" class="content-section">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6">4.3. Tackling Different RC Question Types</h2>
+                <div class="card prose-custom">
+                    <p class="mb-4">Questions categorized by skill tested.</p>
+                    <div class="space-y-2">
+                        <p><strong>Main Idea/Primary Purpose/Best Title:</strong> Overall gist, theme. Look at intro/conclusion and recurring ideas.</p>
+                        <p><strong>Specific Detail/Fact-Based:</strong> Information explicitly stated. Locate relevant part carefully.</p>
+                        <p><strong>Inference ("Suggests," "Implies," "Inferred"):</strong> Read between lines. Must be logically derivable *only* from passage information.</p>
+                        <p><strong>Vocabulary-in-Context:</strong> Word/phrase meaning *as used in the passage*. Context is king.</p>
+                        <p><strong>Tone/Attitude Questions:</strong> Author's feeling (critical, supportive, neutral, analytical). Look for descriptive words and overall presentation.</p>
+                        <p><strong>Passage Structure/Organization:</strong> How passage is constructed or how ideas/paragraphs relate.</p>
+                        <p><strong>Application/Extrapolation:</strong> Applying information from passage to a new, hypothetical situation (less common but possible).</p>
+                    </div>
+                    <h4 class="text-lg font-semibold mt-4 mb-2">Answering Strategies:</h4>
+                     <ul class="list-disc space-y-1">
+                        <li><strong>Refer Back:</strong> Always verify answers from the passage. Avoid relying on memory alone.</li>
+                        <li><strong>Eliminate Incorrect Options:</strong> Systematically rule out choices that are: too broad/narrow, irrelevant, contradictory, unsupported, or extreme.</li>
+                        <li><strong>Use Your Own Words:</strong> Formulate answer first, then check options to avoid being misled by distractors.</li>
+                        <li><strong>Beware of "True but Not Answering the Question":</strong> An option might be a true statement but not the answer to the specific question asked.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="rc-practice" class="content-section">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6">4.4. Practice Passages</h2>
+                <div class="card">
+                    <p class="prose-custom mb-4">Consistent practice is crucial. Attempt questions, then check solutions.</p>
+                    
+                    <div class="mb-8 practice-question-item">
+                        <div class="mb-6 border p-4 rounded bg-slate-50 prose-custom">
+                            <h4 class="text-lg font-semibold mb-2">Passage 1: The Importance of Reading</h4>
+                            <p>Reading is a fundamental skill that plays a vital role in our lives. It is not merely deciphering words on a page but engaging with ideas, exploring different perspectives, and expanding our understanding of the world. When we read, we acquire knowledge, stimulate our minds, and enhance our critical thinking abilities. Reading also broadens our horizons by exposing us to diverse cultures, histories, and experiences beyond our own immediate environment. Furthermore, reading fuels our imagination, allowing us to step into different worlds and live vicariously through characters and narratives. It enhances empathy by helping us understand the thoughts and feelings of others. Moreover, reading is a skill that transcends academic boundaries; it is essential for professional growth, personal development, and informed citizenship. Whether reading fiction or non-fiction, physical books or digital texts, the act of reading enriches our lives in countless ways, improving vocabulary, writing skills, and overall communication abilities. While digital formats offer convenience, physical books provide a unique, timeless, and intimate experience.</p>
+                        </div>
+                        <div class="space-y-4 prose-custom">
+                            <div class="border p-3 rounded-md bg-white shadow-sm"><p class="font-semibold mb-1">1. According to Passage 1, what is the primary benefit of reading?</p>
+                                <div class="space-y-1 text-sm" id="rc_p1_q1_options">
+                                    <label class="block"><input type="radio" name="rc_p1_q1" value="B" class="mr-1"> (B) Acquiring knowledge and stimulating the mind</label>
+                                    <label class="block"><input type="radio" name="rc_p1_q1" value="C" class="mr-1"> (C) Learning new languages</label>
+                                </div>
+                                <button onclick="showSolution('rc_p1_q1_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Answer</button>
+                                <div id="rc_p1_q1_solution" class="solution"><strong>Correct: (B)</strong> Passage states: "acquire knowledge, stimulate our minds..."</div></div>
+                            <div class="border p-3 rounded-md bg-white shadow-sm"><p class="font-semibold mb-1">2. How does reading broaden our horizons, as per Passage 1?</p>
+                                <div class="space-y-1 text-sm" id="rc_p1_q2_options">
+                                    <label class="block"><input type="radio" name="rc_p1_q2" value="B" class="mr-1"> (B) By exposing us to diverse cultures and experiences</label>
+                                    <label class="block"><input type="radio" name="rc_p1_q2" value="C" class="mr-1"> (C) By teaching mathematical skills</label>
+                                </div>
+                                <button onclick="showSolution('rc_p1_q2_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Answer</button>
+                                <div id="rc_p1_q2_solution" class="solution"><strong>Correct: (B)</strong> Passage mentions: "exposing us to diverse cultures, histories, and experiences..."</div></div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 practice-question-item">
+                        <div class="mb-6 border p-4 rounded bg-slate-50 prose-custom">
+                            <h4 class="text-lg font-semibold mb-2">Passage 2: The Rise of Artificial Intelligence in Business</h4>
+                            <p>Artificial Intelligence (AI) is rapidly transforming the business landscape, moving from a futuristic concept to a practical tool for innovation and efficiency. Companies across various sectors are leveraging AI to automate processes, gain deeper insights from data, and enhance customer experiences. Machine learning algorithms, a subset of AI, can analyze vast datasets to identify trends and make predictions with remarkable accuracy, aiding in strategic decision-making. Natural Language Processing (NLP), another AI branch, enables computers to understand and respond to human language, powering chatbots and virtual assistants that provide 24/7 customer support. While the adoption of AI presents numerous opportunities, it also brings challenges such as the need for skilled personnel, concerns about data privacy, and the ethical implications of autonomous systems. Businesses must navigate these complexities thoughtfully to harness AI's full potential responsibly and ensure that its benefits are widespread and equitable.</p>
+                        </div>
+                        <div class="space-y-4 prose-custom">
+                            <div class="border p-3 rounded-md bg-white shadow-sm"><p class="font-semibold mb-1">1. What is the main theme of Passage 2?</p>
+                                <div class="space-y-1 text-sm" id="rc_p2_q1_options">
+                                    <label class="block"><input type="radio" name="rc_p2_q1" value="A" class="mr-1"> (A) The technical details of machine learning algorithms.</label>
+                                    <label class="block"><input type="radio" name="rc_p2_q1" value="B" class="mr-1"> (B) The impact and challenges of AI adoption in the business world.</label>
+                                    <label class="block"><input type="radio" name="rc_p2_q1" value="C" class="mr-1"> (C) The history of Natural Language Processing.</label>
+                                </div>
+                                <button onclick="showSolution('rc_p2_q1_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Answer</button>
+                                <div id="rc_p2_q1_solution" class="solution"><strong>Correct: (B)</strong> The passage discusses how AI is changing business, its applications (like ML and NLP), and the associated opportunities and challenges.</div></div>
+                            <div class="border p-3 rounded-md bg-white shadow-sm"><p class="font-semibold mb-1">2. According to Passage 2, which AI branch helps computers understand human language?</p>
+                                <div class="space-y-1 text-sm" id="rc_p2_q2_options">
+                                    <label class="block"><input type="radio" name="rc_p2_q2" value="A" class="mr-1"> (A) Strategic Decision Making</label>
+                                    <label class="block"><input type="radio" name="rc_p2_q2" value="B" class="mr-1"> (B) Machine Learning</label>
+                                    <label class="block"><input type="radio" name="rc_p2_q2" value="C" class="mr-1"> (C) Natural Language Processing</label>
+                                </div>
+                                <button onclick="showSolution('rc_p2_q2_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Answer</button>
+                                <div id="rc_p2_q2_solution" class="solution"><strong>Correct: (C)</strong> The passage states, "Natural Language Processing (NLP), another AI branch, enables computers to understand and respond to human language..."</div></div>
+                            <div class="border p-3 rounded-md bg-white shadow-sm"><p class="font-semibold mb-1">3. Which of these is mentioned in Passage 2 as a challenge of AI adoption?</p>
+                                <div class="space-y-1 text-sm" id="rc_p2_q3_options">
+                                    <label class="block"><input type="radio" name="rc_p2_q3" value="A" class="mr-1"> (A) Decreased data availability</label>
+                                    <label class="block"><input type="radio" name="rc_p2_q3" value="B" class="mr-1"> (B) Lack of innovation potential</label>
+                                    <label class="block"><input type="radio" name="rc_p2_q3" value="C" class="mr-1"> (C) The need for skilled personnel</label>
+                                </div>
+                                <button onclick="showSolution('rc_p2_q3_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Answer</button>
+                                <div id="rc_p2_q3_solution" class="solution"><strong>Correct: (C)</strong> The passage mentions "...challenges such as the need for skilled personnel..."</div></div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 practice-question-item">
+                        <div class="mb-6 border p-4 rounded bg-slate-50 prose-custom">
+                            <h4 class="text-lg font-semibold mb-2">Passage 3: Cloud Computing Models</h4>
+                            <p>Cloud computing has revolutionized how businesses manage their IT infrastructure by offering scalable and flexible services over the internet. Three primary service models define how cloud services are offered: Infrastructure as a Service (IaaS), Platform as a Service (PaaS), and Software as a Service (SaaS). IaaS provides the fundamental building blocks for cloud IT, including access to computing resources like virtual machines, storage, and networks. This model offers the highest level of flexibility and management control over IT resources. PaaS, on the other hand, removes the need for organizations to manage the underlying infrastructure (usually hardware and operating systems) and allows them to focus on the deployment and management of their applications. SaaS provides a complete software solution that is typically purchased on a pay-as-you-go basis from a cloud service provider. With SaaS, users connect to the application over the internet, usually with a web browser, on their phone, tablet, or PC. All of the underlying infrastructure, middleware, app software, and app data are located in the service provider’s data center. Choosing the right model depends on a company's specific needs, technical expertise, and desired level of control.</p>
+                        </div>
+                        <div class="space-y-4 prose-custom">
+                            <div class="border p-3 rounded-md bg-white shadow-sm"><p class="font-semibold mb-1">1. What is the primary advantage of IaaS mentioned in Passage 3?</p>
+                                <div class="space-y-1 text-sm" id="rc_p3_q1_options">
+                                    <label class="block"><input type="radio" name="rc_p3_q1" value="A" class="mr-1"> (A) It provides complete software solutions.</label>
+                                    <label class="block"><input type="radio" name="rc_p3_q1" value="B" class="mr-1"> (B) It offers the highest level of flexibility and control over IT resources.</label>
+                                    <label class="block"><input type="radio" name="rc_p3_q1" value="C" class="mr-1"> (C) It removes the need to manage applications.</label>
+                                </div>
+                                <button onclick="showSolution('rc_p3_q1_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Answer</button>
+                                <div id="rc_p3_q1_solution" class="solution"><strong>Correct: (B)</strong> The passage states, "This model [IaaS] offers the highest level of flexibility and management control over IT resources."</div></div>
+                            <div class="border p-3 rounded-md bg-white shadow-sm"><p class="font-semibold mb-1">2. Which cloud model allows users to focus on application deployment without managing underlying infrastructure, according to Passage 3?</p>
+                                <div class="space-y-1 text-sm" id="rc_p3_q2_options">
+                                    <label class="block"><input type="radio" name="rc_p3_q2" value="A" class="mr-1"> (A) SaaS</label>
+                                    <label class="block"><input type="radio" name="rc_p3_q2" value="B" class="mr-1"> (B) IaaS</label>
+                                    <label class="block"><input type="radio" name="rc_p3_q2" value="C" class="mr-1"> (C) PaaS</label>
+                                </div>
+                                <button onclick="showSolution('rc_p3_q2_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Answer</button>
+                                <div id="rc_p3_q2_solution" class="solution"><strong>Correct: (C)</strong> The passage says PaaS "...removes the need for organizations to manage the underlying infrastructure...and allows them to focus on the deployment and management of their applications."</div></div>
+                            <div class="border p-3 rounded-md bg-white shadow-sm"><p class="font-semibold mb-1">3. The passage suggests that the selection of a cloud computing model primarily depends on:</p>
+                                <div class="space-y-1 text-sm" id="rc_p3_q3_options">
+                                    <label class="block"><input type="radio" name="rc_p3_q3" value="A" class="mr-1"> (A) The popularity of the service provider.</label>
+                                    <label class="block"><input type="radio" name="rc_p3_q3" value="B" class="mr-1"> (B) The company's specific requirements and expertise.</label>
+                                    <label class="block"><input type="radio" name="rc_p3_q3" value="C" class="mr-1"> (C) The cost of internet connectivity.</label>
+                                </div>
+                                <button onclick="showSolution('rc_p3_q3_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Answer</button>
+                                <div id="rc_p3_q3_solution" class="solution"><strong>Correct: (B)</strong> The last sentence states, "Choosing the right model depends on a company's specific needs, technical expertise, and desired level of control."</div></div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <section id="error-spotting" class="content-section">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6">Part 5.1: Error Spotting</h2>
+                 <div class="card prose-custom">
+                    <p class="mb-4">Identify grammatical errors in sentences divided into parts. Read sentence, check common errors (SVA, Tense, Pronouns etc.). Refer "Common Pitfalls".</p>
+                    <div class="space-y-4">
+                        <div class="practice-question-item"><p class="font-semibold mb-1">1. My dog always (A)/ growl at the (B)/ postman. (C)/ No Error (D)</p>
+                            <button onclick="showSolution('es_q1_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Solution</button>
+                            <div id="es_q1_solution" class="solution"><strong>Error in (B).</strong> Subject 'My dog' (singular) needs verb 'growls' (simple present). <em>Correct: ...always growls...</em></div></div>
+                        <div class="practice-question-item"><p class="font-semibold mb-1">2. Unless you (A)/ do not pay the fine, (B)/ you will not be excused. (C)/ No Error (D)</p>
+                            <button onclick="showSolution('es_q2_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Solution</button>
+                            <div id="es_q2_solution" class="solution"><strong>Error in (B).</strong> 'Unless' implies negative. 'do not' is double negative. Remove 'do not'. <em>Correct: Unless you pay...</em></div></div>
+                        <div class="practice-question-item"><p class="font-semibold mb-1">3. The number of earthquakes (A)/ are rising and (B)/ scientists are worried. (C)/ No Error (D)</p>
+                            <button onclick="showSolution('es_q3_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Solution</button>
+                            <div id="es_q3_solution" class="solution"><strong>Error in (B).</strong> 'The number of' takes singular verb. 'are rising' → 'is rising'. <em>Correct: ...earthquakes is rising...</em></div></div>
+                        <div class="practice-question-item"><p class="font-semibold mb-1">4. The new software, along with its (A)/ numerous features, offer a significant (B)/ improvement over the old system. (C)/ No Error (D)</p>
+                            <button onclick="showSolution('es_q4_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Solution</button>
+                            <div id="es_q4_solution" class="solution"><strong>Error in (B).</strong> The subject is 'software' (singular). The phrase 'along with its numerous features' is an intervening phrase. The verb should be 'offers'. <em>Correct: ...features, offers a significant...</em></div></div>
+                        <div class="practice-question-item"><p class="font-semibold mb-1">5. Each of the IT technicians (A)/ were asked to submit (B)/ their reports by Friday. (C)/ No Error (D)</p>
+                            <button onclick="showSolution('es_q5_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Solution</button>
+                            <div id="es_q5_solution" class="solution"><strong>Error in (B) and (C).</strong> 'Each' takes a singular verb, so 'were' should be 'was'. Also, the pronoun referring to 'each' should be singular ('his or her' or rephrase). <em>Correct: Each ... was asked to submit his or her report... OR All IT technicians were asked to submit their reports...</em> (For exam purposes, usually one primary error is focused on per segment). Here, (B) is the more direct SVA error.</div></div>
+                        <div class="practice-question-item"><p class="font-semibold mb-1">6. The manager, as well as his two assistants, (A)/ are attending the (B)/ crucial client meeting tomorrow. (C)/ No Error (D)</p>
+                            <button onclick="showSolution('es_q6_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Solution</button>
+                            <div id="es_q6_solution" class="solution"><strong>Error in (B).</strong> The subject is 'manager' (singular). Phrases like 'as well as', 'along with', 'in addition to' do not make the subject plural. The verb should be 'is attending'. <em>Correct: ...assistants, is attending the...</em></div></div>
+                        <div class="practice-question-item"><p class="font-semibold mb-1">7. Neither the lead developer nor the project members (A)/ was aware of the (B)/ last-minute change in requirements. (C)/ No Error (D)</p>
+                            <button onclick="showSolution('es_q7_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Solution</button>
+                            <div id="es_q7_solution" class="solution"><strong>Error in (B).</strong> When subjects are joined by 'neither...nor' (or 'either...or'), the verb agrees with the subject nearer to it. 'Project members' is plural, so the verb should be 'were aware'. <em>Correct: ...members were aware of the...</em></div></div>
+                         <div class="practice-question-item"><p class="font-semibold mb-1">8. He is one of those programmers (A)/ who always meets (B)/ deadlines without fail. (C)/ No Error (D)</p>
+                            <button onclick="showSolution('es_q8_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Solution</button>
+                            <div id="es_q8_solution" class="solution"><strong>Error in (B).</strong> In the relative clause "who always meets deadlines," the antecedent of 'who' is 'programmers' (plural), not 'one'. Therefore, the verb should be plural: 'meet'. <em>Correct: ...programmers who always meet deadlines...</em></div></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sentence-improvement" class="content-section">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6">Part 5.2: Sentence Improvement</h2>
+                <div class="card prose-custom">
+                    <p class="mb-4">Identify if underlined/bold part is correct; if not, choose best replacement. Focus on grammar, conciseness, clarity, idioms.</p>
+                    <div class="space-y-4">
+                        <div class="practice-question-item"><p class="font-semibold mb-1">1. He is <u>senior than me</u> in this company.</p>
+                            <div class="space-y-1 text-sm"><label class="block"><input type="radio" name="si_q1" value="A" class="mr-1">(A) senior to</label> <label class="block"><input type="radio" name="si_q1" value="D" class="mr-1">(D) No improvement</label></div>
+                            <button onclick="showSolution('si_q1_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Solution</button>
+                            <div id="si_q1_solution" class="solution"><strong>Correct: (A) senior to.</strong> Comparatives like 'senior' take 'to', not 'than'.</div></div>
+                        <div class="practice-question-item"><p class="font-semibold mb-1">2. We look forward <u>to hear</u> from you.</p>
+                             <div class="space-y-1 text-sm"><label class="block"><input type="radio" name="si_q2" value="B" class="mr-1">(B) hearing</label> <label class="block"><input type="radio" name="si_q2" value="D" class="mr-1">(D) No improvement</label></div>
+                            <button onclick="showSolution('si_q2_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Solution</button>
+                            <div id="si_q2_solution" class="solution"><strong>Correct: (B) hearing.</strong> 'look forward to' is followed by gerund (verb+ing).</div></div>
+                        <div class="practice-question-item"><p class="font-semibold mb-1">3. If he had time, he <u>will call</u> you.</p>
+                             <div class="space-y-1 text-sm"><label class="block"><input type="radio" name="si_q3" value="C" class="mr-1">(C) had time, he would call</label> <label class="block"><input type="radio" name="si_q3" value="D" class="mr-1">(D) No improvement</label></div>
+                            <button onclick="showSolution('si_q3_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Solution</button>
+                            <div id="si_q3_solution" class="solution"><strong>Correct: (C) had time, he would call.</strong> Type 2 conditional: If + Simple Past, ... would + base verb.</div></div>
+                        <div class="practice-question-item"><p class="font-semibold mb-1">4. The data was <u>inputted incorrect</u> by the new intern.</p>
+                             <div class="space-y-1 text-sm">
+                                <label class="block"><input type="radio" name="si_q4" value="A" class="mr-1">(A) inputted incorrectly</label> 
+                                <label class="block"><input type="radio" name="si_q4" value="B" class="mr-1">(B) input incorrectly</label>
+                                <label class="block"><input type="radio" name="si_q4" value="C" class="mr-1">(C) input incorrect</label>
+                                <label class="block"><input type="radio" name="si_q4" value="D" class="mr-1">(D) No improvement</label></div>
+                            <button onclick="showSolution('si_q4_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Solution</button>
+                            <div id="si_q4_solution" class="solution"><strong>Correct: (B) input incorrectly.</strong> 'Input' is standard for past tense/participle (inputted is less common/non-standard). 'Incorrectly' is an adverb modifying 'input'.</div></div>
+                        <div class="practice-question-item"><p class="font-semibold mb-1">5. This is the algorithm <u>what we used</u> for the analysis.</p>
+                             <div class="space-y-1 text-sm">
+                                <label class="block"><input type="radio" name="si_q5" value="A" class="mr-1">(A) which we used</label> 
+                                <label class="block"><input type="radio" name="si_q5" value="B" class="mr-1">(B) that which we used</label>
+                                <label class="block"><input type="radio" name="si_q5" value="C" class="mr-1">(C) whom we used</label>
+                                <label class="block"><input type="radio" name="si_q5" value="D" class="mr-1">(D) No improvement</label></div>
+                            <button onclick="showSolution('si_q5_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Solution</button>
+                            <div id="si_q5_solution" class="solution"><strong>Correct: (A) which we used.</strong> 'Which' or 'that' are appropriate relative pronouns for things like 'algorithm'. 'What' is not suitable here.</div></div>
+                        <div class="practice-question-item"><p class="font-semibold mb-1">6. <u>Having been worked</u> on the project for months, the team was exhausted but proud.</p>
+                             <div class="space-y-1 text-sm">
+                                <label class="block"><input type="radio" name="si_q6" value="A" class="mr-1">(A) Having worked</label> 
+                                <label class="block"><input type="radio" name="si_q6" value="B" class="mr-1">(B) Been working</label>
+                                <label class="block"><input type="radio" name="si_q6" value="C" class="mr-1">(C) To have been worked</label>
+                                <label class="block"><input type="radio" name="si_q6" value="D" class="mr-1">(D) No improvement</label></div>
+                            <button onclick="showSolution('si_q6_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Solution</button>
+                            <div id="si_q6_solution" class="solution"><strong>Correct: (A) Having worked.</strong> This is a perfect participle phrase indicating an action completed before the main clause's action. 'Having been worked' is passive and incorrect here.</div></div>
+                        <div class="practice-question-item"><p class="font-semibold mb-1">7. The company is committed <u>to provide</u> excellent customer service.</p>
+                             <div class="space-y-1 text-sm">
+                                <label class="block"><input type="radio" name="si_q7" value="A" class="mr-1">(A) to providing</label> 
+                                <label class="block"><input type="radio" name="si_q7" value="B" class="mr-1">(B) for providing</label>
+                                <label class="block"><input type="radio" name="si_q7" value="C" class="mr-1">(C) in providing</label>
+                                <label class="block"><input type="radio" name="si_q7" value="D" class="mr-1">(D) No improvement</label></div>
+                            <button onclick="showSolution('si_q7_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Solution</button>
+                            <div id="si_q7_solution" class="solution"><strong>Correct: (A) to providing.</strong> 'Committed to' is a phrasal preposition followed by a gerund (verb+ing) or a noun.</div></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="para-jumbles" class="content-section">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6">Part 5.3: Para Jumbles</h2>
+                <div class="card prose-custom">
+                     <p class="mb-4">Rearrange jumbled sentences. Identify opener, closer, mandatory pairs (pronoun-antecedent, chronology, cause-effect), transition words.</p>
+                    <div class="space-y-6">
+                        <div class="practice-question-item">
+                            <p class="font-semibold mb-1">Example 1: Rearrange.</p>
+                            <ul class="list-decimal list-inside text-sm mb-2" id="pj_q1_sentences">
+                                <li>A. Rani fills the form for the dance show.</li>
+                                <li>B. A talent hunt show is looking for Classical dancers like Rani.</li>
+                                <li>C. Rani is called for auditions.</li>
+                                <li>D. Rani is a trained Bharatnatyam dancer.</li>
+                                <li>E. Rani gets selected.</li>
+                            </ul>
+                            <label for="pj_q1_answer" class="block text-xs font-medium">Your Answer (e.g., DBACE):</label>
+                            <input type="text" id="pj_q1_answer" class="mt-1 block w-full md:w-1/2 p-1.5 border border-slate-300 rounded-md shadow-sm text-sm focus:ring-teal-500 focus:border-teal-500">
+                            <button onclick="checkParaJumble('pj_q1_solution', 'DBACE', 'pj_q1_answer', 'D (intro Rani) → B (show needs dancers like her) → A (applies) → C (auditions) → E (selected).')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Check Answer</button>
+                            <div id="pj_q1_solution" class="solution"><strong>Correct Order: DBACE</strong><br><strong>Explanation:</strong> D (intro Rani) → B (show needs dancers like her) → A (applies) → C (auditions) → E (selected).</div>
+                        </div>
+                        <div class="practice-question-item">
+                            <p class="font-semibold mb-1">Example 2: Rearrange.</p>
+                            <ul class="list-decimal list-inside text-sm mb-2" id="pj_q2_sentences">
+                                <li>P. This data is then processed by complex algorithms.</li>
+                                <li>Q. Modern IT systems generate vast amounts of data daily.</li>
+                                <li>R. Finally, the insights derived help businesses make informed decisions.</li>
+                                <li>S. These algorithms identify patterns and anomalies within the dataset.</li>
+                            </ul>
+                            <label for="pj_q2_answer" class="block text-xs font-medium">Your Answer (e.g., QPSR):</label>
+                            <input type="text" id="pj_q2_answer" class="mt-1 block w-full md:w-1/2 p-1.5 border border-slate-300 rounded-md shadow-sm text-sm focus:ring-teal-500 focus:border-teal-500">
+                            <button onclick="checkParaJumble('pj_q2_solution', 'QPSR', 'pj_q2_answer', 'Q (introduces data generation) → P (data is processed) → S (algorithms identify patterns - elaborates on P) → R (final outcome/conclusion).')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Check Answer</button>
+                            <div id="pj_q2_solution" class="solution"><strong>Correct Order: QPSR</strong><br><strong>Explanation:</strong> Q (introduces data generation) → P (data is processed) → S (algorithms identify patterns - elaborates on P) → R (final outcome/conclusion).</div>
+                        </div>
+                        <div class="practice-question-item">
+                            <p class="font-semibold mb-1">Example 3: Rearrange.</p>
+                            <ul class="list-decimal list-inside text-sm mb-2">
+                                <li>1. Consequently, effective communication is paramount in such environments.</li>
+                                <li>2. Diverse teams bring a variety of perspectives and skills to a project.</li>
+                                <li>3. However, this diversity can also lead to misunderstandings if not managed well.</li>
+                                <li>4. These skills can lead to more innovative solutions and better outcomes.</li>
+                            </ul>
+                            <label for="pj_q3_answer" class="block text-xs font-medium">Your Answer (e.g., 2431):</label>
+                            <input type="text" id="pj_q3_answer" class="mt-1 block w-full md:w-1/2 p-1.5 border border-slate-300 rounded-md shadow-sm text-sm focus:ring-teal-500 focus:border-teal-500">
+                            <button onclick="checkParaJumble('pj_q3_solution', '2431', 'pj_q3_answer', '2 (introduces diverse teams) → 4 (elaborates on benefit of diversity) → 3 (introduces a contrasting challenge - 'However') → 1 (concludes with the solution/implication - 'Consequently').')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Check Answer</button>
+                            <div id="pj_q3_solution" class="solution"><strong>Correct Order: 2431</strong><br><strong>Explanation:</strong> 2 (introduces diverse teams) → 4 (elaborates on benefit of diversity) → 3 (introduces a contrasting challenge - 'However') → 1 (concludes with the solution/implication - 'Consequently').</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sentence-framing" class="content-section">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6">Part 5.4: Sentence Framing</h2>
+                <div class="card prose-custom">
+                    <p class="mb-4">Understanding correct sentence construction. Components: Subject, Predicate, Object.</p>
+                    <h4 class="text-lg font-semibold mb-2">Sentence Types:</h4>
+                    <ul class="list-disc space-y-1 mb-3">
+                        <li><strong>Simple:</strong> One independent clause. <em>Ex: The server rebooted.</em></li>
+                        <li><strong>Compound:</strong> 2+ independent clauses (FANBOYS/semicolon). <em>Ex: The server rebooted, and the services restarted.</em></li>
+                        <li><strong>Complex:</strong> 1 independent + 1+ dependent clauses. <em>Ex: The server rebooted because a critical error occurred.</em></li>
+                    </ul>
+                    <h4 class="text-lg font-semibold mb-2">Common Errors:</h4> Run-ons, comma splices, fragments, faulty parallelism, misplaced modifiers.
+                    <h4 class="text-lg font-semibold mt-4 mb-2">Practice Exercise 1:</h4>
+                    <p class="mb-1">Combine: <em>The software update is ready. It fixes several security vulnerabilities.</em></p>
+                    <p><strong>Possible Complex Sentence:</strong> The software update, which fixes several security vulnerabilities, is ready. OR Because the software update fixes several security vulnerabilities, it is ready (less natural).</p>
+                    <h4 class="text-lg font-semibold mt-4 mb-2">Practice Exercise 2: Identify the error type.</h4>
+                    <p class="italic mb-1">"To ensure data integrity, regular backups performing is essential."</p>
+                    <button onclick="showSolution('sf_ex2_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Error Type</button>
+                    <div id="sf_ex2_solution" class="solution"><strong>Error Type: Faulty Parallelism / Incorrect Verb Form.</strong><br>Should be: "To ensure data integrity, performing regular backups is essential." OR "...regular backup performance is essential." The gerund 'performing' is needed to parallel 'ensure' (implied action) or a noun phrase.</div>
+                </div>
+            </section>
+
+            <section id="cloze-test" class="content-section">
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6">Part 5.5: Cloze Test</h2>
+                <div class="card prose-custom">
+                    <p class="mb-4">Passage with blanks; choose best word. Tests vocab, grammar, context. Read passage, analyze blanks, check options.</p>
+                    <div class="practice-question-item mb-6">
+                        <h4 class="text-lg font-semibold mb-2">Example Passage 1: Childhood</h4>
+                        <p class="leading-relaxed mb-3 text-sm">
+                            Childhood is a time when there are 
+                            <select id="cloze_1_1" class="p-1 border border-slate-300 rounded text-xs mx-0.5"><option value="">(1)</option><option value="A">few</option><option value="B">many</option></select> 
+                            responsibilities... If a child 
+                            <select id="cloze_1_2" class="p-1 border border-slate-300 rounded text-xs mx-0.5"><option value="">(2)</option><option value="B">has</option><option value="A">have</option></select> 
+                            good parents, he is fed, looked 
+                            <select id="cloze_1_3" class="p-1 border border-slate-300 rounded text-xs mx-0.5"><option value="">(3)</option><option value="D">after</option><option value="A">at</option></select> 
+                            ... It is improbable that he will ever again ... 
+                            <select id="cloze_1_4" class="p-1 border border-slate-300 rounded text-xs mx-0.5"><option value="">(4)</option><option value="C">be</option><option value="A">is</option></select> 
+                            given so much without ... anything 
+                            <select id="cloze_1_5" class="p-1 border border-slate-300 rounded text-xs mx-0.5"><option value="">(5)</option><option value="B">in</option><option value="A">for</option></select> 
+                            return.
+                        </p>
+                        <button onclick="showSolution('cloze_1_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Solutions</button>
+                        <div id="cloze_1_solution" class="solution">
+                            <p><strong>Solutions (Passage 1):</strong></p>
+                            <ol class="list-decimal list-inside text-xs">
+                                <li>(1) (A) few: 'Few' for countable 'responsibilities'.</li>
+                                <li>(2) (B) has: Singular 'child' needs 'has'.</li>
+                                <li>(3) (D) after: 'Look after' = take care of.</li>
+                                <li>(4) (C) be: 'will ... be given'.</li>
+                                <li>(5) (B) in: 'in return' is idiomatic.</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="practice-question-item mb-6">
+                        <h4 class="text-lg font-semibold mb-2">Example Passage 2: Cybersecurity</h4>
+                        <p class="leading-relaxed mb-3 text-sm">
+                            In today's digital age, cybersecurity has become (1)______ paramount importance for organizations of all sizes. The increasing sophistication of cyber threats (2)______ robust defense mechanisms. Companies must invest in advanced security software, conduct regular employee training, and (3)______ strict data access protocols. A data breach can not only lead to significant financial losses but also (4)______ a company's reputation. Therefore, a proactive and multi-layered approach to security is no longer optional but an absolute (5)______.
+                        </p>
+                        <p class="text-xs mb-1">Options for (1): (A) of (B) for (C) with (D) to</p>
+                        <p class="text-xs mb-1">Options for (2): (A) necessitates (B) negates (C) nullifies (D) negotiates</p>
+                        <p class="text-xs mb-1">Options for (3): (A) enforce (B) enact (C) elude (D) ensure</p>
+                        <p class="text-xs mb-1">Options for (4): (A) bolster (B) tarnish (C) polish (D) create</p>
+                        <p class="text-xs mb-3">Options for (5): (A) luxury (B) alternative (C) necessity (D) preference</p>
+                        <button onclick="showSolution('cloze_2_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Solutions</button>
+                        <div id="cloze_2_solution" class="solution">
+                            <p><strong>Solutions (Passage 2):</strong></p>
+                            <ol class="list-decimal list-inside text-xs">
+                                <li>(1) (A) of: "of paramount importance" is the correct idiom.</li>
+                                <li>(2) (A) necessitates: The threats make robust defenses necessary.</li>
+                                <li>(3) (A) enforce: Protocols are enforced. 'Enact' is for laws.</li>
+                                <li>(4) (B) tarnish: A data breach damages reputation.</li>
+                                <li>(5) (C) necessity: Given the risks, it's essential.</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="practice-question-item">
+                        <h4 class="text-lg font-semibold mb-2">Example Passage 3: Project Management</h4>
+                        <p class="leading-relaxed mb-3 text-sm">
+                            Effective project management is (1)______ for the successful completion of any complex endeavor. It involves careful planning, resource allocation, and continuous (2)______ of progress. One of the key challenges is managing stakeholder expectations, which requires clear and (3)______ communication. Unexpected issues can (4)______ arise, so a good project manager must be adept at problem-solving and risk (5)______. Without these skills, projects can easily go off track.
+                        </p>
+                        <p class="text-xs mb-1">Options for (1): (A) crucial (B) optional (C) detrimental (D) secondary</p>
+                        <p class="text-xs mb-1">Options for (2): (A) stagnation (B) monitoring (C) delegation (D) avoidance</p>
+                        <p class="text-xs mb-1">Options for (3): (A) ambiguous (B) infrequent (C) consistent (D) convoluted</p>
+                        <p class="text-xs mb-1">Options for (4): (A) seldom (B) invariably (C) never (D) predictably</p>
+                        <p class="text-xs mb-3">Options for (5): (A) amplification (B) creation (C) mitigation (D) acceptance</p>
+                        <button onclick="showSolution('cloze_3_solution')" class="mt-2 bg-teal-500 hover:bg-teal-600 text-white text-xs py-1 px-3 rounded">Show Solutions</button>
+                        <div id="cloze_3_solution" class="solution">
+                            <p><strong>Solutions (Passage 3):</strong></p>
+                            <ol class="list-decimal list-inside text-xs">
+                                <li>(1) (A) crucial: Essential for success.</li>
+                                <li>(2) (B) monitoring: Keeping track of progress is key.</li>
+                                <li>(3) (C) consistent: Clear and regular communication.</li>
+                                <li>(4) (B) invariably: Unexpected issues almost always arise. 'Predictably' can also fit but 'invariably' stresses the certainty.</li>
+                                <li>(5) (C) mitigation: Reducing the impact of risks.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        const mainNav = document.getElementById('mainNav');
+        const allNavItems = mainNav.querySelectorAll('.nav-item');
+        const allSections = document.querySelectorAll('.content-section');
+
+        function showSection(sectionId, clickedNavItem) {
+            allSections.forEach(section => section.classList.remove('active'));
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) targetSection.classList.add('active');
+
+            allNavItems.forEach(item => item.classList.remove('active'));
+            if (clickedNavItem) clickedNavItem.classList.add('active');
+            document.querySelector('main').scrollTo(0, 0);
+        }
+
+        function showSolution(solutionId) {
+            const solutionDiv = document.getElementById(solutionId);
+            if (solutionDiv) solutionDiv.style.display = solutionDiv.style.display === 'block' ? 'none' : 'block';
+        }
+        
+        function checkParaJumble(solutionId, correctAnswer, answerInputId, explanationText) {
+            const solutionDiv = document.getElementById(solutionId);
+            const userInputElem = document.getElementById(answerInputId);
+            if (solutionDiv && userInputElem) {
+                const userInput = userInputElem.value.trim().toUpperCase();
+                let feedbackPrefix = userInput === correctAnswer.trim().toUpperCase() 
+                    ? `<strong class="text-green-600 feedback-prefix">Correct!</strong> `
+                    : `<strong class="text-red-600 feedback-prefix">Incorrect.</strong> `;
+                solutionDiv.innerHTML = feedbackPrefix + `<strong>Correct Order: ${correctAnswer}</strong><br><strong>Explanation:</strong> ${explanationText}`;
+                solutionDiv.style.display = 'block';
+            }
+        }
+        
+        function toggleInteractiveItem(element) {
+            element.classList.toggle('open');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            showSection('overview', mainNav.querySelector('a[href="#overview"]'));
+            initializeCharts();
+            populateVocabulary();
+            populateIdioms();
+            populatePhrasalVerbs();
+        });
+
+        function initializeCharts() {
+            const commonOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false }, title: { display: false } },
+                scales: { x: { ticks: { font: { size: 10 }, callback: function(value) { const label = this.getLabelForValue(value); if (label.length > 15) { return label.match(/.{1,15}/g); } return label; }}}, y: { ticks: { font: { size: 10 }}}}
+            };
+
+            const paper1MarksCtx = document.getElementById('paper1MarksChart')?.getContext('2d');
+            if (paper1MarksCtx) {
+                new Chart(paper1MarksCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ["Gen Awareness", "English Lang", "Quant Aptitude", "Reasoning"],
+                        datasets: [{ data: [25, 25, 25, 25], backgroundColor: ['#67e8f9', '#fda4af', '#86efac', '#fcd34d'], borderWidth: 0 }]
+                    },
+                    options: { ...commonOptions, scales: { ...commonOptions.scales, y: { beginAtZero: true, max: 30 } } }
+                });
+            }
+
+            const englishContributionCtx = document.getElementById('englishContributionChart')?.getContext('2d');
+            if (englishContributionCtx) {
+                 new Chart(englishContributionCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['English (25 M)', 'Others (75 M)'],
+                        datasets: [{ data: [25, 75], backgroundColor: ['#fda4af', '#e5e7eb'], borderWidth: 0 }]
+                    },
+                    options: { ...commonOptions, plugins: { legend: { position: 'bottom', labels: { font: {size: 10}} } } }
+                });
+            }
+        }
+
+    const vocabularyData = [
+        // Existing words + new ones
+        { word: "Abate", meaning: "Become less intense", syn: "Decrease, Diminish", ant: "Intensify, Increase" },
+        { word: "Abet", meaning: "Encourage wrongdoing", syn: "Incite, Condone", ant: "Hinder, Prevent" },
+        { word: "Abhor", meaning: "Regard with disgust", syn: "Hate, Loathe", ant: "Love, Admire" },
+        { word: "Abject", meaning: "Extremely bad/degrading", syn: "Miserable, Wretched", ant: "Commendable" },
+        { word: "Abscond", meaning: "Leave secretly", syn: "Flee, Escape", ant: "Remain, Stay" },
+        { word: "Abstruse", meaning: "Hard to understand", syn: "Obscure, Esoteric", ant: "Clear, Obvious" },
+        { word: "Accolade", meaning: "Award or honor", syn: "Honor, Tribute", ant: "Criticism" },
+        { word: "Acrimony", meaning: "Bitterness", syn: "Animosity, Rancor", ant: "Goodwill" },
+        { word: "Admonish", meaning: "Warn firmly", syn: "Rebuke, Censure", ant: "Praise" },
+        { word: "Alacrity", meaning: "Cheerful readiness", syn: "Eagerness", ant: "Apathy" },
+        { word: "Ameliorate", meaning: "Make better", syn: "Improve, Enhance", ant: "Worsen" },
+        { word: "Assiduous", meaning: "Showing great care", syn: "Diligent, Meticulous", ant: "Lazy, Careless" },
+        { word: "Banal", meaning: "Lacking originality", syn: "Trite, Mundane", ant: "Original, Fresh" },
+        { word: "Bolster", meaning: "Support or strengthen", syn: "Reinforce, Boost", ant: "Undermine" },
+        { word: "Capricious", meaning: "Sudden mood changes", syn: "Fickle, Unpredictable", ant: "Stable" },
+        { word: "Clandestine", meaning: "Kept secret", syn: "Covert, Stealthy", ant: "Open, Overt" },
+        { word: "Dauntless", meaning: "Fearless", syn: "Brave, Valiant", ant: "Timid" },
+        { word: "Deference", meaning: "Humble respect", syn: "Regard, Obedience", ant: "Disrespect" },
+        { word: "Detrimental", meaning: "Causing harm", syn: "Harmful, Damaging", ant: "Beneficial" },
+        { word: "Erudite", meaning: "Learned, scholarly", syn: "Knowledgeable", ant: "Ignorant" },
+        { word: "Exacerbate", meaning: "Make worse", syn: "Aggravate, Worsen", ant: "Alleviate, Improve"},
+        { word: "Fastidious", meaning: "Attentive to detail", syn: "Meticulous, Scrupulous", ant: "Careless" },
+        { word: "Gauche", meaning: "Unsophisticated", syn: "Awkward, Clumsy", ant: "Elegant" },
+        { word: "Haughty", meaning: "Arrogantly superior", syn: "Proud, Vain", ant: "Humble" },
+        { word: "Impasse", meaning: "No progress possible", syn: "Deadlock, Stalemate", ant: "Breakthrough" },
+        { word: "Inchoate", meaning: "Just begun, not fully formed", syn: "Rudimentary", ant: "Developed" },
+        { word: "Juxtapose", meaning: "Place side by side for contrast", syn: "Compare, Contrast", ant: "Separate"},
+        { word: "Laconic", meaning: "Using few words", syn: "Brief, Concise", ant: "Verbose" },
+        { word: "Malevolent", meaning: "Wishing evil", syn: "Malicious, Spiteful", ant: "Benevolent" },
+        { word: "Mitigate", meaning: "Make less severe", syn: "Alleviate, Reduce", ant: "Aggravate" },
+        { word: "Mundane", meaning: "Dull, ordinary", syn: "Boring, Tedious", ant: "Exciting" },
+        { word: "Obdurate", meaning: "Stubborn", syn: "Obstinate, Inflexible", ant: "Compliant" },
+        { word: "Ominous", meaning: "Suggesting something bad", syn: "Threatening, Menacing", ant: "Auspicious" },
+        { word: "Pellucid", meaning: "Translucently clear", syn: "Transparent, Lucid", ant: "Obscure" },
+        { word: "Prolific", meaning: "Productive", syn: "Creative, Fertile", ant: "Unproductive" },
+        { word: "Quash", meaning: "Reject as invalid", syn: "Cancel, Reverse", ant: "Validate" },
+        { word: "Recalcitrant", meaning: "Uncooperative", syn: "Obstinate, Defiant", ant: "Compliant" },
+        { word: "Sanguine", meaning: "Optimistic", syn: "Hopeful, Positive", ant: "Pessimistic" },
+        { word: "Surreptitious", meaning: "Secretive", syn: "Stealthy, Clandestine", ant: "Open, Blatant" },
+        { word: "Taciturn", meaning: "Reserved in speech", syn: "Reticent, Quiet", ant: "Talkative" },
+        { word: "Tenacious", meaning: "Persistent", syn: "Determined, Resolute", ant: "Weak" },
+        { word: "Ubiquitous", meaning: "Found everywhere", syn: "Omnipresent, Pervasive", ant: "Rare" },
+        { word: "Venerable", meaning: "Respected due to age/wisdom", syn: "Esteemed, Revered", ant: "Disreputable" },
+        { word: "Vociferous", meaning: "Loud and forceful", syn: "Vehement, Outspoken", ant: "Quiet" },
+        { word: "Zeal", meaning: "Great energy/enthusiasm", syn: "Passion, Fervor", ant: "Apathy" },
+        { word: "Zenith", meaning: "Most powerful point", syn: "Peak, Summit", ant: "Nadir" }
+    ];
+
+    const idiomData = [
+        // Existing idioms + new ones
+        { item: "A piece of cake", meaning: "Very easy", example: "The test was a piece of cake." },
+        { item: "Beat around the bush", meaning: "Avoid main topic", example: "Stop beating around the bush." },
+        { item: "Bite the bullet", meaning: "Face difficulty bravely", example: "He bit the bullet and confessed." },
+        { item: "Break a leg", meaning: "Good luck (to performers)", example: "Break a leg tonight!" },
+        { item: "Call it a day", meaning: "Stop working", example: "Let's call it a day." },
+        { item: "Cry over spilt milk", meaning: "Complain about past loss", example: "No use crying over spilt milk." },
+        { item: "Cut corners", meaning: "Do poorly to save time/money", example: "They cut corners on quality." },
+        { item: "Get cold feet", meaning: "Become nervous/afraid to do something planned", example: "He got cold feet before the presentation." },
+        { item: "Hit the nail on the head", meaning: "Say exactly right", example: "You hit the nail on the head." },
+        { item: "Let the cat out of the bag", meaning: "Reveal a secret", example: "She let the cat out of the bag." },
+        { item: "Once in a blue moon", meaning: "Very rarely", example: "He visits once in a blue moon." },
+        { item: "Read between the lines", meaning: "Understand the hidden meaning", example: "You need to read between the lines to understand his true intentions." },
+        { item: "Spill the beans", meaning: "Reveal secret info", example: "Don't spill the beans!" },
+        { item: "Take with a grain of salt", meaning: "Be skeptical", example: "Take his claims with a grain of salt." },
+        { item: "The ball is in your court", meaning: "It's your turn to act/decide", example: "I've made my offer; the ball is in your court."},
+        { item: "Under the weather", meaning: "Slightly ill", example: "Feeling under the weather." }
+    ];
+    
+    const phrasalVerbData = [
+        // Existing phrasal verbs + new ones
+        { item: "Abide by", meaning: "Respect/obey a rule", example: "Abide by the rules." },
+        { item: "Account for", meaning: "Explain", example: "Account for your actions." },
+        { item: "Back up", meaning: "Support; Make copy", example: "Back up your files." },
+        { item: "Break down", meaning: "Stop functioning; Lose control", example: "Car broke down. She broke down." },
+        { item: "Bring up", meaning: "Raise child; Mention topic", example: "She brought up her kids. Don't bring that up." },
+        { item: "Call off", meaning: "Cancel", example: "Called off the meeting." },
+        { item: "Carry on", meaning: "Continue", example: "Carry on with your work." },
+        { item: "Come across", meaning: "Find by chance", example: "Came across an old photo." },
+        { item: "Cut down on", meaning: "Reduce consumption", example: "Cut down on sugar." },
+        { item: "Deal with", meaning: "Handle, manage a problem", example: "You need to deal with this issue." },
+        { item: "Figure out", meaning: "Understand; Solve", example: "Figure out the problem." },
+        { item: "Get along with", meaning: "Good relationship", example: "Get along with colleagues." },
+        { item: "Give up", meaning: "Stop trying; Quit", example: "Don't give up." },
+        { item: "Go over", meaning: "Review, examine", example: "Let's go over the report." },
+        { item: "Hold on", meaning: "Wait; Grip", example: "Hold on a minute." },
+        { item: "Look after", meaning: "Take care of", example: "Look after the baby." },
+        { item: "Look forward to", meaning: "Anticipate (+gerund/noun)", example: "Look forward to meeting you." },
+        { item: "Put off", meaning: "Postpone", example: "Put off the meeting." },
+        { item: "Put up with", meaning: "Tolerate", example: "Can't put up with the noise." },
+        { item: "Run out of", meaning: "No more left", example: "Ran out of milk." },
+        { item: "Set up", meaning: "Arrange, establish", example: "Set up a new server." },
+        { item: "Take after", meaning: "Resemble parent", example: "Takes after his father." },
+        { item: "Turn down", meaning: "Refuse; Reduce volume", example: "Turned down the offer. Turn down music." }
+    ];
+
+    function createInteractiveListItem(itemData, type) {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'interactive-item bg-white p-2.5 rounded shadow-sm border border-slate-200 cursor-pointer hover:shadow-md transition-shadow text-sm';
+        itemDiv.onclick = function() { toggleInteractiveItem(this); };
+
+        const header = document.createElement('div');
+        header.className = 'interactive-item-header font-medium text-teal-700';
+        header.textContent = type === 'vocab' ? itemData.word : itemData.item;
+        itemDiv.appendChild(header);
+
+        const detailsDiv = document.createElement('div');
+        detailsDiv.className = 'details mt-1.5 text-xs text-slate-600 space-y-0.5';
+        
+        if (type === 'vocab') {
+            detailsDiv.innerHTML = `<p><strong>M:</strong> ${itemData.meaning}</p><p><strong>S:</strong> ${itemData.syn}</p><p><strong>A:</strong> ${itemData.ant}</p>`;
+        } else {
+             detailsDiv.innerHTML = `<p><strong>M:</strong> ${itemData.meaning}</p><p><strong>Ex:</strong> <em>${itemData.example}</em></p>`;
+        }
+        itemDiv.appendChild(detailsDiv);
+        return itemDiv;
+    }
+
+    function populateList(containerId, dataArray, type) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        container.innerHTML = ''; 
+        dataArray.forEach(item => container.appendChild(createInteractiveListItem(item, type)));
+    }
+    
+    function populateVocabulary() { populateList('vocabListContainer', vocabularyData, 'vocab'); }
+    function populateIdioms() { populateList('idiomListContainer', idiomData, 'idiom'); }
+    function populatePhrasalVerbs() { populateList('phrasalVerbListContainer', phrasalVerbData, 'phrasal'); }
+
+    function filterList(inputId, containerId, dataArray, type) {
+        const filter = document.getElementById(inputId).value.toUpperCase();
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        container.innerHTML = ''; 
+        const filteredData = dataArray.filter(item => (type === 'vocab' ? item.word : item.item).toUpperCase().includes(filter));
+        filteredData.forEach(item => container.appendChild(createInteractiveListItem(item, type)));
+    }
+
+    function filterVocab() { filterList('vocabSearch', 'vocabListContainer', vocabularyData, 'vocab'); }
+    function filterIdioms() { filterList('idiomSearch', 'idiomListContainer', idiomData, 'idiom'); }
+    function filterPhrasalVerbs() { filterList('phrasalVerbSearch', 'phrasalVerbListContainer', phrasalVerbData, 'phrasal'); }
+
+    </script>
+
+</body>
+</html>
